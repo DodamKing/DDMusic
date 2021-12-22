@@ -15,5 +15,7 @@ public class UserVO {
 	int membership;
 	String membershipDate;
 	int membershipCnt;
-	String visible;
+	int withdrawal;
+	
+	String nextMembershipDate;
 }

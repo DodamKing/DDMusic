@@ -2,6 +2,43 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.spring.cjs2108_kdd.dao.UserDAO">
 	<select id="getUserVO" resultType="com.spring.cjs2108_kdd.vo.UserVO">
-		select * from user_jsp where userId = #{userId} and pwd = #{pwd};
+		select * from user where idx = #{idx};
 	</select>
+	
+	<select id="idCheck" resultType="int">
+		select count(*) from user where userId = #{userId};
+	</select>
+	
+	<insert id="setSignup">
+		insert into user values (default, #{vo.userId}, #{vo.pwd}, #{vo.email}, #{vo.telecom}, #{vo.phoneNb}, #{vo.userNm}, #{vo.nickNm}, default, default, default, default);
+	</insert>
+	
+	<select id="getIdx" resultType="Integer">
+		select idx from user where userId = #{userId};
+	</select>
+	
+	<update id="setWithdrawal">
+		update user set withdrawal = 1 where idx = #{idx};
+	</update>
+
+	<update id="setuserUpdate">
+		update user set email = #{vo.email}, telecom = #{vo.telecom}, phoneNb = #{vo.phoneNb}, userNm = #{vo.userNm}, nickNm = #{vo.nickNm} where idx = #{idx};
+	</update>
+	
+	<update id="setUpdatePwd">
+		update user set pwd = #{pwd} where idx = #{idx};
+	</update>
+	
+	<update id="setMembership">
+		update user set membership = 1, membershipDate = now(), membershipCnt = membershipCnt + 1 where idx = #{idx};
+	</update>
+	
+	<select id="getNextMembershipDate" resultType="String">
+		select date_add(membershipDate, interval 1 month) from user where idx = #{idx};
+	</select>
+	
+	<select id="getUserId" resultType="String">
+		select userId from user where userNm = #{userNm} and phoneNb = #{phoneNb} and email = #{email};
+	</select>
+
 </mapper>

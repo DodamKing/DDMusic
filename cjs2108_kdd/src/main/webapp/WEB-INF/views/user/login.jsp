@@ -25,7 +25,7 @@
                     <form method="post">
                         <h2>로그인</h2>
                         <div class="form-group">
-                            <input class="form-control input-control" type="text" id="userId" name="userId"
+                            <input class="form-control input-control" type="text" id="userId" name="userId" value="${sMid_}"
                                 placeholder="아이디" autofocus required>
                         </div>
                         <div class="form-group">

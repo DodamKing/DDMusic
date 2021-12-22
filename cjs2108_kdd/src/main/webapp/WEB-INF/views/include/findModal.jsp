@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:set var="ctp" value="<%=request.getContextPath() %>" />
 <!DOCTYPE html>
 
  <div class="modal" id="myModal1">
@@ -83,7 +85,7 @@
 		
 		$.ajax({
 			type : "post",
-			url : "finduserId.user",
+			url : "${ctp}/user/finduserId",
 			data : data,
 			success : (mid) => {
 				if (mid == "") {
@@ -105,10 +107,13 @@
 			
 			$.ajax({
 				type : "post",
-				url : "finduserPwd.user",
+				url : "${ctp}/user/finduserPwd",
 				data : data,
 				success : (pwd) => {
-					if (pwd == "") {
+					if (pwd == "1") {
+						demo21.innerHTML = "이메일 작업 해야 함";
+					}
+					else if (pwd == "") {
 						demo21.innerHTML = "일치하는 정보가 없습니다.";
 					}
 					else {
@@ -122,12 +127,12 @@
 		userNm1.value = "";
 		phoneNb1.value = "";
 		email1.value = "";
-		demo1.innerHTML = "";
+		demo11.innerHTML = "";
 		
 		userId2.value = "";
 		phoneNb2.value = "";
 		email2.value = "";
-		demo2.innerHTML = "";
+		demo21.innerHTML = "";
 	}
 	
 </script>

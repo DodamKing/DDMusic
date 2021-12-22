@@ -29,8 +29,8 @@ userId.addEventListener("keyup", () => {
 // });
 
 pwd.addEventListener("keyup", () => {
-    if (pwd.value.length < 4 || pwd.value.length > 8) {
-        demo2.innerHTML = "비밀번호는 최소 4자 최대 8자 입니다.";
+    if (pwd.value.length < 4 || pwd.value.length > 16) {
+        demo2.innerHTML = "비밀번호는 최소 4자 최대 16자 입니다.";
     } else {
         demo2.innerHTML = "";
     }
@@ -81,7 +81,7 @@ overlapCheck_btn.addEventListener("click", () => {
 		alert("아이디를 입력해 주세요.");
 		return;
 	}
-    let url = "useroverlapcheck.user?userId=" + userId.value;
+    let url = "overlapcheck?userId=" + userId.value;
     window.open(url, "nWin", "width=500px, height=300px, left=250px, top=150px");
 })
 
