@@ -26,12 +26,17 @@
 	
 	<beans:bean id="bCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 	
-	<!-- <interceptors>
+	<interceptors>
 		<interceptor>
-		         <mapping path="/user/**" /> 
-		         <beans:bean class="com.spring.cjs2108_kdd.interceptor.UserInterceptor" />
+	         <mapping path="/user/**" />
+	         <exclude-mapping path="/user/login"/> 
+	         <exclude-mapping path="/user/signup"/> 
+	         <exclude-mapping path="/user/finduserId"/> 
+	         <exclude-mapping path="/user/finduserPwd"/> 
+	         <exclude-mapping path="/user/overlapcheck"/> 
+	         <beans:bean class="com.spring.cjs2108_kdd.interceptor.UserInterceptor" />
 		</interceptor>
-	</interceptors> -->
+	</interceptors>
 	
 	
 </beans:beans>

@@ -1,5 +1,7 @@
 package com.spring.cjs2108_kdd.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -59,6 +61,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public String getUserId(String userNm, String phoneNb, String email) {
 		return userDAO.getUserId(userNm, phoneNb, email);
+	}
+
+	@Override
+	public List<UserVO> getUserVOS() {
+		return userDAO.getUserVOS();
 	}
 
 }

@@ -38,7 +38,11 @@
 	</select>
 	
 	<select id="getUserId" resultType="String">
-		select userId from user where userNm = #{userNm} and phoneNb = #{phoneNb} and email = #{email};
+		select userId from user where userNm = #{userNm} and phoneNb = #{phoneNb} and email = #{email} and withdrawal = 0;
+	</select>
+
+	<select id="getUserVOS" resultType="com.spring.cjs2108_kdd.vo.UserVO">
+		select * from user order by idx desc;
 	</select>
 
 </mapper>

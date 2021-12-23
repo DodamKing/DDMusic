@@ -12,6 +12,13 @@
 	<title>My Information</title>
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+    	.profileImg {
+    		width: 200px;
+    		overflow: hidden;
+    		border-radius: 100%;
+    	}
+    </style>
 </head>
 <body>
 	<c:if test="${sVO == null }"><script>location.href="${ctp}/today"</script></c:if>
@@ -21,8 +28,11 @@
 		<div class="card-body" style="background: #F7F7F7;">
 			<table class="table table-borderless mt-5 p-3" style="margin: auto; width: 60%;">
 				<tr>
-					<th class="btn-warning">아이디</th>
+					<th class="btn-warning" style="width: 200px;">아이디</th>
 					<td>${vo.userId }</td>
+					<c:if test="${!empty vo.profileImg}">
+						<td style="vertical-align: middle;" rowspan="6"><div class="profileImg" ><img src="${ctp }/resources/img/${vo.profileImg}" /></div></td>
+					</c:if>
 				</tr>
 				<tr>
 					<th class="btn-warning">이메일 주소</th>
@@ -49,7 +59,7 @@
 				</tr>
 				<tr><td style="background: #F7F7F7;"></td><td style="background: #F7F7F7;"></td></tr>
 				<tr>
-					<td style="background: #F7F7F7; text-align: right;" colspan="2">
+					<td style="background: #F7F7F7; text-align: right;" colspan="3">
 						<div class="btn-group btn-group-lg">
 							<input type="button" value="비밀번호 변경" class="btn btn-warning" onclick="location.href='${ctp}/user/pwdcha/${vo.idx}'" />
 							<input type="button" value="수정" class="btn btn-warning" onclick="location.href='${ctp}/user/update/${vo.idx}'" />

@@ -1,5 +1,7 @@
 package com.spring.cjs2108_kdd.service;
 
+import java.util.List;
+
 import com.spring.cjs2108_kdd.vo.UserVO;
 
 public interface UserService {
@@ -23,5 +25,7 @@ public interface UserService {
 	String getNextMembershipDate(Integer idx);
 
 	String getUserId(String userNm, String phoneNb, String email);
+
+	List<UserVO> getUserVOS();
 
 }

@@ -1,5 +1,7 @@
 package com.spring.cjs2108_kdd.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.spring.cjs2108_kdd.vo.UserVO;
@@ -25,5 +27,7 @@ public interface UserDAO {
 	String getNextMembershipDate(Integer idx);
 
 	String getUserId(@Param("userNm") String userNm, @Param("phoneNb") String phoneNb,  @Param("email")String email);
+
+	List<UserVO> getUserVOS();
 
 }

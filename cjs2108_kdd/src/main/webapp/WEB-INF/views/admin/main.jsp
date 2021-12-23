@@ -28,8 +28,7 @@
 		}
 		
 		section {
-			position: absolute;
-			left: 200px;
+			margin-left: 200px;
 			padding-bottom: 100px;
 		}
 		
@@ -50,21 +49,37 @@
 		    color: inherit;
 		    opacity: 0.7;
 		}
+		
+		.ho:hover {
+			cursor: pointer;
+		}
+		
+		.sticky {
+			position: fixed;
+			top: 0px;
+			right: 10px;
+		}
+
+		.sticky2 {
+			position: fixed;
+			top: 60px;
+			right: 10px;
+		}
 	</style>
 </head>
 <body>
 	<nav>
 		<div class="card-body nav-w">
 	        <ul>
-	            <li><a href="admin/main">메인</a></li>
-	            <li><a href="admi/main?sw=1">회원관리</a></li>
-                <li><a href="admin/main?sw=2">음원관리</a></li>
+	            <li><a href="${ctp }/admin/main">메인</a></li>
+	            <li><a href="${ctp }/admin/main?sw=1">회원관리</a></li>
+                <li><a href="${ctp }/admin/main?sw=2">음원관리</a></li>
             </ul>
     	</div>
 	</nav>
 	<section>
 		<c:if test="${sw == 0 }">
-			<div class="container mt-5">
+			<div class="container mt-5 ml-5">
 				<h2>업데이트 필요한 곡</h2>
 				<div>
 				<c:set var="ok" value="0" />
@@ -83,30 +98,59 @@
 			</div>
 		</c:if>
 		<c:if test="${sw == 1 }">
-			<div class="container mt-5">
+			<div class="container mt-5 ml-5">
 				<h2>회원관리</h2>
-				<div>준비중 입니다.</div>
+				<div>
+					<table class="table text-center">
+						<tr>
+							<th>아이디</th>
+							<th>이름</th>
+							<th>별명</th>
+							<th>이메일</th>
+							<th>멤버십</th>
+							<th>탈퇴신청</th>
+						</tr>
+						<c:forEach var="vo" items="${vos}">
+							<tr>
+								<td>${vo.userId }</td>
+								<td>${vo.userNm }</td>
+								<td>${vo.nickNm }</td>
+								<td>${vo.email }</td>
+								<td>
+									<c:if test="${vo.membership == -1 }">관리자</c:if>
+									<c:if test="${vo.membership == 0 }">없음</c:if>
+									<c:if test="${vo.membership == 1 }">DDMusic 무제한 듣기</c:if>
+								</td>
+								<td>
+									<c:if test="${vo.withdrawal == 0 }"></c:if>
+									<c:if test="${vo.withdrawal == 1 }"><div onclick="userdel(${vo.idx})">탈퇴</div></c:if>
+								</td>
+							</tr>
+						</c:forEach>
+					</table>
+				</div>
 			</div>
 		</c:if>
 		<c:if test="${sw == 2 }">
 			<div class="container mt-5">
-				<h2>음원관리</h2>
-				<div>
+				<h2 class="ml-5">음원관리</h2>
+				<div class="sticky">
 					<ul class="pagination">
-					    <li class="page-item"><a class="page-link bg-dark text-warning" href="adminMain.ad?sw=2&pageNo=1">First</a></li>
-					    <li class="page-item"><a class="page-link bg-dark text-warning" href="adminMain.ad?sw=2&pageNo=<c:if test="${pageNo != 1 }">${pageNo - 1 }</c:if><c:if test="${pageNo == 1 }">1</c:if> ">Previous</a></li>
+					    <li class="page-item"><a class="page-link bg-dark text-warning" href="${ctp }/admin/main?sw=2&pageNo=1">First</a></li>
+					    <li class="page-item"><a class="page-link bg-dark text-warning" href="${ctp }/admin/main?sw=2&pageNo=<c:if test="${pageNo != 1 }">${pageNo - 1 }</c:if><c:if test="${pageNo == 1 }">1</c:if> ">Previous</a></li>
 					    <li class="page-item"><a class="page-link bg-secondary text-danger">${pageNo }</a></li>
 					    <!-- <li class="page-item"><a class="page-link bg-dark text-warning" href="#">1</a></li>
 					    <li class="page-item"><a class="page-link bg-secondary text-danger" href="#">2</a></li>
 					    <li class="page-item"><a class="page-link bg-dark text-warning" href="#">3</a></li> -->
-					    <li class="page-item"><a class="page-link bg-dark text-warning" href="adminMain.ad?sw=2&pageNo=<c:if test="${pageNo + 1 > lastPageNo }">${pageNo }</c:if><c:if test="${pageNo + 1 <= lastPageNo }">${pageNo + 1}</c:if>">Next</a></li>
-					    <li class="page-item"><a class="page-link bg-dark text-warning" href="adminMain.ad?sw=2&pageNo=${lastPageNo }">Last</a></li>
+					    <li class="page-item"><a class="page-link bg-dark text-warning" href="${ctp }/admin/main?sw=2&pageNo=<c:if test="${pageNo + 1 > lastPageNo }">${pageNo }</c:if><c:if test="${pageNo + 1 <= lastPageNo }">${pageNo + 1}</c:if>">Next</a></li>
+					    <li class="page-item"><a class="page-link bg-dark text-warning" href="${ctp }/admin/main?sw=2&pageNo=${lastPageNo }">Last</a></li>
 		 	 		</ul>
 				</div>
-			    <div><input class="btn btn-warning" type="button" value="변경사항 적용" onclick="commit()"></div>
-				<div>
-					<form method="post" action="adminSongUpdate.ad" name="myform">
-						<table class="table table-bordered" style="width: 3000px;">
+			    <div class="sticky2"><input class="btn btn-warning" type="button" value="변경사항 적용" onclick="commit()"></div>
+				<div class="mt-3">
+					<form method="post" name="myform">
+					<div>수정 하려는 항목을 더블 클릭 하세요!</div>
+						<table class="table table-bordered" style="width: 3300px;">
 							<thead class="thead-dark">
 								<tr>
 									<th class="text-right">#</th>
@@ -129,15 +173,15 @@
 			                        <td class="text-center"><div class="imgBox"><img src="${vo.img }" alt=""></div></td>
 			                        <td class="align-middle">${vo.title }</td>
 			                        <td class="align-middle">${vo.artist }</td>
-			                        <td class="align-middle" ondblclick="updt_album(${vo.idx})"><div id="album_${vo.idx }" >${vo.album }</div></td>
-			                        <td class="align-middle" ondblclick="updt_releaseDate(${vo.idx})"><div id="releaseDate_${vo.idx }" >${vo.releaseDate }</div></td>
-			                        <td class="align-middle" ondblclick="updt_genre(${vo.idx})"><div id="genre_${vo.idx }" >${vo.genre }</div></td>
-			                        <td class="align-middle" ondblclick="updt_music(${vo.idx})"><div id="music_${vo.idx }" >${vo.music }</div></td>
-			                        <td class="align-middle" ondblclick="updt_words(${vo.idx})"><div id="words_${vo.idx }" >${vo.words }</div></td>
-			                        <td class="align-middle" ondblclick="updt_arranger(${vo.idx})"><div id="arranger_${vo.idx }" >${vo.arranger }</div></td>
+			                        <td class="align-middle" ondblclick="updt_album(${vo.idx})"><div class="ho" id="album_${vo.idx }" >${vo.album }</div></td>
+			                        <td class="align-middle" ondblclick="updt_releaseDate(${vo.idx})"><div class="ho" id="releaseDate_${vo.idx }" >${vo.releaseDate }</div></td>
+			                        <td class="align-middle" ondblclick="updt_genre(${vo.idx})"><div class="ho" id="genre_${vo.idx }" >${vo.genre }</div></td>
+			                        <td class="align-middle" ondblclick="updt_music(${vo.idx})"><div class="ho" id="music_${vo.idx }" >${vo.music }</div></td>
+			                        <td class="align-middle" ondblclick="updt_words(${vo.idx})"><div class="ho" id="words_${vo.idx }" >${vo.words }</div></td>
+			                        <td class="align-middle" ondblclick="updt_arranger(${vo.idx})"><div class="ho" id="arranger_${vo.idx }" >${vo.arranger }</div></td>
 			                        <td class="align-middle text-center">
 			                        	<c:if test="${empty vo.lyrics }">없음</c:if>
-			                        	<c:if test="${!empty vo.lyrics }">더보기</c:if>
+			                        	<c:if test="${!empty vo.lyrics }"><div class="ho" onclick="more()">더보기</div></c:if>
 		                        	</td>
 			                        <td class="align-middle text-center">${vo.likeCnt }</td>
 			                    </tr>
@@ -209,6 +253,14 @@
 				demo.value = item;
 				myform.submit();	
 			}
+		}
+		
+		function more() {
+			alert("가사 보여주기");
+		}
+		
+		function userdel(idx) {
+			alert("삭제 하자. " + idx);
 		}
 		
 		window.onkeydown = (e) => {

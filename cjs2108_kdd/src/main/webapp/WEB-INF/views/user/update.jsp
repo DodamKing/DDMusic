@@ -23,6 +23,20 @@
 	<jsp:include page="/WEB-INF/views/include/title.jsp" />
 	<div class="container p-5">
 		<h2 class="mb-5">DD Music 프로필 수정</h2>
+		<form action="">
+			<div class="input-group mb-3">
+				<div class="input-group-prepend">
+					<span class="input-group-text bg-warning">프로필사진</span>
+				</div>
+				<div>
+				<c:if test="${!empty vo.profileImg}">
+					<div><img src="${ctp }/resources/img/${vo.profileImg}" /></div>
+				</c:if>
+					<input type="button" value="사진변경" >
+					<input type="button" value="삭제" >
+				</div>
+			</div>
+		</form>
 		<form method="post" name="form">
 			<div class="input-group mb-3">
 				<div class="input-group-prepend">

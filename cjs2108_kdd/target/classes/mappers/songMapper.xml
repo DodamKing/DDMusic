@@ -4,4 +4,16 @@
 	<select id="getSongIdx" resultType="Integer">
 		select idx from song where title = #{title} and artist = #{artist};
 	</select>
+	
+	<select id="getSongCnt" resultType="int">
+		select count(*) from song;
+	</select>
+	
+	<select id="getSongVOS" resultType="com.spring.cjs2108_kdd.vo.SongVO">
+		select * from song order by idx desc limit #{startNo}, #{pageSize};
+	</select>
+	
+	<update id="setAdminSongUpdate">
+		update song set ${column} = #{value} where idx = #{idx};
+	</update>
 </mapper>
