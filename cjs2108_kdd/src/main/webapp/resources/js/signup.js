@@ -1,6 +1,6 @@
 "use strict"
 
-var idPattern = /[^a-zA-Z0-9]$/;
+var idPattern = /[a-zA-Z0-9]{4,}$/;
 // var pwdPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}$/;
 var pwdPattern = /^[]{4, 8}$/;
 var emailPattern = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]+$/;
@@ -11,8 +11,8 @@ var nickPattern = /[^가-힣a-zA-Z1-9]/;
 let overlapCheck = 0;
 
 userId.addEventListener("keyup", () => {
-    if (idPattern.test(userId.value)) {
-        demo1.innerHTML = "아이디는 영문 대소문자와 숫자만 가능합니다.";
+    if (!idPattern.test(userId.value)) {
+        demo1.innerHTML = "아이디는 최소 4자, 영문 대소문자와 숫자만 가능합니다.";
     } else {
         demo1.innerHTML = "";
     }

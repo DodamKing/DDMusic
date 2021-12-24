@@ -2,6 +2,8 @@ package com.spring.cjs2108_kdd.service;
 
 import java.util.List;
 
+import javax.mail.MessagingException;
+
 import com.spring.cjs2108_kdd.vo.UserVO;
 
 public interface UserService {

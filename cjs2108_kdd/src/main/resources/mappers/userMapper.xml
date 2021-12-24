@@ -10,7 +10,7 @@
 	</select>
 	
 	<insert id="setSignup">
-		insert into user values (default, #{vo.userId}, #{vo.pwd}, #{vo.email}, #{vo.telecom}, #{vo.phoneNb}, #{vo.userNm}, #{vo.nickNm}, default, default, default, default);
+		insert into user values (default, #{vo.userId}, #{vo.pwd}, #{vo.email}, #{vo.telecom}, #{vo.phoneNb}, #{vo.userNm}, #{vo.nickNm}, default, default, default, default, default);
 	</insert>
 	
 	<select id="getIdx" resultType="Integer">

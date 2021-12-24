@@ -2,17 +2,20 @@ package com.spring.cjs2108_kdd.service;
 
 import java.util.List;
 
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.cjs2108_kdd.dao.UserDAO;
+import com.spring.cjs2108_kdd.method.SendEmail;
 import com.spring.cjs2108_kdd.vo.UserVO;
 
 @Service
 public class UserServiceImpl implements UserService {
 	@Autowired
 	UserDAO userDAO;
-
+	
 	@Override
 	public UserVO getUserVO(Integer idx) {
 		return userDAO.getUserVO(idx);
@@ -60,11 +63,14 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public String getUserId(String userNm, String phoneNb, String email) {
-		return userDAO.getUserId(userNm, phoneNb, email);
+		String mid = userDAO.getUserId(userNm, phoneNb, email);
+		mid = mid.replace(mid.substring(0, 4), "****");
+		return mid;
 	}
 
 	@Override
 	public List<UserVO> getUserVOS() {
+		
 		return userDAO.getUserVOS();
 	}
 

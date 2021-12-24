@@ -42,7 +42,7 @@ public class MessageController {
 		model.addAttribute("url", "user/profile/" + idx);
 		return "include/message";
 	}
-	
+
 	@RequestMapping("/pwdchafalse/{idx}")
 	public String pwdchafalseGet(Model model, @PathVariable Integer idx) {
 		model.addAttribute("msg", "기존 비밀번호가 일치하지 않습니다.");

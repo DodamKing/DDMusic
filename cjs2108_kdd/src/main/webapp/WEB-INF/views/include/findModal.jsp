@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <c:set var="ctp" value="<%=request.getContextPath() %>" />
 <!DOCTYPE html>
 
@@ -53,12 +54,12 @@
 					</div>
 					<input id="userId2" name="userId2" type="text" class="form-control"/>
 				</div>
-				<div class="input-group">
+				<!-- <div class="input-group">
 					<div class="input-group-prepend mb-3">
 						<span class="input-group-text">휴대폰 번호</span>
 					</div>
 					<input id="phoneNb2" name="phoneNb2" type="text" class="form-control"/>
-				</div>
+				</div> -->
 				<div class="input-group">
 					<div class="input-group-prepend mb-3">
 						<span class="input-group-text">이메일 주소</span>
@@ -101,7 +102,7 @@
 	function findUserPwd() {
 		let data = {
 				userId : userId2.value,
-				phoneNb : phoneNb2.value,
+				/* phoneNb : phoneNb2.value, */
 				email : email2.value
 			}
 			
@@ -109,15 +110,15 @@
 				type : "post",
 				url : "${ctp}/user/finduserPwd",
 				data : data,
-				success : (pwd) => {
-					if (pwd == "1") {
-						demo21.innerHTML = "이메일 작업 해야 함";
+				success : (data) => {
+					if (data == "1") {
+						demo21.innerHTML = email2.value + "로 임시 비밀번호를 보냈습니다.";
 					}
-					else if (pwd == "") {
-						demo21.innerHTML = "일치하는 정보가 없습니다.";
+					else if (data == "0") {
+						demo21.innerHTML = "없는 아이디 입니다.";
 					}
-					else {
-						demo21.innerHTML = "임시 비밀번호는 <b>" + pwd + "</b> 입니다.";	
+					else if (data == "2") {
+						demo21.innerHTML = "이메일 주소가 일치 하지 않습니다.";
 					}
 				}
 			});	
@@ -130,7 +131,7 @@
 		demo11.innerHTML = "";
 		
 		userId2.value = "";
-		phoneNb2.value = "";
+		/* phoneNb2.value = ""; */
 		email2.value = "";
 		demo21.innerHTML = "";
 	}
