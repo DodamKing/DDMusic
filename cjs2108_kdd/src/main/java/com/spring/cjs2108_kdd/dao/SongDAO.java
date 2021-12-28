@@ -15,5 +15,9 @@ public interface SongDAO {
 	public ArrayList<SongVO> getSongVOS(@Param("startNo") int startNo, @Param("pageSize") int pageSize);
 
 	public void setAdminSongUpdate(@Param("idx") int idx, @Param("column") String column, @Param("value") String value);
+
+	public SongVO getSongInfor(int idx);
+
+	public ArrayList<SongVO> getSongSrch(String srchKwd);
 	
 }

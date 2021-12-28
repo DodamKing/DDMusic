@@ -1,5 +1,7 @@
 package com.spring.cjs2108_kdd.controller;
 
+import java.io.IOException;
+
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
@@ -15,9 +17,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.cjs2108_kdd.method.RandomPwd;
 import com.spring.cjs2108_kdd.service.UserService;
@@ -119,9 +123,8 @@ public class UserController {
 	}
 
 	@RequestMapping(value="/imgupdate/{idx}", method = RequestMethod.POST)
-	public String imgupdatePost(Model model, @PathVariable Integer idx) {
-		UserVO vo = userService.getUserVO(idx);
-		model.addAttribute("vo", vo);
+	public String imgupdatePost(@PathVariable Integer idx, MultipartFile imgUpdate) throws IOException {
+		userService.setImgUpdate(idx, imgUpdate);
 		return "redirect:/message/userupdatesuccess/" + idx;
 	}
 	

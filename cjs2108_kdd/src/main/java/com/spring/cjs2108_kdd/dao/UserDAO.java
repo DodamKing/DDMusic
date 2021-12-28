@@ -31,4 +31,7 @@ public interface UserDAO {
 
 	List<UserVO> getUserVOS();
 
+	void setImgUpdate(@Param("idx") Integer idx, @Param("profileImg") String profileImg);
+
+
 }

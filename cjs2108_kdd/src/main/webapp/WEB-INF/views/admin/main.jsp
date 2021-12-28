@@ -78,6 +78,7 @@
     	</div>
 	</nav>
 	<section>
+		<jsp:include page="/WEB-INF/views/include/modal.jsp" />
 		<c:if test="${sw == 0 }">
 			<div class="container mt-5 ml-5">
 				<h2>업데이트 필요한 곡</h2>
@@ -180,8 +181,8 @@
 			                        <td class="align-middle" ondblclick="updt_words(${vo.idx})"><div class="ho" id="words_${vo.idx }" >${vo.words }</div></td>
 			                        <td class="align-middle" ondblclick="updt_arranger(${vo.idx})"><div class="ho" id="arranger_${vo.idx }" >${vo.arranger }</div></td>
 			                        <td class="align-middle text-center">
-			                        	<c:if test="${empty vo.lyrics }">없음</c:if>
-			                        	<c:if test="${!empty vo.lyrics }"><div class="ho" onclick="more()">더보기</div></c:if>
+			                        	<c:if test="${empty vo.lyrics }"><div class="ho" onclick="more(${vo.idx })" data-toggle="modal" data-target="#myModal">없음</div></c:if>
+			                        	<c:if test="${!empty vo.lyrics }"><div class="ho" onclick="more(${vo.idx })" data-toggle="modal" data-target="#myModal">더보기</div></c:if>
 		                        	</td>
 			                        <td class="align-middle text-center">${vo.likeCnt }</td>
 			                    </tr>
@@ -255,8 +256,24 @@
 			}
 		}
 		
-		function more() {
-			alert("가사 보여주기");
+		function more(idx) {
+			
+			let data = {
+				idx : idx
+			}
+			
+			$.ajax({
+				type : "post",
+				url : "${ctp}/admin/lyrics",
+				data : data,
+				success : (data) => {
+					modal_i.src = data.img;
+					$("#modal_t").html(data.title);
+					$("#modal_a").html(data.artist);
+					let lyrics = data.lyrics.replace(/\n/g, "<br>");
+					$("#modal_c").html(lyrics);
+				}
+			});
 		}
 		
 		function userdel(idx) {

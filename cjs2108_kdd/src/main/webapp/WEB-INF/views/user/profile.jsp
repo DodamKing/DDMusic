@@ -36,7 +36,7 @@
 					<th class="btn-warning" style="width: 200px;">아이디</th>
 					<td>${vo.userId }</td>
 					<c:if test="${empty vo.profileImg}">
-						<td style="vertical-align: middle;" rowspan="6"><div onclick="location.href='${ctp}/user/imgupdate/${vo.idx}'" class="profileImg" ><img style="width: 100%; height: 100%;" src="${ctp }/resources/img/noimage.jpg" /></div></td>
+						<td style="vertical-align: middle;" rowspan="6"><div onclick="location.href='${ctp}/user/imgupdate/${vo.idx}'" class="profileImg text-center p-3" ><i class="fa-solid fa-user fa-5x"></i></div></td>
 					</c:if>
 					<c:if test="${!empty vo.profileImg}">
 						<td style="vertical-align: middle;" rowspan="6"><div onclick="location.href='${ctp}/user/imgupdate/${vo.idx}'" class="profileImg" ><img style="width: 100%; height: 100%;" src="${ctp }/resources/img/${vo.profileImg}" /></div></td>
@@ -70,8 +70,9 @@
 					<td style="background: #F7F7F7; text-align: right;" colspan="3">
 						<div class="btn-group btn-group-lg">
 							<input type="button" value="비밀번호 변경" class="btn btn-warning" onclick="location.href='${ctp}/user/pwdcha/${vo.idx}'" />
-							<input type="button" value="수정" class="btn btn-warning" onclick="location.href='${ctp}/user/update/${vo.idx}'" />
-							<input type="button" value="탈퇴" class="btn btn-warning" onclick="cf()" />
+							<input type="button" value="프사 변경" class="btn btn-warning" onclick="location.href='${ctp}/user/imgupdate/${vo.idx}'" />
+							<input type="button" value="정보 수정" class="btn btn-warning" onclick="location.href='${ctp}/user/update/${vo.idx}'" />
+							<input type="button" value="회원 탈퇴" class="btn btn-warning" onclick="cf()" />
 						</div>
 					</td>
 				</tr>

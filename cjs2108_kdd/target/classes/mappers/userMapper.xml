@@ -44,5 +44,10 @@
 	<select id="getUserVOS" resultType="com.spring.cjs2108_kdd.vo.UserVO">
 		select * from user order by idx desc;
 	</select>
+	
+	<update id="setImgUpdate">
+		update user set profileImg = #{profileImg} where idx = #{idx};
+	</update>
+	
 
 </mapper>

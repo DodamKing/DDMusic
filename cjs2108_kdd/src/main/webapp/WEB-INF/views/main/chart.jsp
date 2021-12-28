@@ -32,7 +32,7 @@
 	                        <td>${st.index + 1}</td>
 	                        <td><div class="imgBox"><a href="${fn:replace(vo.img, 50, 800) }" target="_blank"><img name="top100Img" src="${vo.img }" alt=""></a></div></td>
 	                        <td>
-	                            <div name="top100Title"><a href="sotrack.so?idx=${vo.idx }">${vo.title }</a></div>
+	                            <div name="top100Title"><a href="song/infor?idx=${vo.idx }">${vo.title }</a></div>
 	                            <div name="top100Artist">${vo.artist }</div>
 	                        </td>
 	                        <td><button name="add_btn" type="button" class="btn"><i title="곡 추가" class="fas fa-plus"></i></button></td>

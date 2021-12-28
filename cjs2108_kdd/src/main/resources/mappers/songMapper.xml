@@ -16,4 +16,12 @@
 	<update id="setAdminSongUpdate">
 		update song set ${column} = #{value} where idx = #{idx};
 	</update>
+	
+	<select id="getSongInfor" resultType="com.spring.cjs2108_kdd.vo.SongVO">
+		select * from song where idx = #{idx};
+	</select>
+	
+	<select id="getSongSrch" resultType="com.spring.cjs2108_kdd.vo.SongVO">
+		select * from song where title like '%${srchKwd}%' or artist like '%${srchKwd}%';
+	</select>
 </mapper>

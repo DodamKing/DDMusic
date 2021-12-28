@@ -17,4 +17,8 @@ public interface SongService {
 
 	void setAdminSongUpdate(int idx, String column, String value);
 
+	SongVO getSongInfor(int idx);
+
+	ArrayList<SongVO> getSongSrch(String srchKwd);
+
 }

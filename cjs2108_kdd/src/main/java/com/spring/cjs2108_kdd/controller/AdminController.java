@@ -7,18 +7,21 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.cjs2108_kdd.service.SongService;
 import com.spring.cjs2108_kdd.service.UserService;
+import com.spring.cjs2108_kdd.vo.SongVO;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
 	@Autowired
-	SongService songservice;
+	SongService songService;
 	
 	@Autowired
 	UserService userService;
@@ -29,7 +32,7 @@ public class AdminController {
 			@RequestParam(value = "pageNo", defaultValue = "1") int pageNo) 
 					throws FileNotFoundException {
 		if (sw == 0) {
-			model.addAttribute("vos", songservice.getChartJson());
+			model.addAttribute("vos", songService.getChartJson());
 		}
 		
 		else if (sw == 1) {
@@ -39,9 +42,9 @@ public class AdminController {
 		else if (sw == 2) {
 			int pageSize = 10;
 			int startNo = (pageNo - 1) * pageSize;
-			int lastPageNo = songservice.getSongCnt() / 10 + 1;
-			if (songservice.getSongCnt() % 10 == 0) lastPageNo--;
-			model.addAttribute("vos", songservice.getSongVOS(startNo, pageSize));
+			int lastPageNo = songService.getSongCnt() / 10 + 1;
+			if (songService.getSongCnt() % 10 == 0) lastPageNo--;
+			model.addAttribute("vos", songService.getSongVOS(startNo, pageSize));
 			model.addAttribute("lastPageNo", lastPageNo);
 			model.addAttribute("pageNo", pageNo);
 		}
@@ -66,12 +69,20 @@ public class AdminController {
 						String name = column + "_" + idx;
 						String value = request.getParameter(name);
 						
-						songservice.setAdminSongUpdate(idx, column, value);
+						songService.setAdminSongUpdate(idx, column, value);
 					}
 				}
 			}
 		model.addAttribute("sw", sw);
 		model.addAttribute("pageNo", pageNo);
 		return "redirect:/admin/main";
+	}
+	
+	@RequestMapping("/lyrics")
+	@ResponseBody
+	public SongVO getlyricsPost(Integer idx) {
+		SongVO vo = songService.getSongInfor(idx);
+		if (vo != null) vo.setImg(vo.getImg().replaceFirst("50", "200"));
+		return vo;
 	}
 }

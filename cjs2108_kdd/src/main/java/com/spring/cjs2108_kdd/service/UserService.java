@@ -1,8 +1,11 @@
 package com.spring.cjs2108_kdd.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.mail.MessagingException;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.cjs2108_kdd.vo.UserVO;
 
@@ -29,5 +32,7 @@ public interface UserService {
 	String getUserId(String userNm, String phoneNb, String email);
 
 	List<UserVO> getUserVOS();
+
+	void setImgUpdate(Integer idx, MultipartFile imgUpdate) throws IOException;
 
 }

@@ -30,20 +30,26 @@
 	<jsp:include page="/WEB-INF/views/include/title.jsp" />
 	<div class="container p-5">
 		<h2 class="mb-5">DD Music 프로필 수정</h2>
-		<form method="post" name="form">
+		<form method="post" name="form" enctype="multipart/form-data">
 			<div class="input-group mb-3">
 				<div class="input-group-prepend">
 					<span class="input-group-text bg-warning">프로필사진</span>
 				</div>
 				<div class="ml-5">
 					<c:if test="${empty vo.profileImg}">
-						<div class="profileImg"><img id="thum" style="width: 100%; height: 100%;" src="${ctp }/resources/img/noimage.jpg" /></div>
+						<div class="profileImg">
+							<i class="fa-solid fa-user fa-5x m-5"></i>
+							<img id="thum" style="width: 100%; height: 100%;" src="" />
+						</div>
 					</c:if>
 					<c:if test="${!empty vo.profileImg}">
-						<div class="profileImg"><img id="thum" style="width: 100%; height: 100%;" src="${ctp }/resources/img/${vo.profileImg}" /></div>
+						<div class="profileImg">
+							<i class="fa-solid fa-user fa-5x m-5" style="display: none;"></i>
+							<img id="thum" style="width: 100%; height: 100%;" src="${ctp }/resources/img/${vo.profileImg}" />
+						</div>
 					</c:if>
 					<div class="mt-3">
-						<input class="btn btn-dark" type="file" id="imgUpdate" name="img" value="사진변경" >
+						<input class="btn btn-dark" type="file" id="imgUpdate" name="imgUpdate" value="사진변경" >
 						<input class="btn btn-dark" type="button" value="삭제" onclick="imgDelete()" >
 					</div>
 				</div>
@@ -58,24 +64,43 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
     	let origin = $("#thum").attr("src");
+    	let delsw = 0;
     
 		$("#imgUpdate").change((e) => {
+			delsw = 0;
 			let reader = new FileReader();
 			reader.readAsDataURL(e.target.files[0]);
 			
 			reader.onload = (e) => {
 				$("#thum").attr("src", e.target.result);
+				$("i").hide();
 			}
 		})
     	
     	function imgDelete() {
 			$("#imgUpdate").val("");
-			$("#thum").attr("src", "${ctp}/resources/img/noimage.jpg");
+			$("#thum").attr("src", "");
+			$("i").show();
+			delsw = 1;
 		}
 		
 		function smit() {
+			let ext = $("#imgUpdate").val().split(".").pop().toLowerCase();
 			if (confirm("변경 사항을 적용 할까요?")) {
-				form.submit();
+				if (delsw == 1) {
+						form.submit();
+						return;
+				}
+				if (ext == "jpg" || ext == "gif" || ext == "png") {
+					if ($("#imgUpdate")[0].files[0].size < 1024 * 1024 * 2) {
+						
+						form.submit();
+						return;
+					}
+					alert("파일의 크기는 2Mbyte를 넘을 수 없습니다.")
+					return;
+				}
+				alert("업로드 가능한 파일은 jpg, gif, png 입니다.")
 			}
 		}
 		

@@ -1,6 +1,5 @@
 package com.spring.cjs2108_kdd.service;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.Reader;
@@ -71,6 +70,16 @@ public class SongServiceImpl implements SongService {
 	@Override
 	public void setAdminSongUpdate(int idx, String column, String value) {
 		songDAO.setAdminSongUpdate(idx, column, value);
+	}
+
+	@Override
+	public SongVO getSongInfor(int idx) {
+		return songDAO.getSongInfor(idx);
+	}
+
+	@Override
+	public ArrayList<SongVO> getSongSrch(String srchKwd) {
+		return songDAO.getSongSrch(srchKwd);
 	}
 	
 }

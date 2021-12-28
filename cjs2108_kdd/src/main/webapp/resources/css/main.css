@@ -59,14 +59,20 @@ div.row > div.col-1 {
     padding: 5px 0px;
 }
 
-div.row > div.col-2:hover, div.row > div.col:hover {
+div.row > div.col-2:hover, div.row > div.col:hover, div.row > div.col-3:hover {
     cursor: pointer;
     opacity: 0.7;
 }
 
+div.row > div.col-2 > img {
+	width: 30px;
+	height: 30px;
+	border-radius: 100%;
+}
+
 .nav-w > div:first-child {
-    padding: 12px 10px;
-    height: 50px;
+    padding: 18px 10px;
+    height: 60px;
     margin-top: 0px;
     border-top: 1px solid gray;
     border-bottom: 1px solid gray;
