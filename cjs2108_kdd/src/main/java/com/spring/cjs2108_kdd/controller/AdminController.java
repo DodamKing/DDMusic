@@ -28,7 +28,7 @@ public class AdminController {
 	
 	@RequestMapping("/main")
 	public String mainGet(Model model, 
-			@RequestParam(value = "sw", defaultValue = "0") int sw, 
+			@RequestParam(value = "sw", defaultValue = "1") int sw, 
 			@RequestParam(value = "pageNo", defaultValue = "1") int pageNo) 
 					throws FileNotFoundException {
 		if (sw == 0) {
@@ -56,7 +56,7 @@ public class AdminController {
 	@RequestMapping(value="/main", method = RequestMethod.POST)
 	public String mainPost(Model model,
 			HttpServletRequest request,
-			@RequestParam(value = "sw", defaultValue = "0") int sw, 
+			@RequestParam(value = "sw", defaultValue = "1") int sw, 
 			@RequestParam(value = "pageNo", defaultValue = "1") int pageNo,
 			@RequestParam(value = "item") String items) 
 					throws FileNotFoundException {
@@ -84,5 +84,11 @@ public class AdminController {
 		SongVO vo = songService.getSongInfor(idx);
 		if (vo != null) vo.setImg(vo.getImg().replaceFirst("50", "200"));
 		return vo;
+	}
+
+	@RequestMapping("/userdel")
+	@ResponseBody
+	public void userdelPost(Integer idx) {
+		userService.setUserDel(idx);
 	}
 }

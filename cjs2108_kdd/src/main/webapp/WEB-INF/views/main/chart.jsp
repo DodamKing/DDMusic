@@ -12,11 +12,10 @@
 	<title>DD Music Chart Top 100</title>
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="${ctp }/resources/css/main.css">
+    <link rel="stylesheet" href="${ctp }/resources/css/main.css?v=2">
     <link rel="stylesheet" href="${ctp }/resources/css/top100.css">
 </head>
 <body>
-	<jsp:include page="/WEB-INF/views/include/playList.jsp" />
 	<jsp:include page="/WEB-INF/views/include/searchBar.jsp" />
 	<jsp:include page="/WEB-INF/views/include/nav.jsp" />
 	<jsp:include page="/WEB-INF/views/include/header_NV.jsp" />
@@ -43,7 +42,6 @@
         </div>
         <jsp:include page="/WEB-INF/views/include/sFooter.jsp" />
     </section>
-    <jsp:include page="/WEB-INF/views/include/footer.jsp" />
     
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

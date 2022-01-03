@@ -19,5 +19,5 @@ public interface SongDAO {
 	public SongVO getSongInfor(int idx);
 
 	public ArrayList<SongVO> getSongSrch(String srchKwd);
-	
+
 }

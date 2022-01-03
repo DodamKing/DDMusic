@@ -29,6 +29,7 @@
     		String srchKwdL = srchKwd.toLowerCase();
     	  	pageContext.setAttribute("srchKwdU", srchKwd.toUpperCase());
     	  	pageContext.setAttribute("srchKwdL", srchKwd.toLowerCase());
+    	  	pageContext.setAttribute("active", "<span class='bg-warning'>" + srchKwd + "</span>");
     	  	pageContext.setAttribute("activeU", "<span class='bg-warning'>" + srchKwdU + "</span>");
     	  	pageContext.setAttribute("activeL", "<span class='bg-warning'>" + srchKwdL + "</span>");
     	%>
@@ -42,19 +43,21 @@
 	                        <td>
 	                            <div name="top100Title">
 	                            	<a href="${ctp }/song/infor?idx=${vo.idx }">
-	                            		<c:if test="${fn:contains(vo.title, srchKwdU) }">
+	                            		${fn:replace(vo.title, srchKwd, active) }
+	                            		<%-- <c:if test="${fn:contains(vo.title, srchKwdU) }">
 			                            	${fn:replace(vo.title, srchKwdU, activeU) }
 	                            		</c:if>
 	                            		<c:if test="${fn:contains(vo.title, srchKwdL) }">
 		                            		${fn:replace(vo.title, srchKwdL, activeL) }
 		                            	</c:if>
 		                            	<c:if test="${!fn:contains(vo.title, srchKwdU) && !fn:contains(vo.title, srchKwdL) }">
-	                            		${vo.title }
-	                            	</c:if>
+	                            			${vo.title }
+	                            		</c:if> --%>
 	                            	</a>
                             	</div>
 	                            <div name="top100Artist">
-	                            	<c:if test="${fn:contains(vo.artist, srchKwdU) }">
+	                           		${fn:replace(vo.artist, srchKwd, active) }
+	                            	<%-- <c:if test="${fn:contains(vo.artist, srchKwdU) }">
 	                            		${fn:replace(vo.artist, srchKwdU, activeU) }
 	                            	</c:if>
 	                            	<c:if test="${fn:contains(vo.artist, srchKwdL) }">
@@ -62,7 +65,7 @@
 	                            	</c:if>
 	                            	<c:if test="${!fn:contains(vo.artist, srchKwdU) && !fn:contains(vo.artist, srchKwdL) }">
 	                            		${vo.artist }
-	                            	</c:if>
+	                            	</c:if> --%>
 	                            </div>
 	                        </td> 
 	                        <td><button name="add_btn" type="button" class="btn"><i title="곡 추가" class="fas fa-plus"></i></button></td>

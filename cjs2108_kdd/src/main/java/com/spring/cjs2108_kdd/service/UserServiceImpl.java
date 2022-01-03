@@ -100,4 +100,9 @@ public class UserServiceImpl implements UserService {
 		userDAO.setImgUpdate(idx, profileImg);
 	}
 
+	@Override
+	public void setUserDel(Integer idx) {
+		userDAO.setUserDel(idx);
+	}
+
 }

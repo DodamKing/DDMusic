@@ -2,16 +2,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <c:set var="ctp" value="<%=request.getContextPath() %>" />
-<div id="play_listContainer">
-	<div id="play_listImg">
-		<div class="text-center">
+<div id="play_listContainer" class="row">
+	<img id="play_listbg" src="${ctp }/resources/img/music.png">
+	<div id="play_listImg" class="col text-center">
+		<div>
 			<c:if test="${empty sPlaylist }"><img id="play_listImg_img" src="${ctp }/resources/img/music.png"></c:if>
 			<c:if test="${!empty sPlaylist }"><img id="play_listImg_img" src="${fn: replace(sPlaylist[0].img, '50', '600') }"></c:if>
 		</div>
 	</div>
-	<div id="play_listBox">
+	<div id="play_listBox" class="col-4">
 	    <div class="container mt-3">
-	        <h4>이어지는 노래</h4>
 	        <div id="play_list" class="pfc mt-3" >
 				<c:forEach var="vo" items="${sPlaylist }" varStatus="st">
 					<c:if test="${!empty sPlaylist }">

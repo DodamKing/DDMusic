@@ -35,4 +35,6 @@ public interface UserService {
 
 	void setImgUpdate(Integer idx, MultipartFile imgUpdate) throws IOException;
 
+	void setUserDel(Integer idx);
+
 }

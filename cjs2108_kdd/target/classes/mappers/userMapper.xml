@@ -49,5 +49,9 @@
 		update user set profileImg = #{profileImg} where idx = #{idx};
 	</update>
 	
+	<delete id="setUserDel">
+		delete from user where idx = #{idx}; 
+	</delete>
+	
 
 </mapper>

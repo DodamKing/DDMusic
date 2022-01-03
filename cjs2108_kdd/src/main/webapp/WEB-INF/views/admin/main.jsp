@@ -71,7 +71,7 @@
 	<nav>
 		<div class="card-body nav-w">
 	        <ul>
-	            <li><a href="${ctp }/admin/main">메인</a></li>
+	            <li><a href="${ctp }/admin/main?sw=0">업데이트</a></li>
 	            <li><a href="${ctp }/admin/main?sw=1">회원관리</a></li>
                 <li><a href="${ctp }/admin/main?sw=2">음원관리</a></li>
             </ul>
@@ -124,7 +124,7 @@
 								</td>
 								<td>
 									<c:if test="${vo.withdrawal == 0 }"></c:if>
-									<c:if test="${vo.withdrawal == 1 }"><div onclick="userdel(${vo.idx})">탈퇴</div></c:if>
+									<c:if test="${vo.withdrawal == 1 }"><div class="ho" onclick="userdel(${vo.idx})">탈퇴</div></c:if>
 								</td>
 							</tr>
 						</c:forEach>
@@ -277,7 +277,17 @@
 		}
 		
 		function userdel(idx) {
-			alert("삭제 하자. " + idx);
+			if (confirm("정말 탈퇴 처리 하시겠습니까?")) {
+				$.ajax({
+					type : "post",
+					url : "${ctp}/admin/userdel",
+					data : {idx : idx},
+					success : () => {
+						alert("정상 탈퇴 처리 되었습니다.");
+						location.reload();
+					}
+				});
+			}
 		}
 		
 		window.onkeydown = (e) => {

@@ -33,5 +33,7 @@ public interface UserDAO {
 
 	void setImgUpdate(@Param("idx") Integer idx, @Param("profileImg") String profileImg);
 
+	void setUserDel(Integer idx);
+
 
 }

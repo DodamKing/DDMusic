@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class DDtoday {
-	@RequestMapping("/today")
+	@RequestMapping(value={"/", "/today"})
 	public String mainPage() {
 		
 		return "main/main";
