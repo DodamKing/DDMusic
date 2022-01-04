@@ -11,12 +11,7 @@
 	<title>DD Music</title>
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="${ctp }/resources/css/main.css?v=3">
-    <link rel="stylesheet" href="${ctp }/resources/css/top100.css">
-    <%-- <style>
-	    <%@include file="/resources/css/main.css" %>
-	    <%@include file="/resources/css/top100.css" %>
-    </style> --%>
+    <link rel="stylesheet" href="${ctp }/resources/css/main.css?v=2">
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/include/searchBar.jsp" />
@@ -24,7 +19,6 @@
 	<jsp:include page="/WEB-INF/views/include/header.jsp" />
 	
 	<section>
-    	<jsp:include page="/WEB-INF/views/include/modal.jsp" />
         <div class="ml-5">
             <div class="section-row-box">
                 <div class="section-row">

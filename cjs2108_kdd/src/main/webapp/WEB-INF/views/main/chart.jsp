@@ -21,7 +21,6 @@
 	<jsp:include page="/WEB-INF/views/include/header_NV.jsp" />
 	
 	<section>
-    	<jsp:include page="/WEB-INF/views/include/modal.jsp" />
         <div class="container">
             <div class="card-body">
                 <h2 class="mt-5 mb-5">DD Music Top 100</h2>
@@ -34,19 +33,53 @@
 	                            <div name="top100Title"><a href="song/infor?idx=${vo.idx }">${vo.title }</a></div>
 	                            <div name="top100Artist">${vo.artist }</div>
 	                        </td>
-	                        <td><button name="add_btn" type="button" class="btn"><i title="곡 추가" class="fas fa-plus"></i></button></td>
+	                        <td><button name="add_btn" type="button" class="btn" onclick="addf(${vo.idx})"><i title="곡 추가" class="fas fa-plus"></i></button></td>
 	                    </tr>
                     </c:forEach>
                 </table>
             </div>
         </div>
         <jsp:include page="/WEB-INF/views/include/sFooter.jsp" />
+        <div id="demo" style="display: none;">0</div>
     </section>
     
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	<script src="${ctp }/resources/js/main.js"></script>
+	<script src="${ctp }/resources/js/main.js?v=1"></script>
+	
+	<script>
+		let sw = 0;
+		let player;
+		
+		function addf(idx) {
+			if (idx == 0) {
+				alert("아직 준비 중인 곡입니다.");
+				return;
+			}
+	
+			
+			if (sw == 0) {
+				let url = "${ctp}/song/player?idx=" + idx;
+				player = window.open(url, "player", "width=1000px, height=800px, left=50px, top=150px");
+				sw = 1;
+				return;				
+			}
+			
+			$.ajax({
+				type : "post",
+				url : "${ctp}/song/player",
+				data : {idx : idx},
+				success : (data) => {
+					player.document.getElementById("play_list").innerHTML = player.document.getElementById("play_list").innerHTML
+					+ "<div class='d-flex p-1'><div class='imgBox mr-4'><img src='" + data.img + "'></div><div><div class='playlist_t' title='" + data.title + "'>" + data.title + "</div><div class='playlist_a' title='" + data.artist + "'>" + data.artist + "</div></div><div class='ml-auto'><button name='delete_btn' type='button' class='btn' onclick='delList(" + data.idx + ")' ><i class='fa-regular fa-trash-can'></i></button></div></div>";
+					player.document.getElementById("plist").innerHTML = player.document.getElementById("plist").innerHTML + "/" + data.idx; 
+				}
+			});
+		}
+		
+	</script>
+	
 </body>
 </html>

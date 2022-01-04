@@ -1,7 +1,6 @@
 $().ready(() => {
     mainVideoPlay();
     $("video").on("ended", mainVideoPlay);
-	player.volume = volume_bar.value / 100;
 });
 
 
@@ -39,31 +38,10 @@ $("#dropMenu").click((e) => {
     $(".my-group").toggle();
 });
 
-// 플레이 리스트
-$("#playlistUp_btn").click((e) => {
-    e.stopPropagation();
-    $("#play_listContainer").animate({top: "0px"}, 200);
-    $("#playlistUp_btn").hide();
-    $("#playlistDown_btn").show();
-});
-
-$("#playlistDown_btn").click((e) => {
-    e.stopPropagation();
-    $("#play_listContainer").animate({top: "100%"}, 200);
-    $("#playlistUp_btn").show();
-    $("#playlistDown_btn").hide();
-});
 
 // 땅찍어서 닫기
 $(document).click((e) => {
     $(".my-group").hide();
-    /*if ($(e.target).attr("id") != "play_listBox") {
-        $("#play_listBox").animate({top:"100%"}, 200);
-        if ($("#playlistUp_btn").css("display") == "none") {
-            $("#playlistUp_btn").show();
-            $("#playlistDown_btn").hide();
-        }
-    }*/
 });
 
 //좋아요 버튼

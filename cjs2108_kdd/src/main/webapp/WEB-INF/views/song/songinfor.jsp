@@ -13,24 +13,25 @@
     <title>${vo.title } 곡정보</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="${ctp }/resources/css/main.css">
-    <link rel="stylesheet" href="${ctp }/resources/css/top100.css">
+    <link rel="stylesheet" href="${ctp }/resources/css/main.css?v=1">
 	<style>
 	    #playThum:hover {
 	    	cursor: pointer;
+	    }
+	    
+	    #srch_bar {
+    		position: fixed;
+    		top: 0;
 	    }
     </style>
 </head>
 		
 <body>
-    <jsp:include page="/WEB-INF/views/include/playList.jsp" />
 	<jsp:include page="/WEB-INF/views/include/searchBar.jsp" />
 	<jsp:include page="/WEB-INF/views/include/nav.jsp" />
 	<jsp:include page="/WEB-INF/views/include/header_NV.jsp" />
 
-	    
 	<section>
-		<jsp:include page="/WEB-INF/views/include/modal.jsp" />
 		<div class="container mt-5 mb-5 pb-3 bg-dark" style="width: 70%; border-radius: 5px;">
 			<div>
 				<c:if test="${empty vo.idx }">	
@@ -101,7 +102,6 @@
 		</div>
 		<jsp:include page="/WEB-INF/views/include/sFooter.jsp" />
 	</section>
-    <jsp:include page="/WEB-INF/views/include/footer.jsp" />
 	        
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>

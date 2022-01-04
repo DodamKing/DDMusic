@@ -17,7 +17,6 @@
 </head>
 
 <body>
-    <jsp:include page="/WEB-INF/views/include/playList.jsp" />
 	<jsp:include page="/WEB-INF/views/include/searchBar.jsp" />
 	<jsp:include page="/WEB-INF/views/include/nav.jsp" />
 	<jsp:include page="/WEB-INF/views/include/header_NV.jsp" />

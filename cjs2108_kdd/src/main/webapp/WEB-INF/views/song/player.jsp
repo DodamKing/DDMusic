@@ -10,14 +10,14 @@
 <title>DDMusic</title>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="${ctp }/resources/css/main.css?v=2">
-<%-- <link rel="stylesheet" href="${ctp }/resources/css/top100.css"> --%>
+<link rel="stylesheet" href="${ctp }/resources/css/main.css?v=3">
 </head>
 <body>
 	<div style="width: 1000px;">
 		<jsp:include page="/WEB-INF/views/include/modal.jsp" />
 		<jsp:include page="/WEB-INF/views/include/playList.jsp" />
 		<jsp:include page="/WEB-INF/views/include/footer.jsp" />
+		<div id="plist" style="display: none;">${vo.idx}</div>
 	</div>
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -26,82 +26,76 @@
 	<script src="${ctp }/resources/js/main.js"></script>
 	
 	<script>
-		const thum_list = []
-		const title_list = []
-		const artist_list = []
+		let idx_list = [];
+		let thum_list = [];
+		let title_list = [];
+		let artist_list = [];
 	
 		let songUrl;
 		let playerIndex = 0;
 		let sw = 0;
 	
-		<c:forEach var="vo" items="${sPlaylist}"> 
+		<c:forEach var="vo" items="${sPlayList}"> 
 			thum_list.push("${vo.img}");
 		    title_list.push("${vo.title}");
 		    artist_list.push("${vo.artist}");
 		</c:forEach>
-	
-		// 플레이 리스트 추가
-		$("button[name='add_btn']").click(function() { 
-		    let topIndex = $("button[name='add_btn']").index(this);
-		    let thum = $("img[name='top100Img']")[topIndex].src;
-		    let title = $("div[name='top100Title']")[topIndex].innerText;
-		    let artist = $("div[name='top100Artist']")[topIndex].innerText;
-	
-			if (!thum_list.includes(thum)) {
-			    thum_list.push(thum);
-			    title_list.push(title);
-			    artist_list.push(artist);
-			
-			    setList();
-			
-				data = {
-					title : title,
-					artist : artist
-				}
-			
+		
+		/* thum_list.push("${vo.img}");
+	    title_list.push("${vo.title}");
+	    artist_list.push("${vo.artist}"); */
+		
+	    //리스트 세팅
+	    function listSetting() {
+			let idx_l = plist.innerHTML.split("/");
+		 	idx_list = [];
+		 	thum_list = [];
+		 	title_list = [];
+		 	artist_list = [];
+		 	
+			for (let i=0; i<idx_l.length; i++) {
 				$.ajax({
 					type : "post",
-					url : "usersaveplaylist.user",
-					data : data
+					url : "${ctp}/song/player",
+					data : {idx : idx_l[i]},
+					success : (data) => {
+						idx_list.push(data.idx);
+						thum_list.push(data.img);
+					    title_list.push(data.title);
+					    artist_list.push(data.artist);
+					}
 				});
 			}
-	
-		});
-	
+		}
 	
 		// 플레이 리스트 음원 삭제
-		function delList(index) {
-			data = {
-				title : title_list[index],
-				artist : artist_list[index]
+		function delList(idx) {
+			let index = idx_list.indexOf(idx);
+			if (index <= playerIndex) {
+				playerIndex--;
 			}
-			
-		    thum_list.splice(index, 1);
+
+			idx_list.splice(index, 1);
+			thum_list.splice(index, 1);
 		    title_list.splice(index, 1);
 		    artist_list.splice(index, 1);
 		    
 		    setList();
-	
-			if (index <= playerIndex) {
-				playerIndex--;
-			}
-			
-			$.ajax({
-				type : "post",
-				url : "userdelplaylist.user",
-				data : data
-			});
 			
 		}
 	
 		// 플레이 리스트에 데이터 뿌리기
 		function setList() {
 			let res = "";
-			
-		    for (let i=0; i<thum_list.length; i++) {
-		        res += "<div class='d-flex p-1'><div class='imgBox mr-4'><img src='" + thum_list[i] + "'></div><div><div class='playlist_t' title='" + title_list[i] + "'>" + title_list[i] + "</div><div class='playlist_a' title='" + artist_list[i] + "'>" + artist_list[i] + "</div></div><div class='ml-auto'><button name='delete_btn' type='button' class='btn' onclick='delList(" + i + ")' ><i class='fa-regular fa-trash-can'></i></button></div></div>";
+			/* <c:if test='${fn:length(vo.title) <= 20}'>${vo.title}</c:if><c:if test='${fn:length(vo.title) > 20}'>${fn:substring(vo.title, 0, 20)}...</c:if> */
+			for (let i=0; i<thum_list.length; i++) {
+				res += "<div class='d-flex p-1'><div class='imgBox mr-4'><img src='" + thum_list[i] + "'></div><div><div class='playlist_t' title='" + title_list[i] + "'>" + title_list[i] + "</div><div class='playlist_a' title='" + artist_list[i] + "'>" + artist_list[i] + "</div></div><div class='ml-auto'><button name='delete_btn' type='button' class='btn' onclick='delList(" + idx_list[i] + ")' ><i class='fa-regular fa-trash-can'></i></button></div></div>";
 			}
 			
+			/* <c:forEach var="vo" items="${sPlayList}" varStatus="st">
+				res += "<div class='d-flex p-1'><div class='imgBox mr-4'><img src='${vo.img}'></div><div><div class='playlist_t' title='${vo.title}'><c:if test='${fn:length(vo.title) <= 20}'>${vo.title}</c:if><c:if test='${fn:length(vo.title) > 20}'>${fn:substring(vo.title, 0, 20)}...</c:if></div><div class='playlist_a' title='${vo.artist}'><c:if test='${fn:length(vo.artist) <= 20}'>${vo.artist}</c:if><c:if test='${fn:length(vo.artist) > 20}'>${fn:substring(vo.artist, 0, 20)}...</c:if></div></div><div class='ml-auto'><button name='delete_btn' type='button' class='btn' onclick='delList(${st.index}, ${vo.idx})' ><i class='fa-regular fa-trash-can'></i></button></div></div>";
+			</c:forEach> */
+		    
 		    play_list.innerHTML = res;
 		}
 	
@@ -151,12 +145,12 @@
 	
 		// 플레이버튼 클릭
 		play_btn.addEventListener("click", () => {
+			listSetting();
 			if (thum_list[0] == null) {
 				$.ajax({
 					type : "post",
 					url : "${ctp}/song/randomPlay",
 					success: (data) => {
-						/* data = JSON.parse(data); */
 						thum_list.push(data.img);
 					    title_list.push(data.title);
 					    artist_list.push(data.artist);
@@ -337,6 +331,7 @@
 			});
 			
 		});
+		
 	</script>
 	
 </body>

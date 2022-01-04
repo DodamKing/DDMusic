@@ -1,10 +1,16 @@
 package com.spring.cjs2108_kdd.controller;
 
-import org.json.simple.JSONObject;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.cjs2108_kdd.service.SongService;
@@ -32,7 +38,24 @@ public class SongController {
 	}
 	
 	@RequestMapping("player")
-	public String playerGet() {
+	public String playerGet(Model model, int idx) {
+		model.addAttribute("vo", songService.getSongInfor(idx));
+		return "song/player";
+
+	}
+	@RequestMapping(value="player", method = RequestMethod.POST)
+	@ResponseBody
+	public SongVO playerPost(int idx) {
+		return songService.getSongInfor(idx);
+	}
+
+	@RequestMapping("delList")
+	public String delListPost(HttpSession session, int idx) {
+		Set<SongVO> vos = new LinkedHashSet<SongVO>();
+		if (session.getAttribute("sPlayList") != null) vos = (Set<SongVO>) session.getAttribute("sPlayList");
+		vos.remove(songService.getSongInfor(idx));
+		session.removeAttribute("sPlayList");
+		session.setAttribute("sPlayList", vos);
 		return "song/player";
 	}
 
