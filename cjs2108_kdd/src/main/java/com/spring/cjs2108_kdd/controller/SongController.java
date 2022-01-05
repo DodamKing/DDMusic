@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.spring.cjs2108_kdd.method.Method;
 import com.spring.cjs2108_kdd.service.SongService;
 import com.spring.cjs2108_kdd.vo.SongVO;
 
@@ -39,7 +40,11 @@ public class SongController {
 	
 	@RequestMapping("player")
 	public String playerGet(Model model, int idx) {
-		model.addAttribute("vo", songService.getSongInfor(idx));
+		SongVO vo = songService.getSongInfor(idx);
+		Method method = new Method();
+		model.addAttribute("vo", vo);
+		model.addAttribute("img1000", method.getImgSize(vo.getImg(), "1000"));
+		model.addAttribute("img2000", method.getImgSize(vo.getImg(), "2000"));
 		return "song/player";
 
 	}

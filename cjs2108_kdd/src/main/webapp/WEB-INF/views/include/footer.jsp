@@ -6,17 +6,24 @@
     <input id="play_bar" type="range" value="0">
     <div class="d-flex">
         <div class="col-1 p-3 mr-3">
-        	<c:if test="${empty sPlaylist }">
+        	<c:if test="${empty sPlaylist && empty vo }">
                 <div class="controls-song mt-1">
                     <div id="controls_title" class="mb-1" title="오늘 뭐 듣지?">오늘 뭐 듣지?</div>
                     <div id="controls_artist" title="재생 버튼을 클릭 해 보세요">재생 버튼을 클릭 해 보세요</div>
                 </div>
             </c:if>
+        	<c:if test="${!empty vo }">
+	            <div class="row">
+	                <div class="controls-song ml-2 mt-2">
+	                    <div id="controls_title" class="mb-1" title="${vo.title }">${vo.title }</div>
+	                    <div id="controls_artist" title="${vo.artist }">${vo.artist }</div>
+	                </div>
+	            </div>
+            </c:if>
         	<c:if test="${!empty sPlaylist }">
 	            <div class="row">
-	                <div class="imgBox"><img id="controls_img" src="${sPlaylist[0].img }" alt=""></div>
 	                <div class="controls-song ml-2 mt-2">
-	                    <div id="controls_title" title="${sPlaylist[0].title }">${sPlaylist[0].title }</div>
+	                    <div id="controls_title" class="mb-1" title="${sPlaylist[0].title }">${sPlaylist[0].title }</div>
 	                    <div id="controls_artist" title="${sPlaylist[0].artist }">${sPlaylist[0].artist }</div>
 	                </div>
 	            </div>
@@ -56,8 +63,8 @@
                         class="fa-solid fa-volume-high"></i></button></div>
             <div id="mute_btn2" class="ml-2" style="display: none;"><button class="btn" type="button"><i
                         class="fa-solid fa-volume-xmark"></i></button></div>
-            <div class="ml-1 mt-1"><input id="volume_bar" type="range" min="0" max="100" value="10" /></div>
+            <div class="ml-1 mt-1"><input id="volume_bar" type="range" min="0" max="100" value="20" /></div>
         </div>
     </div>
-    <audio id="player" src="" ></audio>
+    <audio id="player" src="" onloadstart="this.volume=0.2"></audio>
 </footer>

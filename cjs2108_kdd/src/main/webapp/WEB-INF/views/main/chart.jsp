@@ -72,9 +72,17 @@
 				url : "${ctp}/song/player",
 				data : {idx : idx},
 				success : (data) => {
+					let t = data.title;
+					if (data.title.length > 14) {
+						t = data.title.substring(0, 14) + "...";
+					}
+					let a = data.artist;
+					if (data.artist.length > 14) {
+						a = data.artist.substring(0, 14) + "...";
+					}
 					player.document.getElementById("play_list").innerHTML = player.document.getElementById("play_list").innerHTML
-					+ "<div class='d-flex p-1'><div class='imgBox mr-4'><img src='" + data.img + "'></div><div><div class='playlist_t' title='" + data.title + "'>" + data.title + "</div><div class='playlist_a' title='" + data.artist + "'>" + data.artist + "</div></div><div class='ml-auto'><button name='delete_btn' type='button' class='btn' onclick='delList(" + data.idx + ")' ><i class='fa-regular fa-trash-can'></i></button></div></div>";
-					player.document.getElementById("plist").innerHTML = player.document.getElementById("plist").innerHTML + "/" + data.idx; 
+					+ "<div name='song_row' class='d-flex p-3'><div class='imgBox mr-3'><img src='" + data.img + "'></div><div><div class='playlist_t' title='" + data.title + "'>" + t + "</div><div class='playlist_a' title='" + data.artist + "'>" + a + "</div></div><div class='ml-auto'><button name='delete_btn' type='button' class='btn' onclick='delList(" + data.idx + ")' ><i class='fa-regular fa-trash-can'></i></button></div></div>";
+					player.document.getElementById("plist").innerHTML = player.document.getElementById("plist").innerHTML + data.idx + "/"; 
 				}
 			});
 		}

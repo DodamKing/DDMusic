@@ -233,10 +233,9 @@ button[type="button"]:hover {
 }
 
 #play_listContainer {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    z-index: 990;
+    /* position: static; */
+    /* width: 100%; */
+    /* height: 100%; */
 }
 
 #play_listbg {
@@ -246,26 +245,28 @@ button[type="button"]:hover {
 }
 
 #play_listImg {
-	margin: auto;
-    position: fixed;
-   /*  width: 700px */;
-    /* height: 500px; */
+	/* height: 700px; */
+    /* position: fixed; */
+    /* width: 700px; */
+    
+    /* border: 2px solid white; */
 }
 
 div#play_listImg > div {
-	/* margin: 7% 20%; */
-	z-index: 998;
-	position: fixed;
+	margin: 20%;
+	width: 300px;
+/* 	position: fixed; */
 }
 
 #play_listBox {
 	position: fixed;
-	right: 0px;
-    width: 400px;
-    /* height: 800px; */
+	right: 20px;
+	top: 50px;
+    width: 350px;
+    height: 600px;
     overflow: auto;
-    padding-bottom: 250px;
-    z-index: 998;
+    
+    /* border: 2px solid white; */
 }
 
 /* #play_list {
