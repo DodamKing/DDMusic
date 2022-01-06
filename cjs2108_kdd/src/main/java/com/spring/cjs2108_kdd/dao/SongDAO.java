@@ -20,4 +20,14 @@ public interface SongDAO {
 
 	public ArrayList<SongVO> getSongSrch(String srchKwd);
 
+	public void upLikeCnt(int idx);
+
+	public String getLikeList(int idx);
+
+	public void setLikeList(@Param("idx") int idx, @Param("likeList") String likeList);
+
+	public void downLikeCnt(int idx);
+
+	public String getLyrics(int idx);
+
 }

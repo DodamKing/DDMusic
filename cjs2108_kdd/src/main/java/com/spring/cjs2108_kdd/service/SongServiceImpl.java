@@ -82,4 +82,39 @@ public class SongServiceImpl implements SongService {
 		return songDAO.getSongSrch(srchKwd);
 	}
 
+	@Override
+	public void upLikeCnt(int idx) {
+		songDAO.upLikeCnt(idx);
+	}
+
+	@Override
+	public void addLikeList(int idx, String mid) {
+		String likeList = "";
+		if (songDAO.getLikeList(idx) != null) likeList = songDAO.getLikeList(idx);
+		likeList += mid + "/";
+		songDAO.setLikeList(idx, likeList);
+	}
+
+	@Override
+	public void downLikeCnt(int idx) {
+		songDAO.downLikeCnt(idx);
+	}
+
+	@Override
+	public void subLikeList(int idx, String mid) {
+		String likeList = songDAO.getLikeList(idx);
+		likeList = likeList.replace(mid + "/", "");
+		songDAO.setLikeList(idx, likeList);
+	}
+
+	@Override
+	public String getLikeList(int idx) {
+		return songDAO.getLikeList(idx);
+	}
+
+	@Override
+	public String getLyrics(int idx) {
+		return songDAO.getLyrics(idx);
+	}
+
 }

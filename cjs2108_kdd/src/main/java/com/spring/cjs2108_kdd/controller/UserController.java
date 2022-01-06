@@ -205,7 +205,10 @@ public class UserController {
 		return "0";
 	}
 		
-	
+	@RequestMapping("/playlist")
+	public String playlistGet() {
+		return "user/playlist";
+	}
 	
 }
 

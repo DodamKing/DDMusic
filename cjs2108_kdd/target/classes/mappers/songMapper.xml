@@ -24,4 +24,25 @@
 	<select id="getSongSrch" resultType="com.spring.cjs2108_kdd.vo.SongVO">
 		select * from song where title like '%${srchKwd}%' or artist like '%${srchKwd}%';
 	</select>
+	
+	<update id="upLikeCnt">
+		update song set likeCnt = likeCnt + 1 where idx = #{idx};
+	</update>
+
+	<update id="downLikeCnt">
+		update song set likeCnt = likeCnt - 1 where idx = #{idx};
+	</update>
+	
+	<select id="getLikeList" resultType="String">
+		select likeList from song where idx = #{idx};
+	</select>
+	
+	<update id="setLikeList">
+		update song set likeList = #{likeList} where idx = #{idx};
+	</update>
+	
+	<select id="getLyrics" resultType="String">
+		select lyrics from song where idx = #{idx};
+	</select>
+	
 </mapper>

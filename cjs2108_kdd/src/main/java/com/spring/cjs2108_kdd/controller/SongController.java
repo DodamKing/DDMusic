@@ -1,13 +1,11 @@
 package com.spring.cjs2108_kdd.controller;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,29 +37,24 @@ public class SongController {
 	}
 	
 	@RequestMapping("player")
-	public String playerGet(Model model, int idx) {
+	public String playerGet() {
+		return "song/player";
+	}
+	
+	@RequestMapping("/player/{idx}")
+	public String playerGet(Model model, @PathVariable int idx) {
 		SongVO vo = songService.getSongInfor(idx);
 		Method method = new Method();
 		model.addAttribute("vo", vo);
 		model.addAttribute("img1000", method.getImgSize(vo.getImg(), "1000"));
 		model.addAttribute("img2000", method.getImgSize(vo.getImg(), "2000"));
 		return "song/player";
-
 	}
+	
 	@RequestMapping(value="player", method = RequestMethod.POST)
 	@ResponseBody
 	public SongVO playerPost(int idx) {
 		return songService.getSongInfor(idx);
-	}
-
-	@RequestMapping("delList")
-	public String delListPost(HttpSession session, int idx) {
-		Set<SongVO> vos = new LinkedHashSet<SongVO>();
-		if (session.getAttribute("sPlayList") != null) vos = (Set<SongVO>) session.getAttribute("sPlayList");
-		vos.remove(songService.getSongInfor(idx));
-		session.removeAttribute("sPlayList");
-		session.setAttribute("sPlayList", vos);
-		return "song/player";
 	}
 
 	@RequestMapping("randomPlay")
@@ -69,6 +62,32 @@ public class SongController {
 	public SongVO randomPlayPost() {
 		Integer idx = (int) (Math.random() * songService.getSongCnt()) + 260;
 		return songService.getSongInfor(idx);
+	}
+
+	@RequestMapping("like")
+	@ResponseBody
+	public void likePost(int idx, HttpSession session) {
+		songService.upLikeCnt(idx);
+		songService.addLikeList(idx, (String) session.getAttribute("sMid"));
+	}
+
+	@RequestMapping("unlike")
+	@ResponseBody
+	public void unLikePost(int idx, HttpSession session) {
+		songService.downLikeCnt(idx);
+		songService.subLikeList(idx, (String) session.getAttribute("sMid"));
+	}
+
+	@RequestMapping("likebtn")
+	@ResponseBody
+	public String likebtnPost(int idx) {
+		return songService.getLikeList(idx);
+	}
+
+	@RequestMapping(value = "lyrics", produces = "application/text; charset=utf-8")
+	@ResponseBody
+	public String lyricsPost(int idx) {
+		return songService.getLyrics(idx);
 	}
 	
 }

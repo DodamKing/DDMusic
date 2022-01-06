@@ -24,10 +24,17 @@
         <div class="container">
             <div class="card-body">
                 <h2 class="mt-5 mb-5">DD Music Top 100</h2>
+                <div id="add_btn" class="btn btn-dark" style="position: fixed; right: 30px; bottom: 100px;">버튼</div>
                 <table class="table">
+                	<tr style="border-top: none;">
+                		<td><input id="allch" type="checkbox" ></td>
+                		<td colspan="2">전체선택</td>
+                		<td colspan="2"></td>
+            		</tr>
                     <c:forEach var="vo" items="${vos }" varStatus="st">
 	                    <tr>
-	                        <td>${st.index + 1}</td>
+	                    	<td><input name="tch" type="checkbox" value="${vo.idx }"></td>
+	                        <td style="text-align: center; vertical-align: middle;">${st.index + 1}</td>
 	                        <td><div class="imgBox"><a href="${fn:replace(vo.img, 50, 800) }" target="_blank"><img name="top100Img" src="${vo.img }" alt=""></a></div></td>
 	                        <td>
 	                            <div name="top100Title"><a href="song/infor?idx=${vo.idx }">${vo.title }</a></div>
@@ -50,7 +57,7 @@
 	<script src="${ctp }/resources/js/main.js?v=1"></script>
 	
 	<script>
-		let sw = 0;
+		let sw;
 		let player;
 		
 		function addf(idx) {
@@ -58,34 +65,50 @@
 				alert("아직 준비 중인 곡입니다.");
 				return;
 			}
-	
 			
-			if (sw == 0) {
-				let url = "${ctp}/song/player?idx=" + idx;
-				player = window.open(url, "player", "width=1000px, height=800px, left=50px, top=150px");
-				sw = 1;
-				return;				
+			if (!sw) {
+				let url = "${ctp}/song/player/" + idx;
+				player = window.open(url, "player", "width=1100px, height=800px, left=50px, top=150px");
+				sw = true;
 			}
-			
-			$.ajax({
-				type : "post",
-				url : "${ctp}/song/player",
-				data : {idx : idx},
-				success : (data) => {
-					let t = data.title;
-					if (data.title.length > 14) {
-						t = data.title.substring(0, 14) + "...";
-					}
-					let a = data.artist;
-					if (data.artist.length > 14) {
-						a = data.artist.substring(0, 14) + "...";
-					}
-					player.document.getElementById("play_list").innerHTML = player.document.getElementById("play_list").innerHTML
-					+ "<div name='song_row' class='d-flex p-3'><div class='imgBox mr-3'><img src='" + data.img + "'></div><div><div class='playlist_t' title='" + data.title + "'>" + t + "</div><div class='playlist_a' title='" + data.artist + "'>" + a + "</div></div><div class='ml-auto'><button name='delete_btn' type='button' class='btn' onclick='delList(" + data.idx + ")' ><i class='fa-regular fa-trash-can'></i></button></div></div>";
-					player.document.getElementById("plist").innerHTML = player.document.getElementById("plist").innerHTML + data.idx + "/"; 
+			else {
+				if (!player.closed && sw) {
+					$.ajax({
+						type : "post",
+						url : "${ctp}/song/player",
+						data : {idx : idx},
+						success : (data) => {
+							player.addList(data);
+							player.setList();
+						}
+					});
+				} 
+				else {
+					let url = "${ctp}/song/player/" + idx;
+					player = window.open(url, "player", "width=1100px, height=800px, left=50px, top=150px");
+					sw = true;
 				}
-			});
+			}
 		}
+		
+		allch.addEventListener("click", () => {
+			if (allch.checked) {
+				$("input:checkbox[name='tch']").prop("checked", true);
+			}
+			else {
+				$("input:checkbox[name='tch']").prop("checked", false);
+			}
+		});
+		
+		add_btn.addEventListener("click", () => {
+			for (let i=0; i<100; i++) {
+				if($("input:checkbox[name='tch']")[i].checked) {
+					if ($("input:checkbox[name='tch']")[i].value != 0) {
+						addf($("input:checkbox[name='tch']")[i].value);
+					}
+				}
+			}
+		});
 		
 	</script>
 	

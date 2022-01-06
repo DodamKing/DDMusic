@@ -15,7 +15,10 @@
         	<c:if test="${!empty vo }">
 	            <div class="row">
 	                <div class="controls-song ml-2 mt-2">
-	                    <div id="controls_title" class="mb-1" title="${vo.title }">${vo.title }</div>
+	                    <div id="controls_title" class="mb-1" title="${vo.title }" >
+	                    	<c:if test="${fn:length(vo.title) <= 10 }">${vo.title }</c:if>
+	                    	<c:if test="${fn:length(vo.title) > 10 }"><marquee scrollamount=3>${vo.title }</marquee></c:if>
+	                    </div>
 	                    <div id="controls_artist" title="${vo.artist }">${vo.artist }</div>
 	                </div>
 	            </div>
@@ -23,7 +26,7 @@
         	<c:if test="${!empty sPlaylist }">
 	            <div class="row">
 	                <div class="controls-song ml-2 mt-2">
-	                    <div id="controls_title" class="mb-1" title="${sPlaylist[0].title }">${sPlaylist[0].title }</div>
+	                    <div id="controls_title" class="mb-1" title="${sPlaylist[0].title }"><marquee scrollamount=3>${sPlaylist[0].title }</marquee></div>
 	                    <div id="controls_artist" title="${sPlaylist[0].artist }">${sPlaylist[0].artist }</div>
 	                </div>
 	            </div>
@@ -34,11 +37,11 @@
 	            <button id="like_btn1" class="btn" type="button" title="좋아요"><i class="fa-regular fa-heart"></i></button>
 	            <button id="like_btn2" style="display: none;" class="btn" type="button"><i class="fa-solid fa-heart text-danger"></i></button>
         	</c:if>
-        	<c:if test="${fn:contains(sPlaylist[0].likeList, sMid) && !empty sMid }">
+        	<c:if test="${fn:contains(vo.likeList, sMid) && !empty sMid }">
 	            <button id="like_btn1" style="display: none;" class="btn" type="button" title="좋아요"><i class="fa-regular fa-heart"></i></button>
 	            <button id="like_btn2" class="btn" type="button"><i class="fa-solid fa-heart text-danger"></i></button>
         	</c:if>
-        	<c:if test="${!fn:contains(sPlaylist[0].likeList, sMid) && !empty sMid }">
+        	<c:if test="${!fn:contains(vo.likeList, sMid) && !empty sMid }">
 	            <button id="like_btn1" class="btn" type="button" title="좋아요"><i class="fa-regular fa-heart"></i></button>
 	            <button id="like_btn2" style="display: none;" class="btn" type="button"><i class="fa-solid fa-heart text-danger"></i></button>
         	</c:if>

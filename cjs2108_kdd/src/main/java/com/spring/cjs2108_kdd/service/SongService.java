@@ -21,4 +21,16 @@ public interface SongService {
 
 	ArrayList<SongVO> getSongSrch(String srchKwd);
 
+	void upLikeCnt(int idx);
+
+	void addLikeList(int idx, String mid);
+
+	void downLikeCnt(int idx);
+
+	void subLikeList(int idx, String mid);
+
+	String getLikeList(int idx);
+
+	String getLyrics(int idx);
+
 }

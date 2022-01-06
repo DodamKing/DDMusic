@@ -45,16 +45,18 @@
                 <li><a href="">MAG</a></li>
                 <li><a href="">이달의 노래</a></li>
             </ul>
-            <ul>
-                <div>보관함</div>
-                <li><a href="">믹스테잎</a></li>
-                <li><a href="">노래</a></li>
-                <li><a href="">아티스트</a></li>
-                <li><a href="">앨범</a></li>
-                <li><a href="">플레이리스트</a></li>
-                <li><a href="">받은노래</a></li>
-                <li><a href="">구매한 MP3</a></li>
-            </ul>
+            <c:if test="${sVO != null }">
+	            <ul>
+	                <div>보관함</div>
+	                <li><a href="">믹스테잎</a></li>
+	                <li><a href="">노래</a></li>
+	                <li><a href="">아티스트</a></li>
+	                <li><a href="">앨범</a></li>
+	                <li><a href="${ctp }/user/playlist">플레이리스트</a></li>
+	                <li><a href="">받은노래</a></li>
+	                <li><a href="">구매한 MP3</a></li>
+	            </ul>
+            </c:if>
             <ul>
                 <li><a>#내돈내듣</a></li>
                 <li><a href="">ONSTAGE</a></li>

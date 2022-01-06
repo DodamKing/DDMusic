@@ -17,13 +17,11 @@
 		<jsp:include page="/WEB-INF/views/include/modal.jsp" />
 		<jsp:include page="/WEB-INF/views/include/playList.jsp" />
 		<jsp:include page="/WEB-INF/views/include/footer.jsp" />
-		<div id="plist" style="display: none;">${vo.idx}/</div>
 	</div>
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	<script src="${ctp }/resources/js/main.js"></script>
 	
 	<script>
 		let idx_list = [];
@@ -41,30 +39,19 @@
 		    artist_list.push("${vo.artist}");
 		</c:forEach> */
 		
-		idx_list.push("${vo.idx}");
+		idx_list.push(${vo.idx});
 		thum_list.push("${vo.img}");
 	    title_list.push("${vo.title}");
 	    artist_list.push("${vo.artist}");
 	    
 	    //리스트 세팅
-	    function listSetting() {
-			let idx_l = plist.innerHTML.split("/");
-			let idx = plist.innerHTML.split("/")[idx_l.length - 2];
-			if (idx < 0) idx = 0;
-		
-	 		if (!idx_list.includes(idx) {
-				$.ajax({
-					type : "post",
-					url : "${ctp}/song/player",
-					data : {idx : idx},
-					success : (data) => {
-						idx_list.push(data.idx);
-						thum_list.push(data.img);
-					    title_list.push(data.title);
-					    artist_list.push(data.artist);
-					}
-				});
-	 		}
+	    function addList(data) {
+	    	if (!idx_list.includes(data.idx)) {
+				idx_list.push(data.idx);
+				thum_list.push(data.img);
+			    title_list.push(data.title);
+			    artist_list.push(data.artist);
+	    	}
 		}
 		
 		// 플레이 리스트 음원 삭제
@@ -80,9 +67,17 @@
 		    title_list.splice(index, 1);
 		    artist_list.splice(index, 1);
 		    
-		    listSetting();
 		    setList();
-			
+		}
+
+		// 원하는 곡 재생
+		function startThis(idx) {
+			let index = idx_list.indexOf(idx);
+			playerIndex = index;
+			load();
+			$(play_btn).hide();
+		    $(pause_btn).show();
+			player.play();
 		}
 	
 		// 플레이 리스트에 데이터 뿌리기
@@ -92,9 +87,9 @@
 				let t = title_list[i];
 				let a = artist_list[i];
 				if (title_list[i].length > 14) t = title_list[i].substring(0, 14) + "...";
-				if (artist_list[i].length > 14) t = artist_list[i].substring(0, 14) + "...";
+				if (artist_list[i].length > 14) a = artist_list[i].substring(0, 14) + "...";
 				
-				res += "<div name='song_row' class='d-flex p-3'><div class='imgBox mr-3'><img src='" + thum_list[i] + "'></div><div><div class='playlist_t' title='" + title_list[i] + "'>" + t + "</div><div class='playlist_a' title='" + artist_list[i] + "'>" + a + "</div></div><div class='ml-auto'><button name='delete_btn' type='button' class='btn' onclick='delList(" + idx_list[i] + ")' ><i class='fa-regular fa-trash-can'></i></button></div></div>";
+				res += "<div class='d-flex p-3'><div class='imgBox mr-3'><img src='" + thum_list[i] + "' title='재생' onclick='startThis(" + idx_list[i] + ")'></div><div><div class='playlist_t' title='" + title_list[i] + "'>" + t + "</div><div class='playlist_a' title='" + artist_list[i] + "'>" + a + "</div></div><div class='ml-auto'><button name='delete_btn' type='button' class='btn' onclick='delList(" + idx_list[i] + ")' ><i class='fa-regular fa-trash-can'></i></button></div></div>";
 			}
 		    
 		    play_list.innerHTML = res;
@@ -112,6 +107,7 @@
 			player.src = songUrl;
 		    player.load();
 		    controls_title.innerHTML = title_list[playerIndex];
+		    if (title_list[playerIndex].length >10) controls_title.innerHTML = "<marquee scrollamount=3>" + title_list[playerIndex] + "</marquee>";
 		    controls_artist.innerHTML = artist_list[playerIndex];
 		    controls_title.title = title_list[playerIndex];
 		    controls_artist.title = artist_list[playerIndex];
@@ -121,15 +117,10 @@
 			//로드 할 때 좋아요도 로드 해야 할 듯
 			if (${empty sMid}) return;
 			
-			let data = {
-				title : $("#controls_title").html(),
-				artist : $("#controls_artist").html(),
-			}
-			
 			$.ajax({
 				type : "post",
-				url : "soLikebtn.so",
-				data : data,
+				url : "${ctp}/song/likebtn",
+				data : {idx : idx_list[playerIndex]},
 				success : (data) => {
 					if (data.includes("${sMid}")) {
 						$("#like_btn1").hide();
@@ -315,17 +306,10 @@
 			$("#modal_t").html($("#controls_title").html());
 			$("#modal_a").html($("#controls_artist").html());
 			
-			if (play_listImg_img.src.includes("music.png")) return;
-					
-			let data = {
-				title : $("#controls_title").html(),
-				artist : $("#controls_artist").html(),
-			}
-			
 			$.ajax({
 				type : "post",
-				url : "solyrics.so",
-				data : data,
+				url : "${ctp}/song/lyrics",
+				data : {idx : idx_list[playerIndex]},
 				success : (data) => {
 					data = data.replace(/\n/g, "<br>");
 					$("#modal_c").html(data);
@@ -333,6 +317,33 @@
 			});
 			
 		});
+		
+		// 좋아요 버튼 이벤트
+		$("#like_btn1").click(() => {
+    		$("#like_btn1").hide();
+    		$("#like_btn2").show();
+    		
+    		if (${empty sMid}) return;
+
+    		$.ajax({
+    			type : "post",
+    			url : "${ctp}/song/like",
+    			data : {idx : idx_list[playerIndex]},
+    		});
+    	}); 
+
+		$("#like_btn2").click(() => {
+    		$("#like_btn2").hide();
+    		$("#like_btn1").show();
+    		
+    		if (${empty sMid}) return;
+
+    		$.ajax({
+    			type : "post",
+    			url : "${ctp}/song/unlike",
+    			data : {idx : idx_list[playerIndex]},
+    		});
+    	}); 
 		
 	</script>
 	

@@ -109,29 +109,8 @@
 	<script src="${ctp }/resources/js/main.js"></script>
     <script>
     	function playThis() {
-    		let res = "<div class='d-flex p-1'><div class='imgBox mr-4'><img src='${vo.img}'></div><div><div class='playlist_t' title='${vo.title}'>${vo.title}</div><div class='playlist_a' title='${vo.artist}'>${vo.artist}</div></div><div class='ml-auto'><button name='delete_btn' type='button' class='btn' onclick='delList(${vo.idx})' ><i class='fa-regular fa-trash-can'></i></button></div></div>";
-    		play_list.innerHTML = res;
-    		
-    		let title = "${vo.title}".replace(/[\\\/:*?\"<>|]/g, "");
-    		let artist = "${vo.artist}".replace(/[\\\/:*?\"<>|]/g, "");
-
-    	    songUrl = "music/" + title + " - " + artist + ".mp3";
-    		player.src = songUrl;
-    	    player.load();
-    	    controls_img.src = "${vo.img}";
-    	    controls_title.innerHTML = "${vo.title}";
-    	    controls_artist.innerHTML = "${vo.artist}";
-    	    controls_title.title = "${vo.title}";
-    	    controls_artist.title = "${vo.artist}";
-    		play_listImg_img.src = "${vo.img}".replace("50", "600");
-    		
-    		thum_list.push("${vo.img}");
-    		sw = 1;
-    		
-		 	$(play_btn).hide();
-		    $(pause_btn).show();
-		    player.play();
-    		
+    		let url = "${ctp}/song/player?idx=${vo.idx}";
+			player = window.open(url, "player", "width=1000px, height=800px, left=50px, top=150px");
 		}
     	
     	$("#songlike_btn1").click(() => {
@@ -140,15 +119,10 @@
     		
     		if (${empty sMid}) return;
 
-    		let data = {
-    			title : "${vo.title}",
-    			artist : "${vo.artist}"
-    		}
-    		
     		$.ajax({
     			type : "post",
-    			url : "solike.so",
-    			data : data,
+    			url : "${ctp}/song/like",
+    			data : {idx : ${vo.idx}},
     			success : () => {
     				$("#songLikeCnt").load(window.location.href + " #songLikeCnt");
     			}
@@ -160,16 +134,11 @@
     		$("#songlike_btn1").show();
     		
     		if (${empty sMid}) return;
- 
-    		let data = {
-    				title : "${vo.title}",
-    				artist : "${vo.artist}"
-    			}
     		
 			$.ajax({
 				type : "post",
-				url : "sounlike.so",
-				data : data,
+				url : "${ctp}/song/unlike",
+				data : {idx : ${vo.idx}},
 				success : () => {
     				$("#songLikeCnt").load(window.location.href + " #songLikeCnt");
     			}
