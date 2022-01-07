@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <% pageContext.setAttribute("enter", "\n"); %>
 <c:set var="ctp" value="<%=request.getContextPath() %>" />
 <!DOCTYPE html>
@@ -20,16 +21,11 @@
 		    height: 100%;
 		    left: 0px;
 		    top: 0px;
-		    overflow-y: auto;
-		    margin-top: 0px;
-		    padding-top: 0px;
-		    padding-bottom: 200px;
-		    z-index: 999;
 		}
 		
 		section {
-			margin-left: 200px;
-			padding-bottom: 100px;
+			margin-left: 250px;
+			/* padding-bottom: 100px; */
 		}
 		
 		li {
@@ -82,26 +78,37 @@
 		<c:if test="${sw == 0 }">
 			<div class="container mt-5 ml-5">
 				<h2>업데이트 필요한 곡</h2>
-				<div>
-				<c:set var="ok" value="0" />
-				<c:forEach var="vo" items="${vos }" varStatus="st">
-					<table>
-						<c:if test="${vo.idx == 0 }">
-							<tr>
-								<td>${vo.title } - ${vo.artist }</td>
-								<c:set var="ok" value="${ok + 1 }" />
-							</tr>
-						</c:if>
+				<div class="mt-5">
+					<c:set var="ok" value="0" />
+					<table class="table">
+						<c:forEach var="vo" items="${vos }" varStatus="st">
+							<c:if test="${vo.idx == 0 }">
+								<tr>
+									<td>
+										<c:if test="${fn:length(vo.title) < 20 }">${vo.title }</c:if> 
+										<c:if test="${fn:length(vo.title) >= 20 }">${fn:substring(vo.title, 0, 20) }...</c:if> 
+										- 
+										<c:if test="${fn:length(vo.artist) < 20 }">${vo.artist }</c:if> 
+										<c:if test="${fn:length(vo.artist) >= 20 }">${fn:substring(vo.artist, 0, 20) }...</c:if> 
+									</td>
+									<td>
+										<button class="btn btn-warning" type="button" onclick="adddb('${vo.img}', `${vo.title }`, `${vo.artist }`)">디비에 추가</button>
+										<button class="btn btn-warning" type="button" onclick="fileupload()">파일 업로드</button>
+										<input type="file" id="fup" style="display: none;">
+									</td>
+									<c:set var="ok" value="${ok + 1 }" />
+								</tr>
+							</c:if>
+						</c:forEach>
 					</table>
-				</c:forEach>
-				<c:if test="${ok == 0 }">업데이트가 필요한 곡이 없습니다.</c:if>
+					<c:if test="${ok == 0 }">업데이트가 필요한 곡이 없습니다.</c:if>
 				</div>
 			</div>
 		</c:if>
 		<c:if test="${sw == 1 }">
 			<div class="container mt-5 ml-5">
 				<h2>회원관리</h2>
-				<div>
+				<div class="mt-5">
 					<table class="table text-center">
 						<tr>
 							<th>아이디</th>
@@ -133,7 +140,7 @@
 			</div>
 		</c:if>
 		<c:if test="${sw == 2 }">
-			<div class="container mt-5">
+			<div class="mt-5">
 				<h2 class="ml-5">음원관리</h2>
 				<div class="sticky">
 					<ul class="pagination">
@@ -165,7 +172,6 @@
 									<th>작사</th>
 									<th>편곡</th>
 									<th>가사</th>
-									<th>좋아요</th>
 								</tr>
 							</thead>
 		                    <c:forEach var="vo" items="${vos }" varStatus="st">
@@ -181,10 +187,8 @@
 			                        <td class="align-middle" ondblclick="updt_words(${vo.idx})"><div class="ho" id="words_${vo.idx }" >${vo.words }</div></td>
 			                        <td class="align-middle" ondblclick="updt_arranger(${vo.idx})"><div class="ho" id="arranger_${vo.idx }" >${vo.arranger }</div></td>
 			                        <td class="align-middle text-center">
-			                        	<c:if test="${empty vo.lyrics }"><div class="ho" onclick="more(${vo.idx })" data-toggle="modal" data-target="#myModal">없음</div></c:if>
-			                        	<c:if test="${!empty vo.lyrics }"><div class="ho" onclick="more(${vo.idx })" data-toggle="modal" data-target="#myModal">더보기</div></c:if>
+			                        	<div class="ho" onclick="more(${vo.idx })" data-toggle="modal" data-target="#myModal">더보기</div>
 		                        	</td>
-			                        <td class="align-middle text-center">${vo.likeCnt }</td>
 			                    </tr>
 		                    </c:forEach>
 		                </table>
@@ -288,6 +292,15 @@
 					}
 				});
 			}
+		}
+		
+		function adddb(img, title, artist) {
+			alert("디비에 추가" + img + title + artist);
+		}
+
+		function fileupload() {
+			alert("음원파일 추가");
+			$("#fup").click();
 		}
 		
 		window.onkeydown = (e) => {

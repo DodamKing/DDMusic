@@ -33,16 +33,21 @@
 		let playerIndex = 0;
 		let sw = 0;
 	
-		/* <c:forEach var="vo" items="${sPlayList}"> 
+		<c:if test="${!empty vos }">
+			<c:forEach var="vo" items="${vos}">
+				idx_list.push(${vo.idx});
+				thum_list.push("${vo.img}");
+			    title_list.push("${vo.title}");
+			    artist_list.push("${vo.artist}");
+			</c:forEach>
+		</c:if>
+
+		<c:if test="${!empty vo }">
+			idx_list.push(${vo.idx});
 			thum_list.push("${vo.img}");
 		    title_list.push("${vo.title}");
 		    artist_list.push("${vo.artist}");
-		</c:forEach> */
-		
-		idx_list.push(${vo.idx});
-		thum_list.push("${vo.img}");
-	    title_list.push("${vo.title}");
-	    artist_list.push("${vo.artist}");
+		</c:if>
 	    
 	    //리스트 세팅
 	    function addList(data) {
@@ -86,8 +91,8 @@
 			for (let i=0; i<thum_list.length; i++) {
 				let t = title_list[i];
 				let a = artist_list[i];
-				if (title_list[i].length > 14) t = title_list[i].substring(0, 14) + "...";
-				if (artist_list[i].length > 14) a = artist_list[i].substring(0, 14) + "...";
+				if (title_list[i].length > 13) t = title_list[i].substring(0, 13) + "...";
+				if (artist_list[i].length > 13) a = artist_list[i].substring(0, 13) + "...";
 				
 				res += "<div class='d-flex p-3'><div class='imgBox mr-3'><img src='" + thum_list[i] + "' title='재생' onclick='startThis(" + idx_list[i] + ")'></div><div><div class='playlist_t' title='" + title_list[i] + "'>" + t + "</div><div class='playlist_a' title='" + artist_list[i] + "'>" + a + "</div></div><div class='ml-auto'><button name='delete_btn' type='button' class='btn' onclick='delList(" + idx_list[i] + ")' ><i class='fa-regular fa-trash-can'></i></button></div></div>";
 			}

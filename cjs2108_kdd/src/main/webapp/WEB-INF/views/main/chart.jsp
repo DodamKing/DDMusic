@@ -24,7 +24,7 @@
         <div class="container">
             <div class="card-body">
                 <h2 class="mt-5 mb-5">DD Music Top 100</h2>
-                <div id="add_btn" class="btn btn-dark" style="position: fixed; right: 30px; bottom: 100px;">버튼</div>
+                <div id="add_btn" class="btn btn-dark" style="position: fixed; right: 30px; bottom: 100px;">선택추가</div>
                 <table class="table">
                 	<tr style="border-top: none;">
                 		<td><input id="allch" type="checkbox" ></td>
@@ -47,7 +47,6 @@
             </div>
         </div>
         <jsp:include page="/WEB-INF/views/include/sFooter.jsp" />
-        <div id="demo" style="display: none;">0</div>
     </section>
     
 
@@ -67,7 +66,7 @@
 			}
 			
 			if (!sw) {
-				let url = "${ctp}/song/player/" + idx;
+				let url = "${ctp}/song/player?idx=" + idx;
 				player = window.open(url, "player", "width=1100px, height=800px, left=50px, top=150px");
 				sw = true;
 			}
@@ -84,13 +83,14 @@
 					});
 				} 
 				else {
-					let url = "${ctp}/song/player/" + idx;
+					let url = "${ctp}/song/player?idx=" + idx;
 					player = window.open(url, "player", "width=1100px, height=800px, left=50px, top=150px");
 					sw = true;
 				}
 			}
 		}
 		
+		//전체선택
 		allch.addEventListener("click", () => {
 			if (allch.checked) {
 				$("input:checkbox[name='tch']").prop("checked", true);
@@ -100,12 +100,52 @@
 			}
 		});
 		
+		//전체선택 해제
+		$("input:checkbox[name='tch']").click(() => {
+			for (let i=0; i<100; i++) {
+				if (!$("input:checkbox[name='tch']")[i].checked) {
+					$("#allch").prop("checked", false);
+					return;
+				}
+			}
+		});
+		
+		//선택 추가 버튼
 		add_btn.addEventListener("click", () => {
+			let idxs = "";
+			
 			for (let i=0; i<100; i++) {
 				if($("input:checkbox[name='tch']")[i].checked) {
 					if ($("input:checkbox[name='tch']")[i].value != 0) {
-						addf($("input:checkbox[name='tch']")[i].value);
+						idxs += $("input:checkbox[name='tch']")[i].value + "/";
 					}
+				}
+			}
+			
+			if (!sw) {
+				let url = "${ctp}/song/player?idxs=" + idxs;
+				player = window.open(url, "player", "width=1100px, height=800px, left=50px, top=150px");
+				sw = true;
+			}
+			else {
+				if (!player.closed && sw) {
+					let idx_list = idxs.split("/");
+					for (let i=0; i<idx_list.length - 1; i++) {
+						$.ajax({
+							type : "post",
+							url : "${ctp}/song/player",
+							data : {idx : idx_list[i]},
+							success : (data) => {
+								player.addList(data);
+								player.setList();
+							}
+						});
+					}
+				}
+				else {
+					let url = "${ctp}/song/player?idxs=" + idxs;
+					player = window.open(url, "player", "width=1100px, height=800px, left=50px, top=150px");
+					sw = true;
 				}
 			}
 		});

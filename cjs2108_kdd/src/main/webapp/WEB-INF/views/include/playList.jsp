@@ -26,12 +26,12 @@
 	        			</div>
 		    			<div>
 		    				<div class='playlist_t' title="${vo.title }">
-		    					<c:if test="${fn:length(vo.title) > 14 }">${fn:substring(vo.title, 0, 14) }...</c:if>
-		    					<c:if test="${fn:length(vo.title) <= 14 }">${vo.title }</c:if>
+		    					<c:if test="${fn:length(vo.title) > 13 }">${fn:substring(vo.title, 0, 13) }...</c:if>
+		    					<c:if test="${fn:length(vo.title) <= 13 }">${vo.title }</c:if>
 		    				</div>
 		    				<div class='playlist_a' title="${vo.artist }">
-		    					<c:if test="${fn:length(vo.artist) > 14 }">${fn:substring(vo.artist, 0, 14) }...</c:if>
-		    					<c:if test="${fn:length(vo.artist) <= 14 }">${vo.artist }</c:if>
+		    					<c:if test="${fn:length(vo.artist) > 13 }">${fn:substring(vo.artist, 0, 13) }...</c:if>
+		    					<c:if test="${fn:length(vo.artist) <= 13 }">${vo.artist }</c:if>
 	    					</div>
 		    			</div>
 		    			<div class='ml-auto'>
@@ -39,18 +39,24 @@
 						</div>
 					</div>
 				</c:if>
-				<c:if test="${!empty sPlaylist }">
-					<c:forEach var="vo" items="${sPlaylist }" varStatus="st">
+				<c:if test="${!empty vos }">
+					<c:forEach var="vo" items="${vos }" varStatus="st">
 			        	<div class='d-flex p-3'>
 			        		<div class='imgBox mr-3'>
-			        			<img src='${vo.img}'>
+			        			<img src='${vo.img}' title="재생" onclick="startThis(${vo.idx})">
 		        			</div>
 			    			<div>
-			    				<div class='playlist_t' title="${vo.title }">${vo.title }</div>
-			    				<div class='playlist_a' title="${vo.artist }">${vo.artist }</div>
+			    				<div class='playlist_t' title="${vo.title }">
+				    				<c:if test="${fn:length(vo.title) > 13 }">${fn:substring(vo.title, 0, 13) }...</c:if>
+			    					<c:if test="${fn:length(vo.title) <= 13 }">${vo.title }</c:if>
+			    				</div>
+			    				<div class='playlist_a' title="${vo.artist }">
+				    				<c:if test="${fn:length(vo.artist) > 13 }">${fn:substring(vo.artist, 0, 13) }...</c:if>
+			    					<c:if test="${fn:length(vo.artist) <= 13 }">${vo.artist }</c:if>
+			    				</div>
 			    			</div>
 			    			<div class='ml-auto'>
-			    				<button name='delete_btn' type='button' class='btn' onclick='delList(${st.index })' ><i title="플레이리스트에서 제거" class='fa-regular fa-trash-can'></i></button>
+			    				<button name='delete_btn' type='button' class='btn' onclick='delList(${vo.idx })' ><i title="플레이리스트에서 제거" class='fa-regular fa-trash-can'></i></button>
 							</div>
 						</div>
 					</c:forEach>

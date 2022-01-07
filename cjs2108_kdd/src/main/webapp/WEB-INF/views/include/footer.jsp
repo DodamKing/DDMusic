@@ -6,7 +6,7 @@
     <input id="play_bar" type="range" value="0">
     <div class="d-flex">
         <div class="col-1 p-3 mr-3">
-        	<c:if test="${empty sPlaylist && empty vo }">
+        	<c:if test="${empty vos && empty vo }">
                 <div class="controls-song mt-1">
                     <div id="controls_title" class="mb-1" title="오늘 뭐 듣지?">오늘 뭐 듣지?</div>
                     <div id="controls_artist" title="재생 버튼을 클릭 해 보세요">재생 버튼을 클릭 해 보세요</div>
@@ -23,11 +23,14 @@
 	                </div>
 	            </div>
             </c:if>
-        	<c:if test="${!empty sPlaylist }">
+        	<c:if test="${!empty vos }">
 	            <div class="row">
 	                <div class="controls-song ml-2 mt-2">
-	                    <div id="controls_title" class="mb-1" title="${sPlaylist[0].title }"><marquee scrollamount=3>${sPlaylist[0].title }</marquee></div>
-	                    <div id="controls_artist" title="${sPlaylist[0].artist }">${sPlaylist[0].artist }</div>
+	                    <div id="controls_title" class="mb-1" title="${vos[0].title }">
+							<c:if test="${fn:length(vo.title) <= 10 }">${vos[0].title }</c:if>
+	                    	<c:if test="${fn:length(vo.title) <= 10 }"><marquee scrollamount=3>${vos[0].title }</marquee></c:if>
+	                    </div>
+	                    <div id="controls_artist" title="${vos[0].artist }">${vos[0].artist }</div>
 	                </div>
 	            </div>
             </c:if>

@@ -1,14 +1,15 @@
 package com.spring.cjs2108_kdd.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.cjs2108_kdd.method.Method;
@@ -36,19 +37,36 @@ public class SongController {
 		return "song/songsrch";
 	}
 	
-	@RequestMapping("player")
-	public String playerGet() {
-		return "song/player";
-	}
+//	@RequestMapping("player")
+//	public String playerGet() {
+//		return "song/player";
+//	}
 	
-	@RequestMapping("/player/{idx}")
-	public String playerGet(Model model, @PathVariable int idx) {
-		SongVO vo = songService.getSongInfor(idx);
-		Method method = new Method();
-		model.addAttribute("vo", vo);
-		model.addAttribute("img1000", method.getImgSize(vo.getImg(), "1000"));
-		model.addAttribute("img2000", method.getImgSize(vo.getImg(), "2000"));
-		return "song/player";
+	@RequestMapping("/player")
+	public void playerGet(Model model, String idx, String idxs) {
+		if (idx != null) {
+			SongVO vo = songService.getSongInfor(Integer.parseInt(idx));
+			Method method = new Method();
+			model.addAttribute("vo", vo);
+			model.addAttribute("img1000", method.getImgSize(vo.getImg(), "1000"));
+			model.addAttribute("img2000", method.getImgSize(vo.getImg(), "2000"));
+		}
+		
+		else if (idxs != null) {
+			String[] idx_list = idxs.split("/");
+			List<SongVO> vos = new ArrayList<SongVO>();
+			Method method = new Method();
+			
+			for (int i=0; i<idx_list.length; i++) {
+				vos.add(songService.getSongInfor(Integer.parseInt(idx_list[i])));
+			}
+			
+			model.addAttribute("vos", vos);
+			model.addAttribute("img1000", method.getImgSize(vos.get(0).getImg(), "1000"));
+			model.addAttribute("img2000", method.getImgSize(vos.get(0).getImg(), "2000"));
+			
+		}
+//		return "song/player"; 
 	}
 	
 	@RequestMapping(value="player", method = RequestMethod.POST)
