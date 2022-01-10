@@ -24,12 +24,12 @@
         <div class="container">
             <div class="card-body">
                 <h2 class="mt-5 mb-5">DD Music Top 100</h2>
-                <div id="add_btn" class="btn btn-dark" style="position: fixed; right: 30px; bottom: 100px;">선택추가</div>
+                <div id="top_btn" class="btn btn-dark" style="position: fixed; right: 30px; bottom: 100px;">top</div>
                 <table class="table">
                 	<tr style="border-top: none;">
                 		<td><input id="allch" type="checkbox" ></td>
-                		<td colspan="2">전체선택</td>
-                		<td colspan="2"></td>
+                		<td colspan="2" style="vertical-align: middle;">전체선택</td>
+                		<td colspan="2" class="text-right"><div id="add_btn" class="btn btn-dark btn-sm" >선택추가</div></td>
             		</tr>
                     <c:forEach var="vo" items="${vos }" varStatus="st">
 	                    <tr>
@@ -46,6 +46,7 @@
                 </table>
             </div>
         </div>
+        <!-- <div id="demo" style="display: none;">0</div> -->
         <jsp:include page="/WEB-INF/views/include/sFooter.jsp" />
     </section>
     
@@ -66,6 +67,18 @@
 			}
 			
 			if (!sw) {
+				/* $.ajax({
+					type : "post",
+					url : "${ctp}/song/check",
+					data : {idx : idx},
+					success : (data) => {
+						if (data == "no") {
+							alert("아직 준비 중인 곡입니다.");
+							demo.innerHTML = 1;
+						}
+					}
+				}); */
+				
 				let url = "${ctp}/song/player?idx=" + idx;
 				player = window.open(url, "player", "width=1100px, height=800px, left=50px, top=150px");
 				sw = true;
@@ -148,6 +161,10 @@
 					sw = true;
 				}
 			}
+		});
+		
+		top_btn.addEventListener("click", () => {
+			window.scrollTo({top: 0, behavior: 'smooth'});
 		});
 		
 	</script>

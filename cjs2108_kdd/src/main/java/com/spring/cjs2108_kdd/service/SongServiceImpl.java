@@ -1,7 +1,9 @@
 package com.spring.cjs2108_kdd.service;
 
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
 
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -115,6 +118,25 @@ public class SongServiceImpl implements SongService {
 	@Override
 	public String getLyrics(int idx) {
 		return songDAO.getLyrics(idx);
+	}
+
+	@Override
+	public void addSongDB(String img, String title, String artist) {
+		songDAO.addSongDB(img, title, artist);
+	}
+
+	@Override
+	public void songUpload(int idx, MultipartFile file) throws IOException {
+		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
+		String uploadPath = request.getSession().getServletContext().getRealPath("/resources/music/");
+		
+		String fileNm = songDAO.getSongInfor(idx).getTitle() + " - " + songDAO.getSongInfor(idx).getArtist() + ".mp3";
+		fileNm = fileNm.replaceAll("[\\\\/:*?\"<>|]", "");
+		byte[] data = file.getBytes();
+	
+		FileOutputStream fos = new FileOutputStream(uploadPath + fileNm);
+		fos.write(data);
+		fos.close();
 	}
 
 }

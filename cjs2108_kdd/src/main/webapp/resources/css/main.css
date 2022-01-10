@@ -44,6 +44,10 @@ nav {
     padding-bottom: 200px;
 }
 
+nav::-webkit-scrollbar {
+	display: none;
+}
+
 #title_search {
     position: fixed;
     top: 0;
@@ -264,9 +268,13 @@ div#play_listImg > div {
 	top: 50px;
     width: 350px;
     height: 600px;
-    overflow: auto;
+    overflow: scroll;
     
     /* border: 2px solid white; */
+}
+
+#play_listBox::-webkit-scrollbar {
+	display: none;
 }
 
 /* #play_list {

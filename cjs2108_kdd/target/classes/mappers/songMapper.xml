@@ -45,4 +45,8 @@
 		select lyrics from song where idx = #{idx};
 	</select>
 	
+	<insert id="addSongDB">
+		insert into song (img, title, artist) values (#{img}, #{title}, #{artist});
+	</insert>
+	
 </mapper>

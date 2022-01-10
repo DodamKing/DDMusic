@@ -30,4 +30,6 @@ public interface SongDAO {
 
 	public String getLyrics(int idx);
 
+	public void addSongDB(@Param("img") String img, @Param("title") String title, @Param("artist") String artist);
+
 }

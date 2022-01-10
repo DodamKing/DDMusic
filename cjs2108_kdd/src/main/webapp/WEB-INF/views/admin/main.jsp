@@ -70,188 +70,73 @@
 	            <li><a href="${ctp }/admin/main?sw=0">업데이트</a></li>
 	            <li><a href="${ctp }/admin/main?sw=1">회원관리</a></li>
                 <li><a href="${ctp }/admin/main?sw=2">음원관리</a></li>
+                <li><a href="${ctp }/admin/main?sw=3">파일관리</a></li>
             </ul>
     	</div>
 	</nav>
 	<section>
 		<jsp:include page="/WEB-INF/views/include/modal.jsp" />
 		<c:if test="${sw == 0 }">
-			<div class="container mt-5 ml-5">
-				<h2>업데이트 필요한 곡</h2>
-				<div class="mt-5">
-					<c:set var="ok" value="0" />
-					<table class="table">
-						<c:forEach var="vo" items="${vos }" varStatus="st">
-							<c:if test="${vo.idx == 0 }">
-								<tr>
-									<td>
-										<c:if test="${fn:length(vo.title) < 20 }">${vo.title }</c:if> 
-										<c:if test="${fn:length(vo.title) >= 20 }">${fn:substring(vo.title, 0, 20) }...</c:if> 
-										- 
-										<c:if test="${fn:length(vo.artist) < 20 }">${vo.artist }</c:if> 
-										<c:if test="${fn:length(vo.artist) >= 20 }">${fn:substring(vo.artist, 0, 20) }...</c:if> 
-									</td>
-									<td>
-										<button class="btn btn-warning" type="button" onclick="adddb('${vo.img}', `${vo.title }`, `${vo.artist }`)">디비에 추가</button>
-										<button class="btn btn-warning" type="button" onclick="fileupload()">파일 업로드</button>
-										<input type="file" id="fup" style="display: none;">
-									</td>
-									<c:set var="ok" value="${ok + 1 }" />
-								</tr>
-							</c:if>
-						</c:forEach>
-					</table>
-					<c:if test="${ok == 0 }">업데이트가 필요한 곡이 없습니다.</c:if>
-				</div>
-			</div>
+			<jsp:include page="/WEB-INF/views/admin/dbupload.jsp" />
 		</c:if>
 		<c:if test="${sw == 1 }">
-			<div class="container mt-5 ml-5">
-				<h2>회원관리</h2>
-				<div class="mt-5">
-					<table class="table text-center">
-						<tr>
-							<th>아이디</th>
-							<th>이름</th>
-							<th>별명</th>
-							<th>이메일</th>
-							<th>멤버십</th>
-							<th>탈퇴신청</th>
-						</tr>
-						<c:forEach var="vo" items="${vos}">
-							<tr>
-								<td>${vo.userId }</td>
-								<td>${vo.userNm }</td>
-								<td>${vo.nickNm }</td>
-								<td>${vo.email }</td>
-								<td>
-									<c:if test="${vo.membership == -1 }">관리자</c:if>
-									<c:if test="${vo.membership == 0 }">없음</c:if>
-									<c:if test="${vo.membership == 1 }">DDMusic 무제한 듣기</c:if>
-								</td>
-								<td>
-									<c:if test="${vo.withdrawal == 0 }"></c:if>
-									<c:if test="${vo.withdrawal == 1 }"><div class="ho" onclick="userdel(${vo.idx})">탈퇴</div></c:if>
-								</td>
-							</tr>
-						</c:forEach>
-					</table>
-				</div>
-			</div>
+			<jsp:include page="/WEB-INF/views/admin/userupdate.jsp" />
 		</c:if>
 		<c:if test="${sw == 2 }">
-			<div class="mt-5">
-				<h2 class="ml-5">음원관리</h2>
-				<div class="sticky">
-					<ul class="pagination">
-					    <li class="page-item"><a class="page-link bg-dark text-warning" href="${ctp }/admin/main?sw=2&pageNo=1">First</a></li>
-					    <li class="page-item"><a class="page-link bg-dark text-warning" href="${ctp }/admin/main?sw=2&pageNo=<c:if test="${pageNo != 1 }">${pageNo - 1 }</c:if><c:if test="${pageNo == 1 }">1</c:if> ">Previous</a></li>
-					    <li class="page-item"><a class="page-link bg-secondary text-danger">${pageNo }</a></li>
-					    <!-- <li class="page-item"><a class="page-link bg-dark text-warning" href="#">1</a></li>
-					    <li class="page-item"><a class="page-link bg-secondary text-danger" href="#">2</a></li>
-					    <li class="page-item"><a class="page-link bg-dark text-warning" href="#">3</a></li> -->
-					    <li class="page-item"><a class="page-link bg-dark text-warning" href="${ctp }/admin/main?sw=2&pageNo=<c:if test="${pageNo + 1 > lastPageNo }">${pageNo }</c:if><c:if test="${pageNo + 1 <= lastPageNo }">${pageNo + 1}</c:if>">Next</a></li>
-					    <li class="page-item"><a class="page-link bg-dark text-warning" href="${ctp }/admin/main?sw=2&pageNo=${lastPageNo }">Last</a></li>
-		 	 		</ul>
-				</div>
-			    <div class="sticky2"><input class="btn btn-warning" type="button" value="변경사항 적용" onclick="commit()"></div>
-				<div class="mt-3">
-					<form method="post" name="myform">
-					<div>수정 하려는 항목을 더블 클릭 하세요!</div>
-						<table class="table table-bordered" style="width: 3300px;">
-							<thead class="thead-dark">
-								<tr>
-									<th class="text-right">#</th>
-									<th>썸네일</th>
-									<th>제목</th>
-									<th>가수</th>
-									<th>앨범명</th>
-									<th>발매일</th>
-									<th>작곡</th>
-									<th>장르</th>
-									<th>작사</th>
-									<th>편곡</th>
-									<th>가사</th>
-								</tr>
-							</thead>
-		                    <c:forEach var="vo" items="${vos }" varStatus="st">
-			                    <tr>
-			                        <td class="text-right align-middle">${vo.idx}</td>
-			                        <td class="text-center"><div class="imgBox"><img src="${vo.img }" alt=""></div></td>
-			                        <td class="align-middle">${vo.title }</td>
-			                        <td class="align-middle">${vo.artist }</td>
-			                        <td class="align-middle" ondblclick="updt_album(${vo.idx})"><div class="ho" id="album_${vo.idx }" >${vo.album }</div></td>
-			                        <td class="align-middle" ondblclick="updt_releaseDate(${vo.idx})"><div class="ho" id="releaseDate_${vo.idx }" >${vo.releaseDate }</div></td>
-			                        <td class="align-middle" ondblclick="updt_genre(${vo.idx})"><div class="ho" id="genre_${vo.idx }" >${vo.genre }</div></td>
-			                        <td class="align-middle" ondblclick="updt_music(${vo.idx})"><div class="ho" id="music_${vo.idx }" >${vo.music }</div></td>
-			                        <td class="align-middle" ondblclick="updt_words(${vo.idx})"><div class="ho" id="words_${vo.idx }" >${vo.words }</div></td>
-			                        <td class="align-middle" ondblclick="updt_arranger(${vo.idx})"><div class="ho" id="arranger_${vo.idx }" >${vo.arranger }</div></td>
-			                        <td class="align-middle text-center">
-			                        	<div class="ho" onclick="more(${vo.idx })" data-toggle="modal" data-target="#myModal">더보기</div>
-		                        	</td>
-			                    </tr>
-		                    </c:forEach>
-		                </table>
-		                <input type="hidden" name="sw" value="${sw }" >
-		                <input type="hidden" id="demo" name="item">
-		                <input type="hidden" name="pageNo" value="${pageNo }">
-	                </form>
-				</div>
-			</div>
+			<jsp:include page="/WEB-INF/views/admin/songupdate.jsp" />
 		</c:if>
+		<c:if test="${sw == 3 }">
+			<jsp:include page="/WEB-INF/views/admin/fileupload.jsp" />
+		</c:if>
+		
 	</section>
 	
 	<script>
 		var item = "";
 	
-		function updt_album(idx) {
+		function updt_album(idx, album) {
 			let albumId = "album_" + idx;
-			let temp = $("#" + albumId).html();
-			$("#" + albumId).html("<input class='form-control' type='text' name='" + albumId +"' value='" + temp + "' autofocus >");
+			$("#" + albumId).html("<input class='form-control' type='text' name='" + albumId +"' value='" + album + "' autofocus >");
 			
 			item += albumId + "/";
 		}
 	
-		function updt_releaseDate(idx) {
+		function updt_releaseDate(idx, releaseDate) {
 			let releaseDateId = "releaseDate_" + idx;
-			let temp = $("#" + releaseDateId).html();
-			$("#" + releaseDateId).html("<input class='form-control' type='text' name='" + releaseDateId +"' value='" + temp + "' autofocus >");
+			$("#" + releaseDateId).html("<input class='form-control' type='text' name='" + releaseDateId +"' value='" + releaseDate + "' autofocus >");
 			
 			item += releaseDateId + "/";
 		}
 		
-		function updt_genre(idx) {
+		function updt_genre(idx, genre) {
 			let genreId = "genre_" + idx;
-			let temp = $("#" + genreId).html();
-			$("#" + genreId).html("<input class='form-control' type='text' name='" + genreId +"' value='" + temp + "' autofocus >");
+			$("#" + genreId).html("<input class='form-control' type='text' name='" + genreId +"' value='" + genre + "' autofocus >");
 			
 			item += genreId + "/";
 		}
 		
-		function updt_music(idx) {
+		function updt_music(idx, music) {
 			let musicId = "music_" + idx;
-			let temp = $("#" + musicId).html();
-			$("#" + musicId).html("<input class='form-control' type='text' name='" + musicId +"' value='" + temp + "' autofocus >");
+			$("#" + musicId).html("<input class='form-control' type='text' name='" + musicId +"' value='" + music + "' autofocus >");
 			
 			item += musicId + "/";
 		}
 		
-		function updt_words(idx) {
+		function updt_words(idx, words) {
 			let wordsId = "words_" + idx;
-			let temp = $("#" + wordsId).html();
-			$("#" + wordsId).html("<input class='form-control' type='text' name='" + wordsId +"' value='" + temp + "' autofocus >");
+			$("#" + wordsId).html("<input class='form-control' type='text' name='" + wordsId +"' value='" + words + "' autofocus >");
 			
 			item += wordsId + "/";
 		}
 		
-		function updt_arranger(idx) {
+		function updt_arranger(idx, arranger) {
 			let arrangerId = "arranger_" + idx;
-			let temp = $("#" + arrangerId).html();
-			$("#" + arrangerId).html("<input class='form-control' type='text' name='" + arrangerId +"' value='" + temp + "' autofocus >");
+			$("#" + arrangerId).html("<input class='form-control' type='text' name='" + arrangerId +"' value='" + arranger + "' autofocus >");
 			
 			item += arrangerId + "/";
 		}
 		
+		// 음원 정보 변경
 		function commit() {
 			if (item.length == 0) return;
 			if (confirm("변경 사항을 저장하시겠습니까?")) {
@@ -260,6 +145,7 @@
 			}
 		}
 		
+		// 가사 더 보기
 		function more(idx) {
 			
 			let data = {
@@ -280,6 +166,7 @@
 			});
 		}
 		
+		// 회원 탈퇴
 		function userdel(idx) {
 			if (confirm("정말 탈퇴 처리 하시겠습니까?")) {
 				$.ajax({
@@ -294,15 +181,103 @@
 			}
 		}
 		
+		// 음원 정보(이미지, 제목, 가수) 디비 저장
 		function adddb(img, title, artist) {
-			alert("디비에 추가" + img + title + artist);
-		}
-
-		function fileupload() {
-			alert("음원파일 추가");
-			$("#fup").click();
+			if (confirm(title + " - " + artist + "를 데이터베이스에 추가 하시겠습니까?")) {
+				let data = {
+					img : img,
+					title : title,
+					artist : artist
+				}
+				
+				$.ajax({
+					type : "post",
+					url : "${ctp}/admin/addsong",
+					data : data,
+					success : () => {
+						location.reload();
+						alert(title + "-" + artist + "가 정상적으로 데이터베이스에 등록 되었습니다.");
+					}
+				});
+			}
 		}
 		
+		// 모두 추가
+		function addall() {
+			if (confirm("모든 내용을 데이터베이스에 추가 하시겠습니까?"))
+			$.ajax({
+				type : "post",
+				url : "${ctp}/admin/addsongall",
+				success : () => {
+					location.reload();
+				}
+			});
+		}
+
+		// 음원 재생
+		function play1(title, artist) {
+			title = title.replace(/[\\\/:*?\"<>|]/g, "");
+			artist = artist.replace(/[\\\/:*?\"<>|]/g, "");
+			
+			let hostIndex = location.href.indexOf(location.host) + location.host.length;
+			let contextPath = location.href.substring(hostIndex, location.href.indexOf("/", hostIndex + 1));
+	
+		    songUrl = contextPath + "/music/" + title + " - " + artist + ".mp3";
+		    
+		    $.get(songUrl).done(() => {
+				player.src = songUrl;
+			    player.load();
+			    player.play();
+		    }).fail(() => {
+		    	alert("파일이 없습니다.");
+		    });
+		}
+		
+		//미리 듣기
+		function play2() {
+			if ($("#fup")[0].files[0] == null) {
+				alert("파일을 선택해 주세요.");
+				return;
+			}
+			
+			let reader = new FileReader();
+		    reader.readAsDataURL($("#fup")[0].files[0]);
+		    reader.onload = (e) => {
+		    	$("#player").prop("src", e.target.result);
+		    	player.play();
+		    };
+		}
+		
+		// 파일 업로드
+		function fileupload(idx) {
+			let ext = $("#fup").val().split(".").pop().toLowerCase();
+			if (ext == "") {
+				alert("파일을 선택하세요.");
+				return;
+			}
+			if (ext == "mp3") {
+				if (confirm("현재 파일을 업로드 하시겠습니까?")) {
+					let data = new FormData();
+					data.append("idx", idx);
+					data.append("file", $("#fup")[0].files[0]);
+					
+					$.ajax({
+						type : "post",
+						url : "${ctp}/admin/upload",
+						contentType : false,
+						processData : false,
+						data : data,
+						success : () => {
+							alert("파일이 업로드 되었습니다.");
+						}
+					})
+				}
+				return;
+			}
+			alert("mp3 파일만 업로드 가능 합니다.")
+		}
+		
+		// esc 이벤트
 		window.onkeydown = (e) => {
 			if (e.keyCode == 27) {
 				location.reload();

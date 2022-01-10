@@ -72,7 +72,7 @@
 			reader.readAsDataURL(e.target.files[0]);
 			
 			reader.onload = (e) => {
-				$("#thum").attr("src", e.target.result);
+				$("#thum").prop("src", e.target.result);
 				$("i").hide();
 			}
 		})

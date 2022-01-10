@@ -1,7 +1,10 @@
 package com.spring.cjs2108_kdd.service;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.cjs2108_kdd.vo.SongVO;
 
@@ -32,5 +35,9 @@ public interface SongService {
 	String getLikeList(int idx);
 
 	String getLyrics(int idx);
+
+	void addSongDB(String img, String title, String artist);
+
+	void songUpload(int idx, MultipartFile file) throws IOException;
 
 }

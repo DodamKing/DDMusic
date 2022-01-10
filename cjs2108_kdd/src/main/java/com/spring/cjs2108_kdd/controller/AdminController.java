@@ -1,17 +1,19 @@
 package com.spring.cjs2108_kdd.controller;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.cjs2108_kdd.service.SongService;
 import com.spring.cjs2108_kdd.service.UserService;
@@ -39,7 +41,7 @@ public class AdminController {
 			model.addAttribute("vos", userService.getUserVOS());
 		}
 		
-		else if (sw == 2) {
+		else if (sw == 2 || sw == 3) {
 			int pageSize = 10;
 			int startNo = (pageNo - 1) * pageSize;
 			int lastPageNo = songService.getSongCnt() / 10 + 1;
@@ -90,5 +92,28 @@ public class AdminController {
 	@ResponseBody
 	public void userdelPost(Integer idx) {
 		userService.setUserDel(idx);
+	}
+
+	@RequestMapping("/addsong")
+	@ResponseBody
+	public void addsongPost(String img, String title, String artist) {
+		songService.addSongDB(img, title, artist);
+	}
+
+	@RequestMapping("/addsongall")
+	@ResponseBody
+	public void addsongallPost() throws FileNotFoundException {
+		List<SongVO> vos = songService.getChartJson();
+		for (int i=0; i<vos.size(); i++) {
+			if (vos.get(i).getIdx() == 0) {
+				songService.addSongDB(vos.get(i).getImg(), vos.get(i).getTitle(), vos.get(i).getArtist());
+			}
+		}
+	}
+
+	@RequestMapping("/upload")
+	@ResponseBody
+	public void uploadPost(int idx, MultipartFile file) throws IOException {
+		songService.songUpload(idx, file);
 	}
 }

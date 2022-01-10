@@ -1,8 +1,10 @@
 package com.spring.cjs2108_kdd.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,13 +39,21 @@ public class SongController {
 		return "song/songsrch";
 	}
 	
-//	@RequestMapping("player")
-//	public String playerGet() {
-//		return "song/player";
-//	}
+	@RequestMapping("check")
+	@ResponseBody
+	public String checkPost(HttpServletRequest request, int idx) {
+		SongVO vo = songService.getSongInfor(idx);
+		String name = vo.getTitle() + " - " + vo.getArtist() + ".mp3";
+		String path = request.getSession().getServletContext().getRealPath("/resources/music/");
+		File f = new File(path + name);
+		if (!f.exists()) {
+			return "no";
+		}
+		return "yes";
+	}
 	
-	@RequestMapping("/player")
-	public void playerGet(Model model, String idx, String idxs) {
+	@RequestMapping(value="/player", method = RequestMethod.GET)
+	public String playerGet(HttpServletRequest request, Model model, String idx, String idxs) {
 		if (idx != null) {
 			SongVO vo = songService.getSongInfor(Integer.parseInt(idx));
 			Method method = new Method();
@@ -66,10 +76,10 @@ public class SongController {
 			model.addAttribute("img2000", method.getImgSize(vos.get(0).getImg(), "2000"));
 			
 		}
-//		return "song/player"; 
+		return "song/player"; 
 	}
 	
-	@RequestMapping(value="player", method = RequestMethod.POST)
+	@RequestMapping(value="/player", method = RequestMethod.POST)
 	@ResponseBody
 	public SongVO playerPost(int idx) {
 		return songService.getSongInfor(idx);
