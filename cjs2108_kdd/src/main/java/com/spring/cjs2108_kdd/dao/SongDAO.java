@@ -32,4 +32,12 @@ public interface SongDAO {
 
 	public void addSongDB(@Param("img") String img, @Param("title") String title, @Param("artist") String artist);
 
+	public void setPlayCnt(@Param("songIdx") int songIdx, @Param("userIdx") int userIdx);
+
+	public void addPlayCnt(@Param("songIdx") int songIdx, @Param("userIdx") int userIdx);
+
+	public ArrayList<SongVO> getSong100(@Param("vos") ArrayList<SongVO> vos);
+
+	public int isPlayCnt(@Param("songIdx") int songIdx, @Param("userIdx") int userIdx);
+
 }

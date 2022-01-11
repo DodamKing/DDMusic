@@ -31,7 +31,10 @@
 	
 		let songUrl;
 		let playerIndex = 0;
+		let playerIndex_ = 0;
 		let sw = 0;
+		let pisw1 = 0;
+		let pisw2 = 0;
 	
 		<c:if test="${!empty vos }">
 			<c:forEach var="vo" items="${vos}">
@@ -48,6 +51,15 @@
 		    title_list.push("${vo.title}");
 		    artist_list.push("${vo.artist}");
 		</c:if>
+		
+		//재생수 증가
+		function playCntUp(idx) {
+			$.ajax({
+				type : "post",
+				url : "${ctp}/song/playcntup",
+				data : {songIdx : idx}
+			});
+		}
 	    
 	    //리스트 세팅
 	    function addList(data) {
@@ -94,7 +106,7 @@
 				if (title_list[i].length > 13) t = title_list[i].substring(0, 13) + "...";
 				if (artist_list[i].length > 13) a = artist_list[i].substring(0, 13) + "...";
 				
-				res += "<div class='d-flex p-3'><div class='imgBox mr-3'><img src='" + thum_list[i] + "' title='재생' onclick='startThis(" + idx_list[i] + ")'></div><div><div class='playlist_t' title='" + title_list[i] + "'>" + t + "</div><div class='playlist_a' title='" + artist_list[i] + "'>" + a + "</div></div><div class='ml-auto'><button name='delete_btn' type='button' class='btn' onclick='delList(" + idx_list[i] + ")' ><i class='fa-regular fa-trash-can'></i></button></div></div>";
+				res += "<div id='p_" + idx_list[i] + "' class='d-flex p-3' tabindex='0'><div class='imgBox mr-3'><img src='" + thum_list[i] + "' title='재생' onclick='startThis(" + idx_list[i] + ")'></div><div><div class='playlist_t' title='" + title_list[i] + "'>" + t + "</div><div class='playlist_a' title='" + artist_list[i] + "'>" + a + "</div></div><div class='ml-auto'><button name='delete_btn' type='button' class='btn' onclick='delList(" + idx_list[i] + ")' ><i class='fa-regular fa-trash-can'></i></button></div></div>";
 			}
 		    
 		    play_list.innerHTML = res;
@@ -109,6 +121,11 @@
 			let contextPath = location.href.substring(hostIndex, location.href.indexOf("/", hostIndex + 1));
 	
 		    songUrl = contextPath + "/music/" + title + " - " + artist + ".mp3";
+		    
+		    $.get(songUrl).fail(() => {
+		    	next_btn.click();
+		    });
+		    
 			player.src = songUrl;
 		    player.load();
 		    controls_title.innerHTML = title_list[playerIndex];
@@ -118,6 +135,35 @@
 		    controls_artist.title = artist_list[playerIndex];
 			play_listImg_img.src = thum_list[playerIndex].replace("50", "400");
 			play_listbg.src = thum_list[playerIndex].replace("50", "2000");
+			
+			
+			// 현재 재생 음악 포커스
+			if (pisw1 == 0) {
+				playerIndex_ = playerIndex;
+				pisw1 = 1;
+			}
+			let focu = document.getElementById("p_" + idx_list[playerIndex]);
+			
+			focu.scrollIntoView();
+			focu.style.backgroundColor = "#bbccdd";
+			focu.style.opacity = "0.7";
+			focu.style.borderRadius = "5px";
+			
+			if (pisw1 == 1) {
+				if (pisw2 == 0) {
+					pisw2 = 1;
+				}
+				else {
+					let focu_ = document.getElementById("p_" + idx_list[playerIndex_]);
+					focu_.style.backgroundColor = "";
+					focu_.style.opacity = "1";
+					focu_.style.borderRadius = "0";
+					playerIndex_ = playerIndex;		
+				}
+			}
+			
+			// 재생 수 증가
+			playCntUp(idx_list[playerIndex]);
 			
 			//로드 할 때 좋아요도 로드 해야 할 듯
 			if (${empty sMid}) return;
@@ -273,7 +319,6 @@
 			player.play();
 			$("#controls_time").html("00:00 / 00:00");
 		});
-	
 	
 		// back button
 		$("#back_btn").click(() => {

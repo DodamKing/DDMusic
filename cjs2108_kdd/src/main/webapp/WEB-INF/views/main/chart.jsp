@@ -67,18 +67,6 @@
 			}
 			
 			if (!sw) {
-				/* $.ajax({
-					type : "post",
-					url : "${ctp}/song/check",
-					data : {idx : idx},
-					success : (data) => {
-						if (data == "no") {
-							alert("아직 준비 중인 곡입니다.");
-							demo.innerHTML = 1;
-						}
-					}
-				}); */
-				
 				let url = "${ctp}/song/player?idx=" + idx;
 				player = window.open(url, "player", "width=1100px, height=800px, left=50px, top=150px");
 				sw = true;

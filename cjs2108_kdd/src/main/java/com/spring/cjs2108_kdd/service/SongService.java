@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.json.simple.parser.ParseException;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.cjs2108_kdd.vo.SongVO;
@@ -12,7 +13,7 @@ public interface SongService {
 
 	Integer getSongIdx(String title, String artist);
 
-	ArrayList<SongVO> getChartJson() throws FileNotFoundException;
+	ArrayList<SongVO> getChartJson() throws FileNotFoundException, IOException, ParseException;
 
 	int getSongCnt();
 
@@ -39,5 +40,7 @@ public interface SongService {
 	void addSongDB(String img, String title, String artist);
 
 	void songUpload(int idx, MultipartFile file) throws IOException;
+
+	void setPlayCnt(int songIdx, int userIdx);
 
 }

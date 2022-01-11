@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,7 +33,7 @@ public class AdminController {
 	public String mainGet(Model model, 
 			@RequestParam(value = "sw", defaultValue = "1") int sw, 
 			@RequestParam(value = "pageNo", defaultValue = "1") int pageNo) 
-					throws FileNotFoundException {
+					throws IOException, ParseException {
 		if (sw == 0) {
 			model.addAttribute("vos", songService.getChartJson());
 		}
@@ -102,7 +103,7 @@ public class AdminController {
 
 	@RequestMapping("/addsongall")
 	@ResponseBody
-	public void addsongallPost() throws FileNotFoundException {
+	public void addsongallPost() throws IOException, ParseException {
 		List<SongVO> vos = songService.getChartJson();
 		for (int i=0; i<vos.size(); i++) {
 			if (vos.get(i).getIdx() == 0) {

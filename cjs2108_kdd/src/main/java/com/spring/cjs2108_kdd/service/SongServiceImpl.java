@@ -9,6 +9,10 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -36,26 +40,25 @@ public class SongServiceImpl implements SongService {
 	}
 
 	@Override
-	public ArrayList<SongVO> getChartJson() throws FileNotFoundException {
+	public ArrayList<SongVO> getChartJson() throws IOException, ParseException {
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
 		String path = request.getSession().getServletContext().getRealPath("json/song_json.json");
 		
-		JsonParser parser = new JsonParser();
+		JSONParser parser = new JSONParser();
 		Reader reader = new FileReader(path);
-		JsonObject jsonObject = (JsonObject) parser.parse(reader);
-		JsonArray songs = jsonObject.getAsJsonArray("songs");
+		JSONObject jsonObject = (JSONObject) parser.parse(reader);
+		JSONArray songs = (JSONArray) jsonObject.get("songs");
 		
 		Gson gson = new Gson();
-		ArrayList<SongVO> vos = new ArrayList();
-		
+		ArrayList<SongVO> vos = new ArrayList<SongVO>();
 		for (int i=0; i<songs.size(); i++) {
 			SongVO vo = new SongVO();
-			vo = gson.fromJson(songs.get(i).toString(), SongVO.class);
-			Integer idx = 0;
-			if (songService.getSongIdx(vo.getTitle(), vo.getArtist()) != null) idx = songService.getSongIdx(vo.getTitle(), vo.getArtist());
-			vo.setIdx(idx);
+			JSONObject song = (JSONObject) songs.get(i);
+			vo = gson.fromJson(song.toJSONString(), SongVO.class);
+			vo.setIdx(songDAO.getSongIdx(song.get("title").toString(), song.get("artist").toString()));
 			vos.add(vo);
 		}
+//		vos = songDAO.getSong100(vos);
 		
 		return vos;
 	}
@@ -137,6 +140,14 @@ public class SongServiceImpl implements SongService {
 		FileOutputStream fos = new FileOutputStream(uploadPath + fileNm);
 		fos.write(data);
 		fos.close();
+	}
+
+	@Override
+	public void setPlayCnt(int songIdx, int userIdx) {
+		if (songDAO.isPlayCnt(songIdx, userIdx) == 0) {
+			songDAO.setPlayCnt(songIdx, userIdx);
+		}
+		songDAO.addPlayCnt(songIdx, userIdx);
 	}
 
 }

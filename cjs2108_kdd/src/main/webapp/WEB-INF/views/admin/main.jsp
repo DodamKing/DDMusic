@@ -224,12 +224,12 @@
 	
 		    songUrl = contextPath + "/music/" + title + " - " + artist + ".mp3";
 		    
-		    $.get(songUrl).done(() => {
-				player.src = songUrl;
+		    $.get(songUrl).fail(() => {
+		    	alert("파일이 없습니다.");
+		    }).done(() => {
+			    player.src = songUrl;
 			    player.load();
 			    player.play();
-		    }).fail(() => {
-		    	alert("파일이 없습니다.");
 		    });
 		}
 		

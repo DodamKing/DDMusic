@@ -1,6 +1,5 @@
 package com.spring.cjs2108_kdd.controller;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.spring.cjs2108_kdd.method.Method;
 import com.spring.cjs2108_kdd.service.SongService;
 import com.spring.cjs2108_kdd.vo.SongVO;
+import com.spring.cjs2108_kdd.vo.UserVO;
 
 @Controller
 @RequestMapping("/song")
@@ -39,19 +39,6 @@ public class SongController {
 		return "song/songsrch";
 	}
 	
-	@RequestMapping("check")
-	@ResponseBody
-	public String checkPost(HttpServletRequest request, int idx) {
-		SongVO vo = songService.getSongInfor(idx);
-		String name = vo.getTitle() + " - " + vo.getArtist() + ".mp3";
-		String path = request.getSession().getServletContext().getRealPath("/resources/music/");
-		File f = new File(path + name);
-		if (!f.exists()) {
-			return "no";
-		}
-		return "yes";
-	}
-	
 	@RequestMapping(value="/player", method = RequestMethod.GET)
 	public String playerGet(HttpServletRequest request, Model model, String idx, String idxs) {
 		if (idx != null) {
@@ -68,7 +55,10 @@ public class SongController {
 			Method method = new Method();
 			
 			for (int i=0; i<idx_list.length; i++) {
-				vos.add(songService.getSongInfor(Integer.parseInt(idx_list[i])));
+				SongVO vo = songService.getSongInfor(Integer.parseInt(idx_list[i]));
+				if (method.isFile(vo.getTitle(), vo.getArtist())) {
+					vos.add(vo);
+				}
 			}
 			
 			model.addAttribute("vos", vos);
@@ -116,6 +106,15 @@ public class SongController {
 	@ResponseBody
 	public String lyricsPost(int idx) {
 		return songService.getLyrics(idx);
+	}
+	
+	@RequestMapping("playcntup")
+	@ResponseBody
+	public void playcntupPost(HttpSession session, int songIdx) {
+		int userIdx = 0;
+		UserVO vo = (UserVO) session.getAttribute("sVO");
+		if (vo != null) userIdx = vo.getIdx();
+		songService.setPlayCnt(songIdx, userIdx);
 	}
 	
 }

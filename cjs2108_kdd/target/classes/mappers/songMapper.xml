@@ -49,4 +49,23 @@
 		insert into song (img, title, artist) values (#{img}, #{title}, #{artist});
 	</insert>
 	
+	<select id="isPlayCnt" resultType="int">
+		select count(*) from play where songIdx = #{songIdx} and userIdx = #{userIdx};
+	</select>
+	
+	<insert id="setPlayCnt">
+		insert into play (songIdx, userIdx) values (#{songIdx}, #{userIdx});
+	</insert>
+	
+	<update id="addPlayCnt">
+		update play set playCnt = playCnt + 1 where songIdx = #{songIdx} and userIdx = #{userIdx};
+	</update>
+	
+<!-- 	<select id="getSong100" resultType="com.spring.cjs2108_kdd.vo.SongVO" parameterType="java.util.ArrayList">
+		<foreach collection="vos" item="vo">
+			select * from song where title = #{vo.title} and artist = #{vo.artist}
+		</foreach>
+		;
+	</select> -->
+	
 </mapper>
