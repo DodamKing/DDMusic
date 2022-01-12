@@ -67,7 +67,7 @@
 	                            	</c:if> --%>
 	                            </div>
 	                        </td> 
-	                        <td><button name="add_btn" type="button" class="btn"><i title="곡 추가" class="fas fa-plus"></i></button></td>
+	                        <td><button name="add_btn" type="button" class="btn" onclick="addf(${vo.idx})"><i title="곡 추가" class="fas fa-plus"></i></button></td>
 	                    </tr>
                     </c:forEach>
                 </table>
@@ -75,7 +75,6 @@
         </div>
         <jsp:include page="/WEB-INF/views/include/sFooter.jsp" />
     </section>
-    <jsp:include page="/WEB-INF/views/include/footer.jsp" />
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>

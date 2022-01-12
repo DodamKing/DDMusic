@@ -43,4 +43,6 @@ public interface SongService {
 
 	void setPlayCnt(int songIdx, int userIdx);
 
+	ArrayList<SongVO> getRank();
+
 }

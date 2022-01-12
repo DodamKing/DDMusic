@@ -24,23 +24,25 @@ public class SongController {
 	@Autowired
 	SongService songService;
 	
-	@RequestMapping("/infor")
-	public String songinforGet(Model model, int idx) {
-		SongVO vo = songService.getSongInfor(idx);
-		if (vo != null) vo.setImg(vo.getImg().replaceFirst("50", "300"));
-		model.addAttribute("vo", vo);
-		return "song/songinfor";
-	}
+//	@RequestMapping("/infor")
+//	public String songinforGet(Model model, int idx) {
+//		SongVO vo = songService.getSongInfor(idx);
+//		if (vo != null) vo.setImg(vo.getImg().replaceFirst("50", "300"));
+//		model.addAttribute("vo", vo);
+//		return "song/songinfor";
+//	}
 	
-	@RequestMapping("srch")
-	public String srchPost(Model model, String srchKwd) {
-		model.addAttribute("srchKwd", srchKwd);
-		model.addAttribute("vos", songService.getSongSrch(srchKwd));
-		return "song/songsrch";
-	}
+//	@RequestMapping("srch")
+//	public String srchPost(Model model, String srchKwd) {
+//		model.addAttribute("srchKwd", srchKwd);
+//		model.addAttribute("vos", songService.getSongSrch(srchKwd));
+//		return "song/songsrch";
+//	}
 	
 	@RequestMapping(value="/player", method = RequestMethod.GET)
-	public String playerGet(HttpServletRequest request, Model model, String idx, String idxs) {
+	public String playerGet(HttpServletRequest request, HttpSession session, Model model, String idx, String idxs) {
+		session.setAttribute("player", true);
+		
 		if (idx != null) {
 			SongVO vo = songService.getSongInfor(Integer.parseInt(idx));
 			Method method = new Method();
@@ -115,6 +117,13 @@ public class SongController {
 		UserVO vo = (UserVO) session.getAttribute("sVO");
 		if (vo != null) userIdx = vo.getIdx();
 		songService.setPlayCnt(songIdx, userIdx);
+	}
+
+	@RequestMapping("close")
+	@ResponseBody
+	public void clseosPost(HttpSession session) {
+		session.removeAttribute("player");
+		session.setAttribute("player", false);
 	}
 	
 }

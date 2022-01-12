@@ -35,6 +35,7 @@
 		let sw = 0;
 		let pisw1 = 0;
 		let pisw2 = 0;
+		let repeat = 0;
 	
 		<c:if test="${!empty vos }">
 			<c:forEach var="vo" items="${vos}">
@@ -154,11 +155,13 @@
 					pisw2 = 1;
 				}
 				else {
-					let focu_ = document.getElementById("p_" + idx_list[playerIndex_]);
-					focu_.style.backgroundColor = "";
-					focu_.style.opacity = "1";
-					focu_.style.borderRadius = "0";
-					playerIndex_ = playerIndex;		
+					if (playerIndex != playerIndex_) {
+						let focu_ = document.getElementById("p_" + idx_list[playerIndex_]);
+						focu_.style.backgroundColor = "";
+						focu_.style.opacity = "1";
+						focu_.style.borderRadius = "0";
+						playerIndex_ = playerIndex;		
+					}
 				}
 			}
 			
@@ -337,15 +340,22 @@
 		// 연속 재생
 		$("#player").on("ended", () => {
 			playerIndex++;
+			if (repeat == 2) playerIndex--;
 			if (playerIndex >= thum_list.length) {
 				$(play_btn).show();
 		    	$(pause_btn).hide();
 				playerIndex = 0;
 				sw = 0;
 				player.currentTime = 0;
+				
+				if (repeat == 1) {
+					load();
+					player.play();
+				}
+				
 				return;
 			}
-	
+			
 			load();
 			player.play();
 		});
@@ -393,7 +403,33 @@
     			url : "${ctp}/song/unlike",
     			data : {idx : idx_list[playerIndex]},
     		});
-    	}); 
+    	});
+		
+		//반복 재생 버튼
+		$("#repeat_btn").click(() => {
+			if (repeat == 0) {
+				alert("반복재생");
+				repeat = 1;
+			}
+			
+			else if (repeat == 1) {
+				alert("한곡반복");
+				repeat = 2;
+			}
+			
+			else if (repeat == 2) {
+				alert("반복해제");
+				repeat = 0;
+			}
+		});
+		
+		// 창 닫기 이벤트
+		window.addEventListener("unload", () => {
+			$.ajax({
+				type : "post",
+				url : "${ctp}/song/close"
+			});
+		});
 		
 	</script>
 	

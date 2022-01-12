@@ -61,6 +61,14 @@
 		update play set playCnt = playCnt + 1 where songIdx = #{songIdx} and userIdx = #{userIdx};
 	</update>
 	
+	<select id="getTop10" resultType="int">
+		select songIdx from play group by songIdx order by sum(playCnt) desc limit 10;
+	</select>
+	
+	<select id="getSumPlayCnt" resultType="int">
+		select sum(playCnt) from play where songIdx = #{idx} group by songIdx;
+	</select>
+	
 <!-- 	<select id="getSong100" resultType="com.spring.cjs2108_kdd.vo.SongVO" parameterType="java.util.ArrayList">
 		<foreach collection="vos" item="vo">
 			select * from song where title = #{vo.title} and artist = #{vo.artist}

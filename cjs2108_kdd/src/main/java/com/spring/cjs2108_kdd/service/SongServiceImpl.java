@@ -1,6 +1,5 @@
 package com.spring.cjs2108_kdd.service;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
@@ -20,11 +19,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.spring.cjs2108_kdd.dao.SongDAO;
+import com.spring.cjs2108_kdd.vo.PlayVO;
 import com.spring.cjs2108_kdd.vo.SongVO;
+import com.spring.cjs2108_kdd.vo.UserVO;
 
 @Service
 public class SongServiceImpl implements SongService {
@@ -148,6 +146,18 @@ public class SongServiceImpl implements SongService {
 			songDAO.setPlayCnt(songIdx, userIdx);
 		}
 		songDAO.addPlayCnt(songIdx, userIdx);
+	}
+
+	@Override
+	public ArrayList<SongVO> getRank() {
+		ArrayList<SongVO> vos = new ArrayList<SongVO>();
+		int[] idxs = songDAO.getTop10();
+		for (int i=0; i<idxs.length; i++) {
+			SongVO vo = songDAO.getSongInfor(idxs[i]);
+			vo.setPlayCnt(songDAO.getSumPlayCnt(idxs[i]));
+			vos.add(vo);
+		}
+		return vos;
 	}
 
 }

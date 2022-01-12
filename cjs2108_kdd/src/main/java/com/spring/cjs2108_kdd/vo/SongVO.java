@@ -17,4 +17,6 @@ public class SongVO {
 	private String lyrics;
 	private int likeCnt;
 	private String likeList;
+	
+	private int playCnt;
 }

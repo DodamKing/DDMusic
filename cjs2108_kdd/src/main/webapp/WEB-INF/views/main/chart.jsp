@@ -37,7 +37,7 @@
 	                        <td style="text-align: center; vertical-align: middle;">${st.index + 1}</td>
 	                        <td><div class="imgBox"><a href="${fn:replace(vo.img, 50, 800) }" target="_blank"><img name="top100Img" src="${vo.img }" alt=""></a></div></td>
 	                        <td>
-	                            <div name="top100Title"><a href="song/infor?idx=${vo.idx }">${vo.title }</a></div>
+	                            <div name="top100Title"><a href="infor?idx=${vo.idx }">${vo.title }</a></div>
 	                            <div name="top100Artist">${vo.artist }</div>
 	                        </td>
 	                        <td><button name="add_btn" type="button" class="btn" onclick="addf(${vo.idx})"><i title="곡 추가" class="fas fa-plus"></i></button></td>
@@ -57,7 +57,7 @@
 	<script src="${ctp }/resources/js/main.js?v=1"></script>
 	
 	<script>
-		let sw;
+		/* let sw;
 		let player;
 		
 		function addf(idx) {
@@ -89,7 +89,7 @@
 					sw = true;
 				}
 			}
-		}
+		} */
 		
 		//전체선택
 		allch.addEventListener("click", () => {

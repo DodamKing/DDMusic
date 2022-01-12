@@ -55,7 +55,7 @@ public class UserController {
 			}
 			session.setAttribute("sMid", vo.getUserId());
 			session.setAttribute("sVO", vo);
-			return "main/main";
+			return "redirect:/today";
 		}
 		return "redirect:/message/idFalse";
 	}
@@ -85,7 +85,7 @@ public class UserController {
 	@RequestMapping("/logout")
 	public String logoutGet(HttpSession session) {
 		session.invalidate();
-		return "main/main";
+		return "redirect:/today";
 	}
 
 	@RequestMapping("/profile/{idx}")

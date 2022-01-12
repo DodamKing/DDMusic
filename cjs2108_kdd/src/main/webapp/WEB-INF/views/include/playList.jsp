@@ -20,7 +20,7 @@
 	    <div class="mt-3">
 	        <div id="play_list" class="pfc" tabindex="0">
 				<c:if test="${!empty vo }">
-		        	<div class='d-flex p-3'>
+		        	<div id="p_${vo.idx }" class='d-flex p-3'>
 		        		<div class='imgBox mr-3'>
 		        			<img src='${vo.img}' title="재생" onclick="startThis(${vo.idx})">
 	        			</div>

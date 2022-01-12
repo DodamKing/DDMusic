@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.spring.cjs2108_kdd.vo.PlayVO;
 import com.spring.cjs2108_kdd.vo.SongVO;
 
 public interface SongDAO {
@@ -39,5 +40,11 @@ public interface SongDAO {
 	public ArrayList<SongVO> getSong100(@Param("vos") ArrayList<SongVO> vos);
 
 	public int isPlayCnt(@Param("songIdx") int songIdx, @Param("userIdx") int userIdx);
+
+	public ArrayList<SongVO> getRank();
+
+	public int[] getTop10();
+
+	public int getSumPlayCnt(int idx);
 
 }

@@ -43,7 +43,7 @@
                 <li><a href="">최신앨범</a></li>
                 <li><a href="">DJ 스테이션</a></li>
                 <li><a href="">MAG</a></li>
-                <li><a href="">이달의 노래</a></li>
+                <li><a href="${ctp }/rank">이달의 노래</a></li>
             </ul>
             <c:if test="${sVO != null }">
 	            <ul>
