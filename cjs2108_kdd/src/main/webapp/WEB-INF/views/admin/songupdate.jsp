@@ -11,7 +11,7 @@
 </head>
 <body>
 	<div class="mt-5">
-		<h2 class="ml-5">음원관리</h2>
+		<h2 class="ml-5">음원정보</h2>
 		<div class="sticky">
 			<ul class="pagination">
 			    <li class="page-item"><a class="page-link bg-dark text-warning" href="${ctp }/admin/main?sw=2&pageNo=1">First</a></li>
@@ -24,7 +24,10 @@
 			    <li class="page-item"><a class="page-link bg-dark text-warning" href="${ctp }/admin/main?sw=2&pageNo=${lastPageNo }">Last</a></li>
  	 		</ul>
 		</div>
-	    <div class="sticky2"><input class="btn btn-warning" type="button" value="변경사항 적용" onclick="commit()"></div>
+	    <div class="sticky2">
+	    	<input class="btn btn-warning" type="button" value="추가" data-toggle="modal" data-target="#addSongModal">
+	    	<input class="btn btn-warning" type="button" value="변경사항 적용" onclick="commit()">
+    	</div>
 		<div class="mt-3">
 			<form method="post" name="myform">
 			<div>수정 하려는 항목을 더블 클릭 하세요!</div>

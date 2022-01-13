@@ -29,6 +29,7 @@
 					<th>#</th>
 					<th>제목</th>
 					<th>가수</th>
+					<th></th>
 					<th>
 						<button class="btn btn-warning" type="button" onclick="$('#fup').click()">파일 선택</button>
 						<button class="btn btn-warning" type="button" onclick="play2()">미리 듣기</button>
@@ -37,8 +38,14 @@
 				<c:forEach var="vo" items="${vos}">
 					<tr>
 						<td>${vo.idx }</td>
-						<td>${vo.title }</td>
+						<td title="${vo.title }">
+							<c:if test="${fn:length(vo.title) >= 20 }">${fn:substring(vo.title, 0, 20) }...</c:if>
+							<c:if test="${fn:length(vo.title) < 20 }">${vo.title }</c:if>
+						</td>
 						<td>${vo.artist }</td>
+						<td>
+							<c:if test="${vo.isFile == 0}">음원 파일 없음</c:if>
+						</td>
 						<td>
 							<button class="btn btn-warning" type="button" onclick="play1(`${vo.title}`, `${vo.artist }`)">재생</button>
 							<button class="btn btn-warning" type="button" onclick="fileupload(${vo.idx})">파일 업로드</button>

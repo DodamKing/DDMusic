@@ -45,4 +45,8 @@ public interface SongService {
 
 	ArrayList<SongVO> getRank();
 
+	void insertSong(SongVO vo);
+
+	int isSong(String title, String artist);
+
 }

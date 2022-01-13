@@ -36,6 +36,13 @@ public class MessageController {
 		return "include/message";
 	}
 
+	@RequestMapping("/reviewnoinput")
+	public String reviewnoinputGet(Model model) {
+		model.addAttribute("msg", "제목과 내용을 입력해 주세요.");
+		model.addAttribute("url", "wirte");
+		return "include/message";
+	}
+
 	@RequestMapping("/userupdatesuccess/{idx}")
 	public String userupdatesuccessGet(Model model, @PathVariable Integer idx) {
 		model.addAttribute("msg", "수정 되었습니다.");

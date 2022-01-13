@@ -117,4 +117,15 @@ public class AdminController {
 	public void uploadPost(int idx, MultipartFile file) throws IOException {
 		songService.songUpload(idx, file);
 	}
+
+	@RequestMapping("/insertsong")
+	@ResponseBody
+	public String insertsongPost(SongVO vo) {
+		if (songService.isSong(vo.getTitle(), vo.getArtist()) != 0) return "no" ;
+		
+		else {
+			songService.insertSong(vo); 
+			return "yes";
+		}
+	}
 }

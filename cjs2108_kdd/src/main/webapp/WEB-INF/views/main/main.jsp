@@ -20,14 +20,23 @@
 	<c:if test="${flag == 'rank'}">
 		<jsp:include page="/WEB-INF/views/song/songrank.jsp" />
 	</c:if>
+	<c:if test="${flag == 'review'}">
+		<jsp:include page="/WEB-INF/views/main/review.jsp" />
+	</c:if>
+	<c:if test="${flag == 'comming'}">
+		<jsp:include page="/WEB-INF/views/main/comming.jsp" />
+	</c:if>
+	<c:if test="${flag == 'write'}">
+		<jsp:include page="/WEB-INF/views/main/write.jsp" />
+	</c:if>
 </div>
 
 <script>
 	let sw;
 	let player;
 	
-	function addf(idx) {
-		if (idx == 0) {
+	function addf(idx, isFile) {
+		if (idx == 0 || isFile == 0) {
 			alert("아직 준비 중인 곡입니다.");
 			return;
 		}

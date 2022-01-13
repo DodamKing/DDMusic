@@ -40,12 +40,13 @@ public class UserController {
 	JavaMailSender mailSender;
 	
 	@RequestMapping("/login")
-	public String loginGet(Model model) {
+	public String loginGet(Model model, String flag) {
+		model.addAttribute("flag", flag);
 		return "user/login";
 	}
 
 	@RequestMapping(value="/login", method = RequestMethod.POST)
-	public String loginPost(HttpSession session, String userId, String pwd) {
+	public String loginPost(HttpSession session, String userId, String pwd, String flag) {
 		Integer idx = userService.getIdx(userId);
 		session.setAttribute("sMid_", userId);
 		UserVO vo = userService.getUserVO(idx);
@@ -55,6 +56,7 @@ public class UserController {
 			}
 			session.setAttribute("sMid", vo.getUserId());
 			session.setAttribute("sVO", vo);
+			if (flag.equals("write")) return "redirect:/" + flag;
 			return "redirect:/today";
 		}
 		return "redirect:/message/idFalse";

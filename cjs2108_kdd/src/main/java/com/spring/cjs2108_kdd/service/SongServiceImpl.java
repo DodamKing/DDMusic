@@ -53,7 +53,9 @@ public class SongServiceImpl implements SongService {
 			SongVO vo = new SongVO();
 			JSONObject song = (JSONObject) songs.get(i);
 			vo = gson.fromJson(song.toJSONString(), SongVO.class);
-			vo.setIdx(songDAO.getSongIdx(song.get("title").toString(), song.get("artist").toString()));
+			int idx = songDAO.getSongIdx(song.get("title").toString(), song.get("artist").toString());
+			vo.setIdx(idx);
+			vo.setIsFile(songDAO.getSongInfor(idx).getIsFile());
 			vos.add(vo);
 		}
 //		vos = songDAO.getSong100(vos);
@@ -158,6 +160,16 @@ public class SongServiceImpl implements SongService {
 			vos.add(vo);
 		}
 		return vos;
+	}
+
+	@Override
+	public void insertSong(SongVO vo) {
+		songDAO.insertSong(vo);
+	}
+
+	@Override
+	public int isSong(String title, String artist) {
+		return songDAO.isSong(title, artist);
 	}
 
 }

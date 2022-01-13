@@ -69,6 +69,18 @@
 		select sum(playCnt) from play where songIdx = #{idx} group by songIdx;
 	</select>
 	
+	<insert id="insertSong">
+		insert into song values (default, #{vo.img}, #{vo.title}, #{vo.artist}, #{vo.album}, #{vo.releaseDate}, #{vo.genre}, #{vo.music}, #{vo.words}, #{vo.arranger}, #{vo.lyrics}, default, default, default);
+	</insert>
+	
+	<select id="isSong" resultType="int">
+		select count(*) from song where title = #{title} and artist = #{artist};
+	</select>
+	
+	<update id="setIsfile">
+		update song set isFile = 1 where idx = ${idx}
+	</update>
+	
 <!-- 	<select id="getSong100" resultType="com.spring.cjs2108_kdd.vo.SongVO" parameterType="java.util.ArrayList">
 		<foreach collection="vos" item="vo">
 			select * from song where title = #{vo.title} and artist = #{vo.artist}

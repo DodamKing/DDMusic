@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.cjs2108_kdd.method.Method;
 import com.spring.cjs2108_kdd.service.SongService;
+import com.spring.cjs2108_kdd.vo.ReviewVO;
 import com.spring.cjs2108_kdd.vo.SongVO;
 
 @Controller
@@ -24,7 +26,7 @@ public class DDMusic {
 	@Autowired
 	SongService songService;
 	
-	@RequestMapping(value={"/"})
+	@RequestMapping(value={"/", "index"})
 	public String mainPage(Model model) {
 		model.addAttribute("flag", "today");
 		return "main/main";
@@ -40,7 +42,7 @@ public class DDMusic {
 //	}
 	
 	@RequestMapping("/{flag}")
-	public String mainGet(Model model, @PathVariable String flag, String srchKwd, String idx) throws FileNotFoundException, IOException, ParseException {
+	public String mainGet(Model model, HttpSession session , @PathVariable String flag, String srchKwd, String idx) throws FileNotFoundException, IOException, ParseException {
 		if (flag.equals("chart")) {
 			ArrayList<SongVO> vos = songService.getChartJson();
 			model.addAttribute("vos", vos);
@@ -66,17 +68,35 @@ public class DDMusic {
 			model.addAttribute("vos", vos);
 		}
 		
+		else if (flag.equals("review")) {
+			
+		}
+
+		else if (flag.equals("comming")) {
+			
+		}
+
+		else if (flag.equals("write")) {
+			if (session.getAttribute("sMid") == null) {
+				return "redirect:/index";
+			}
+		}
+		
 		model.addAttribute("flag", flag);
 		return "main/main";
 	}
 	
-//	@RequestMapping(value="/{flag}", method = RequestMethod.POST)
-//	@ResponseBody
-//	public void mainPost(Model model, @PathVariable String flag, String srchKwd) {
-//		if (flag.equals("srch")) {
-//			model.addAttribute("srchKwd", srchKwd);
-//			model.addAttribute("vos", songService.getSongSrch(srchKwd));
-//		}
-//		model.addAttribute("flag", flag);
-//	}
+	@RequestMapping(value="/{flag}", method = RequestMethod.POST)
+	public String mainPost(Model model, @PathVariable String flag, ReviewVO reviewVO) {
+		if (flag.equals("write")) {
+			if (reviewVO.getTitle() == null || reviewVO.getContent() ==null) {
+				return "redirect:/message/reviewnoinput";
+			}
+			System.out.println(reviewVO);
+			model.addAttribute("flag", "review");
+			return "main/main";
+		}
+		model.addAttribute("flag", flag);
+		return "main/main";
+	}
 }

@@ -431,6 +431,11 @@
 			});
 		});
 		
+		//크기 고정
+		window.addEventListener("resize", () => {
+			window.resizeTo(1100, 800);
+		});
+		
 	</script>
 	
 </body>

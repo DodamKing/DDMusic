@@ -68,14 +68,15 @@
 		<div class="card-body nav-w">
 	        <ul>
 	            <li><a href="${ctp }/admin/main?sw=0">업데이트</a></li>
-	            <li><a href="${ctp }/admin/main?sw=1">회원관리</a></li>
-                <li><a href="${ctp }/admin/main?sw=2">음원관리</a></li>
-                <li><a href="${ctp }/admin/main?sw=3">파일관리</a></li>
+	            <li><a href="${ctp }/admin/main?sw=1">회원정보</a></li>
+                <li><a href="${ctp }/admin/main?sw=2">음원정보</a></li>
+                <li><a href="${ctp }/admin/main?sw=3">음원파일</a></li>
             </ul>
     	</div>
 	</nav>
 	<section>
 		<jsp:include page="/WEB-INF/views/include/modal.jsp" />
+		<jsp:include page="/WEB-INF/views/include/addsongform.jsp" />
 		<c:if test="${sw == 0 }">
 			<jsp:include page="/WEB-INF/views/admin/dbupload.jsp" />
 		</c:if>

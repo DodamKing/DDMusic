@@ -40,7 +40,7 @@
 	                            <div name="top100Title"><a href="infor?idx=${vo.idx }">${vo.title }</a></div>
 	                            <div name="top100Artist">${vo.artist }</div>
 	                        </td>
-	                        <td><button name="add_btn" type="button" class="btn" onclick="addf(${vo.idx})"><i title="곡 추가" class="fas fa-plus"></i></button></td>
+	                        <td><button name="add_btn" type="button" class="btn" onclick="addf(${vo.idx}, ${vo.isFile })"><i title="곡 추가" class="fas fa-plus"></i></button></td>
 	                    </tr>
                     </c:forEach>
                 </table>
@@ -57,40 +57,6 @@
 	<script src="${ctp }/resources/js/main.js?v=1"></script>
 	
 	<script>
-		/* let sw;
-		let player;
-		
-		function addf(idx) {
-			if (idx == 0) {
-				alert("아직 준비 중인 곡입니다.");
-				return;
-			}
-			
-			if (!sw) {
-				let url = "${ctp}/song/player?idx=" + idx;
-				player = window.open(url, "player", "width=1100px, height=800px, left=50px, top=150px");
-				sw = true;
-			}
-			else {
-				if (!player.closed && sw) {
-					$.ajax({
-						type : "post",
-						url : "${ctp}/song/player",
-						data : {idx : idx},
-						success : (data) => {
-							player.addList(data);
-							player.setList();
-						}
-					});
-				} 
-				else {
-					let url = "${ctp}/song/player?idx=" + idx;
-					player = window.open(url, "player", "width=1100px, height=800px, left=50px, top=150px");
-					sw = true;
-				}
-			}
-		} */
-		
 		//전체선택
 		allch.addEventListener("click", () => {
 			if (allch.checked) {

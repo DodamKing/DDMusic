@@ -15,13 +15,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="${ctp }/resources/css/main.css?v=1">
 	<style>
-	    #playThum:hover {
+	    .ho:hover {
 	    	cursor: pointer;
-	    }
-	    
-	    #srch_bar {
-    		position: fixed;
-    		top: 0;
+	    	opacity: 0.7;
 	    }
     </style>
 </head>
@@ -35,20 +31,20 @@
 		<div class="container">
 			<div class="card-body" style="padding-bottom: 300px;">
 	            <h2 class="mt-5 mb-5">DD Music 이달의 노래</h2>
-				<div style="width: 350px; margin: auto;" class="mb-5 text-center">
+				<div style="width: 350px; margin: auto;" class="mb-5 text-center ho" onclick="javascript:location.href='infor?idx=${vos[0].idx }'">
 					<div><img src="${vos[0].img }"></div>
 					<div>${vos[0].title }</div>
 					<div>${vos[0].artist }</div>
 					<div>재생수 : ${vos[0].playCnt }</div>
 				</div>
 				<div class="row mb-5">
-					<div class="col text-center">
+					<div class="col text-center" onclick="javascript:location.href='infor?idx=${vos[1].idx }'">
 						<div><img src="${vos[1].img }"></div>
 						<div>${vos[1].title }</div>
 						<div>${vos[1].artist }</div>
 						<div>재생수 : ${vos[1].playCnt }</div>
 					</div>
-					<div class="col text-center">
+					<div class="col text-center" onclick="javascript:location.href='infor?idx=${vos[2].idx }'">
 						<div><img src="${vos[2].img }"></div>
 						<div>${vos[2].title }</div>
 						<div>${vos[2].artist }</div>
@@ -66,25 +62,27 @@
 						<th class="text-center align-middle">기타</th>
 					</tr>
 					<c:forEach var="vo" items="${vos}" varStatus="st">
-						<c:if test="${st.index > 2}">
-							<tr>
-								<td class="text-center align-middle"><input name="tch" type="checkbox"></td>
-								<td class="text-center align-middle">${st.count }</td>
-								<td class="align-middle"><img src="${vo.img }"></td>
-								<td class="align-middle" title="${vo.title }">
-									<a href="infor?idx=${vo.idx }">
-										<c:if test="${fn:length(vo.title) < 20 }">${vo.title }</c:if>
-										<c:if test="${fn:length(vo.title) >= 20 }">${fn:substring(vo.title, 0, 20) }...</c:if>
-									</a>
-								</td>
-								<td class="align-middle">${vo.artist }</td>
-								<td class="align-middle text-center">${vo.playCnt }</td>
-								<td class="align-middle"></td>
-							</tr>
-						</c:if>
+						<tr>
+							<td class="text-center align-middle"><input name="tch" type="checkbox"></td>
+							<td class="text-center align-middle">${st.count }</td>
+							<c:if test="${st.index <= 2}"><td class="align-middle"><img style="width: 50px;" src="${vo.img }"></td></c:if>
+							<c:if test="${st.index > 2}"><td class="align-middle"><img src="${vo.img }"></td></c:if>
+							<td class="align-middle" title="${vo.title }">
+								<a href="infor?idx=${vo.idx }">
+									<c:if test="${fn:length(vo.title) < 20 }">${vo.title }</c:if>
+									<c:if test="${fn:length(vo.title) >= 20 }">${fn:substring(vo.title, 0, 20) }...</c:if>
+								</a>
+							</td>
+							<td class="align-middle" title="${vo.artist }">
+								<c:if test="${fn:length(vo.artist) < 20 }">${vo.artist }</c:if>
+								<c:if test="${fn:length(vo.artist) >= 20 }">${fn:substring(vo.artist, 0, 20) }...</c:if>
+							</td>
+							<td class="align-middle text-center">${vo.playCnt }</td>
+							<td class="align-middle"></td>
+						</tr>
 					</c:forEach>
 					<tr>
-						<td class="text-right" colspan="6"><button class="btn btn-dark" type="button" onclick="addsel()">버튼</button></td>
+						<td class="text-right" colspan="7"><button class="btn btn-dark" type="button" onclick="addsel()">버튼</button></td>
 					</tr>
 				</table>
 			</div>

@@ -15,13 +15,14 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="${ctp }/resources/css/main.css?v=1">
 	<style>
-	    #playThum:hover {
-	    	cursor: pointer;
-	    }
-	    
 	    #srch_bar {
     		position: fixed;
     		top: 0;
+	    }
+	    
+	    #lyrics_div {
+	    	height: 200px;
+	    	overflow: hidden;
 	    }
     </style>
 </head>
@@ -63,7 +64,7 @@
 							<tr>
 								<th width="100px">아티스트</th>
 								<td>${vo.artist }</td>
-								<td rowspan="7"><div id="playThum" title="재생" style="width: 300px; float: right;" onclick="playThis()"><img style="border-radius: 100%" src="${vo.img }"></div></td>
+								<td rowspan="7"><div style="width: 300px; float: right;"><img style="border-radius: 100%" src="${vo.img }"></div></td>
 							</tr>
 							<tr>
 								<th>앨범</th>
@@ -96,7 +97,8 @@
 			<div class="p-3" style="border-radius: 15px; background-color: rgb(35, 35, 35);">
 				<h5><b>가사정보</b></h5>
 				<div class="text-light text-center">
-					${fn:replace(vo.lyrics, enter, "<br>") }
+					<div id="lyrics_div">${fn:replace(vo.lyrics, enter, "<br>") }</div>
+					<button type="button" class="btn btn-dark form-control mt-5" onclick="moerLyrics()">더보기</button>
 				</div>
 			</div>
 		</div>
@@ -108,11 +110,8 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<script src="${ctp }/resources/js/main.js"></script>
     <script>
-    	function playThis() {
-    		let url = "${ctp}/song/player?idx=${vo.idx}";
-			player = window.open(url, "player", "width=1000px, height=800px, left=50px, top=150px");
-		}
-    	
+    	let lyricssw = 0;
+    
     	$("#songlike_btn1").click(() => {
     		$("#songlike_btn1").hide();
     		$("#songlike_btn2").show();
@@ -145,6 +144,19 @@
 			});    		
     	}); 
     		
+    	function moerLyrics() {
+    		if (lyricssw == 0) {
+	    		lyrics_div.style.height = "auto";
+	    		lyrics_div.style.overflow = "auto";
+	    		lyricssw = 1;    			
+    		}
+    		
+    		else {
+	    		lyrics_div.style.height = "200px";
+	    		lyrics_div.style.overflow = "hidden";
+	    		lyricssw = 0;    			
+    		}
+		}
     	
     </script>
 </body>
