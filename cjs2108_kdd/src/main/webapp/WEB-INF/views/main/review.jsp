@@ -29,16 +29,20 @@
 					</tr>
 					<tr>
 						<td class="text-center">번호</td>
-						<td class="text-center">분류</td>
 						<td class="text-center">제목</td>
 						<td class="text-center">작성자</td>
+						<td class="text-center">작성일</td>
 					</tr>
-					<tr>
-						<td class="text-center">1</td>
-						<td>공지사항</td>
-						<td>게시판 시작</td>
-						<td class="text-center">관리자</td>
-					</tr>
+					<c:set var="index" value="${fn:length(vos) }" />
+					<c:forEach var="vo" items="${vos }">
+						<tr>
+							<td class="text-center">${index }</td>
+							<td>${vo.title }</td>
+							<td class="text-center">${vo.userIdx }</td>
+							<td class="text-center">${vo.date }</td>
+						</tr>
+						<c:set var="index" value="${index - 1 }" />
+					</c:forEach>
 				</table>
 			</div>
 		</div>

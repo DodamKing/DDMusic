@@ -49,4 +49,6 @@ public interface SongService {
 
 	int isSong(String title, String artist);
 
+	void setIsfile(int idx);
+
 }

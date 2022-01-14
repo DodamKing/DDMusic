@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.parser.ParseException;
@@ -14,9 +13,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.cjs2108_kdd.method.Method;
+import com.spring.cjs2108_kdd.service.ReviewService;
 import com.spring.cjs2108_kdd.service.SongService;
 import com.spring.cjs2108_kdd.vo.ReviewVO;
 import com.spring.cjs2108_kdd.vo.SongVO;
@@ -25,6 +24,9 @@ import com.spring.cjs2108_kdd.vo.SongVO;
 public class DDMusic {
 	@Autowired
 	SongService songService;
+	
+	@Autowired
+	ReviewService reviewService;
 	
 	@RequestMapping(value={"/", "index"})
 	public String mainPage(Model model) {
@@ -69,7 +71,9 @@ public class DDMusic {
 		}
 		
 		else if (flag.equals("review")) {
-			
+			ArrayList<ReviewVO> vos = new ArrayList<ReviewVO>();
+			vos = reviewService.getReviewData();
+			model.addAttribute("vos", vos);
 		}
 
 		else if (flag.equals("comming")) {
@@ -80,6 +84,7 @@ public class DDMusic {
 			if (session.getAttribute("sMid") == null) {
 				return "redirect:/index";
 			}
+			
 		}
 		
 		model.addAttribute("flag", flag);
@@ -87,16 +92,15 @@ public class DDMusic {
 	}
 	
 	@RequestMapping(value="/{flag}", method = RequestMethod.POST)
-	public String mainPost(Model model, @PathVariable String flag, ReviewVO reviewVO) {
+	public String mainPost(Model model, @PathVariable String flag, ReviewVO vo) {
 		if (flag.equals("write")) {
-			if (reviewVO.getTitle() == null || reviewVO.getContent() ==null) {
+			if (vo.getTitle() == null || vo.getContent() ==null) {
 				return "redirect:/message/reviewnoinput";
 			}
-			System.out.println(reviewVO);
+			reviewService.setReviewData(vo);
 			model.addAttribute("flag", "review");
-			return "main/main";
+			return "redirect:/review";
 		}
-		model.addAttribute("flag", flag);
-		return "main/main";
+		return "redirect:/" + flag;
 	}
 }

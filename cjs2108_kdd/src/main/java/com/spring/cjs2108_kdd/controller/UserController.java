@@ -56,8 +56,10 @@ public class UserController {
 			}
 			session.setAttribute("sMid", vo.getUserId());
 			session.setAttribute("sVO", vo);
-			if (flag.equals("write")) return "redirect:/" + flag;
-			return "redirect:/today";
+			if (flag != null) {
+				if (flag.equals("write")) return "redirect:/" + flag;
+			}
+			return "redirect:/index";
 		}
 		return "redirect:/message/idFalse";
 	}

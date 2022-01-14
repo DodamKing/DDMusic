@@ -59,7 +59,6 @@
 						<th></th>
 						<th></th>
 						<th class="text-center align-middle">재생수</th>
-						<th class="text-center align-middle">기타</th>
 					</tr>
 					<c:forEach var="vo" items="${vos}" varStatus="st">
 						<tr>
@@ -78,7 +77,6 @@
 								<c:if test="${fn:length(vo.artist) >= 20 }">${fn:substring(vo.artist, 0, 20) }...</c:if>
 							</td>
 							<td class="align-middle text-center">${vo.playCnt }</td>
-							<td class="align-middle"></td>
 						</tr>
 					</c:forEach>
 					<tr>

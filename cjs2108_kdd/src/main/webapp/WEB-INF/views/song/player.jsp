@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>DDMusic</title>
+<title>DDMusic </title>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="${ctp }/resources/css/main.css?v=1">
@@ -137,6 +137,9 @@
 			play_listImg_img.src = thum_list[playerIndex].replace("50", "400");
 			play_listbg.src = thum_list[playerIndex].replace("50", "2000");
 			
+			
+			//타이틀 변경
+			document.title = "DDMusic " + title_list[playerIndex] + " - " + artist_list[playerIndex];
 			
 			// 현재 재생 음악 포커스
 			if (pisw1 == 0) {

@@ -23,23 +23,7 @@
 		<div class="container">
 			<div class="card-body" style="padding-bottom: 300px;">
 				<h2 class="mt-5 mb-5">커밍쑨 DDMusic</h2>
-				<table class="table">
-					<tr class="text-right">
-						<td colspan="4"><button type="button" class="btn btn-dark" onclick="javascript:location.href='${ctp}/'">글쓰기</button></td>
-					</tr>
-					<tr>
-						<td class="text-center">번호</td>
-						<td class="text-center">분류</td>
-						<td class="text-center">제목</td>
-						<td class="text-center">작성자</td>
-					</tr>
-					<tr>
-						<td class="text-center">1</td>
-						<td>공지사항</td>
-						<td>게시판 시작</td>
-						<td class="text-center">관리자</td>
-					</tr>
-				</table>
+				페이지 공사중
 			</div>
 		</div>
 		<jsp:include page="/WEB-INF/views/include/sFooter.jsp" />

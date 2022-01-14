@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.spring.cjs2108_kdd.dao.SongDAO;
 import com.spring.cjs2108_kdd.service.SongService;
 import com.spring.cjs2108_kdd.service.UserService;
 import com.spring.cjs2108_kdd.vo.SongVO;
@@ -116,6 +117,7 @@ public class AdminController {
 	@ResponseBody
 	public void uploadPost(int idx, MultipartFile file) throws IOException {
 		songService.songUpload(idx, file);
+		songService.setIsfile(idx);
 	}
 
 	@RequestMapping("/insertsong")

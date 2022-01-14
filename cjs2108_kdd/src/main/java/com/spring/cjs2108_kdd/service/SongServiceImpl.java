@@ -172,4 +172,9 @@ public class SongServiceImpl implements SongService {
 		return songDAO.isSong(title, artist);
 	}
 
+	@Override
+	public void setIsfile(int idx) {
+		songDAO.setIsfile(idx);
+	}
+
 }
