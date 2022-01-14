@@ -6,7 +6,23 @@
 	</insert>
 	
 	<select id="getReviewData" resultType="com.spring.cjs2108_kdd.vo.ReviewVO">
-		select * from review where visible = 1 order by idx desc;
+		select * from review r left join user u on r.userIdx = u.idx where visible = 1 order by r.idx desc;
+	</select>
+	
+	<select id="getReview" resultType="com.spring.cjs2108_kdd.vo.ReviewVO">
+		select * from review r left join user u on r.userIdx = u.idx where r.idx = #{idx};
+	</select>
+	
+	<update id="setReviewDel">
+		update review set visible = 0 where idx = #{idx};
+	</update>
+	
+	<select id="getreviewCnt" resultType="int">
+		select count(*) from review where visible = 1; 
+	</select>
+	
+	<select id="getReviewVOS" resultType="com.spring.cjs2108_kdd.vo.ReviewVO">
+		select * from review r left join user u on r.userIdx = u.idx where visible = 1 order by r.idx desc limit #{startNo}, #{pageSize};
 	</select>
 	
 </mapper>

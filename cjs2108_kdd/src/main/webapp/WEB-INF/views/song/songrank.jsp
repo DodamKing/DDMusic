@@ -10,7 +10,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${vo.title } 곡정보</title>
+    <title>DD Music</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="${ctp }/resources/css/main.css?v=1">
@@ -35,20 +35,20 @@
 					<div><img src="${vos[0].img }"></div>
 					<div>${vos[0].title }</div>
 					<div>${vos[0].artist }</div>
-					<div>재생수 : ${vos[0].playCnt }</div>
+					<div>재생수 : ${vos[0].playCntSum }</div>
 				</div>
 				<div class="row mb-5">
 					<div class="col text-center" onclick="javascript:location.href='infor?idx=${vos[1].idx }'">
 						<div><img src="${vos[1].img }"></div>
 						<div>${vos[1].title }</div>
 						<div>${vos[1].artist }</div>
-						<div>재생수 : ${vos[1].playCnt }</div>
+						<div>재생수 : ${vos[1].playCntSum }</div>
 					</div>
 					<div class="col text-center" onclick="javascript:location.href='infor?idx=${vos[2].idx }'">
 						<div><img src="${vos[2].img }"></div>
 						<div>${vos[2].title }</div>
 						<div>${vos[2].artist }</div>
-						<div>재생수 : ${vos[2].playCnt }</div>
+						<div>재생수 : ${vos[2].playCntSum }</div>
 					</div>
 				</div>
 				<table class="table">
@@ -76,7 +76,7 @@
 								<c:if test="${fn:length(vo.artist) < 20 }">${vo.artist }</c:if>
 								<c:if test="${fn:length(vo.artist) >= 20 }">${fn:substring(vo.artist, 0, 20) }...</c:if>
 							</td>
-							<td class="align-middle text-center">${vo.playCnt }</td>
+							<td class="align-middle text-center">${vo.playCntSum }</td>
 						</tr>
 					</c:forEach>
 					<tr>

@@ -9,10 +9,16 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>사용자 리뷰</title>
+	<title>DD Music 서비스 소개</title>
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="${ctp }/resources/css/main.css?v=2">
+    <style>
+    	.ho:hover {
+    		cursor: pointer;
+    		opacity: 0.7;
+    	}
+    </style>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/include/searchBar.jsp" />
@@ -22,28 +28,17 @@
 	<section>
 		<div class="container">
 			<div class="card-body" style="padding-bottom: 300px;">
-				<h2 class="mt-5 mb-5">사용자 리뷰</h2>
-				<table class="table">
-					<tr class="text-right">
-						<td colspan="4"><button type="button" class="btn btn-dark" onclick="goWrite()">글쓰기</button></td>
-					</tr>
-					<tr>
-						<td class="text-center">번호</td>
-						<td class="text-center">제목</td>
-						<td class="text-center">작성자</td>
-						<td class="text-center">작성일</td>
-					</tr>
-					<c:set var="index" value="${fn:length(vos) }" />
-					<c:forEach var="vo" items="${vos }">
-						<tr>
-							<td class="text-center">${index }</td>
-							<td>${vo.title }</td>
-							<td class="text-center">${vo.userIdx }</td>
-							<td class="text-center">${vo.date }</td>
-						</tr>
-						<c:set var="index" value="${index - 1 }" />
-					</c:forEach>
-				</table>
+				<h2 class="mt-5 mb-5">서비스 소개</h2>
+				<div>
+					<p style="font-size: 24px;"><span style="font-size: 32px;"><b>2022년 1월 14일</b></span> 서비스를 시작 합니다.</p>
+					<p style="font-size: 20px;">차트를 불러 오실 때 많이 늦습니다. <font color="blue;">기다려 주세요!</font> 곧 로직 수정 하겠습니다.</p>
+					<p>계정 설정에서 썸네일 추가 하실 수 있습니다.</p>
+					<p>음악은 1분 미리 듣기만 가능하며, My 맴버십에서 맴버십 변경시 전체 듣기 가능합니다.</p>
+					<p>사용자 리뷰에 글쓰기 가능합니다.</p>
+				</div>
+				<div>
+					<a href="${ctp }/comming" class="btn btn-dark">업데이트 확인 바로가기</a>
+				</div>
 			</div>
 		</div>
 		<jsp:include page="/WEB-INF/views/include/sFooter.jsp" />
@@ -54,18 +49,6 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<script src="${ctp }/resources/js/main.js?v=1"></script>
-	
-	<script>
-		function goWrite() {
-			if (${sVO == null}) {
-				if (confirm("로그인이 필요합니다. \n로그인 페이지로 이동 하시겠습니까?")) {
-					location.href="${ctp}/user/login?flag=write"
-				}
-				return;
-			}
-			location.href="${ctp}/write"
-		}
-	</script>
 	
 </body>
 </html>

@@ -11,4 +11,8 @@ public class ReviewVO {
 	private String date;
 	private String hostIp;
 	private int visible;
+	
+	private String userId;
+	private String nickNm;
+	private String profileImg;
 }

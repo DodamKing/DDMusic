@@ -20,4 +20,5 @@ public class SongVO {
 	private int isFile;
 	
 	private int playCnt;
+	private int playCntSum;
 }

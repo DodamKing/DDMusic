@@ -58,8 +58,8 @@
 	            </ul>
             </c:if>
             <ul>
-                <li><a href="">#내돈내듣</a></li>
-                <li><a href="">서비스 소개</a></li>
+                <li><a href="${ctp }/myranking">#내돈내듣</a></li>
+                <li><a href="${ctp }/intro">서비스 소개</a></li>
                 <li><a href="${ctp }/review">사용자 리뷰</a></li>
                 <li><a href="${ctp }/comming">커밍쑨 DDMusic</a></li>
             </ul>

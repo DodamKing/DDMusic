@@ -61,12 +61,8 @@
 		update play set playCnt = playCnt + 1 where songIdx = #{songIdx} and userIdx = #{userIdx};
 	</update>
 	
-	<select id="getTop10" resultType="int">
-		select songIdx from play group by songIdx order by sum(playCnt) desc limit 10;
-	</select>
-	
-	<select id="getSumPlayCnt" resultType="int">
-		select sum(playCnt) from play where songIdx = #{idx} group by songIdx;
+	<select id="getRank" resultType="com.spring.cjs2108_kdd.vo.SongVO">
+		select *, sum(playCnt) as playCntSum from song s left join play p on s.idx = p.songIdx group by s.idx order by sum(playCnt) desc limit 10;
 	</select>
 	
 	<insert id="insertSong">

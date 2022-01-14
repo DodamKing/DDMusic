@@ -152,14 +152,7 @@ public class SongServiceImpl implements SongService {
 
 	@Override
 	public ArrayList<SongVO> getRank() {
-		ArrayList<SongVO> vos = new ArrayList<SongVO>();
-		int[] idxs = songDAO.getTop10();
-		for (int i=0; i<idxs.length; i++) {
-			SongVO vo = songDAO.getSongInfor(idxs[i]);
-			vo.setPlayCnt(songDAO.getSumPlayCnt(idxs[i]));
-			vos.add(vo);
-		}
-		return vos;
+		return songDAO.getRank();
 	}
 
 	@Override

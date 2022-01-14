@@ -21,13 +21,22 @@
 		<jsp:include page="/WEB-INF/views/song/songrank.jsp" />
 	</c:if>
 	<c:if test="${flag == 'review'}">
-		<jsp:include page="/WEB-INF/views/main/review.jsp" />
+		<jsp:include page="/WEB-INF/views/review/review.jsp" />
 	</c:if>
 	<c:if test="${flag == 'comming'}">
 		<jsp:include page="/WEB-INF/views/main/comming.jsp" />
 	</c:if>
 	<c:if test="${flag == 'write'}">
-		<jsp:include page="/WEB-INF/views/main/write.jsp" />
+		<jsp:include page="/WEB-INF/views/review/write.jsp" />
+	</c:if>
+	<c:if test="${flag == 'content'}">
+		<jsp:include page="/WEB-INF/views/review/content.jsp" />
+	</c:if>
+	<c:if test="${flag == 'intro'}">
+		<jsp:include page="/WEB-INF/views/main/intro.jsp" />
+	</c:if>
+	<c:if test="${flag == 'myranking'}">
+		<jsp:include page="/WEB-INF/views/main/myranking.jsp" />
 	</c:if>
 </div>
 

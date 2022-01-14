@@ -30,7 +30,7 @@ public class DDMusic {
 	
 	@RequestMapping(value={"/", "index"})
 	public String mainPage(Model model) {
-		model.addAttribute("flag", "today");
+		model.addAttribute("flag", "intro");
 		return "main/main";
 	}
 	
@@ -44,7 +44,7 @@ public class DDMusic {
 //	}
 	
 	@RequestMapping("/{flag}")
-	public String mainGet(Model model, HttpSession session , @PathVariable String flag, String srchKwd, String idx) throws FileNotFoundException, IOException, ParseException {
+	public String mainGet(Model model, HttpSession session , @PathVariable String flag, String srchKwd, String idx, String pageNo) throws FileNotFoundException, IOException, ParseException {
 		if (flag.equals("chart")) {
 			ArrayList<SongVO> vos = songService.getChartJson();
 			model.addAttribute("vos", vos);
@@ -71,9 +71,19 @@ public class DDMusic {
 		}
 		
 		else if (flag.equals("review")) {
-			ArrayList<ReviewVO> vos = new ArrayList<ReviewVO>();
-			vos = reviewService.getReviewData();
-			model.addAttribute("vos", vos);
+			int pageSize = 10;
+			int intPageNo = 1;
+			if (pageNo != null) intPageNo = Integer.parseInt(pageNo);
+			int startNo = (intPageNo - 1) * pageSize;
+			int lastPageNo = reviewService.getreviewCnt() / pageSize + 1;
+			if (reviewService.getreviewCnt() % 10 == 0) lastPageNo--;
+			model.addAttribute("vos", reviewService.getReviewVOS(startNo, pageSize));
+			model.addAttribute("lastPageNo", lastPageNo);
+			model.addAttribute("pageNo", intPageNo);
+			
+//			ArrayList<ReviewVO> vos = new ArrayList<ReviewVO>();
+//			vos = reviewService.getReviewData();
+//			model.addAttribute("vos", vos);
 		}
 
 		else if (flag.equals("comming")) {
@@ -88,6 +98,13 @@ public class DDMusic {
 		}
 		
 		model.addAttribute("flag", flag);
+		return "main/main";
+	}
+	
+	@RequestMapping("/review/{idx}")
+	public String reviewGet(Model model, @PathVariable int idx) {
+		model.addAttribute("vo", reviewService.getReview(idx));
+		model.addAttribute("flag", "content");
 		return "main/main";
 	}
 	

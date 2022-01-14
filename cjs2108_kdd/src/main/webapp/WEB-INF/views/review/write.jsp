@@ -23,7 +23,7 @@
 	<section>
 		<div class="container">
 			<div class="card-body" style="padding-bottom: 100px;">
-				<h2 class="mt-5 mb-5">DDMusic 글쓰기</h2>
+				<h2 class="mt-5 mb-5">사용자 리뷰 글쓰기</h2>
 				<form method="post" name="myform">
 					<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
 						<tbody>
@@ -69,15 +69,24 @@
 					return;
 				}
 
-				if (myform.content == "") {
+				if (CKEDITOR.instances.CKEDITOR.getData() == "") {
 					alert("내용을 입력해 주세요.");
 					return;
 				}
 				
 				
+				
 				myform.submit();
 			}
 		}
+		
+		$("#title").keydown((e) => {
+			if (e.keyCode == 13) {
+				e.preventDefault();
+			}
+		});
+				
+		
 	</script>
 	
 </body>

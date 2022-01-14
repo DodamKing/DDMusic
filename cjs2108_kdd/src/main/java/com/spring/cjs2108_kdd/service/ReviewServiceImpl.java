@@ -22,6 +22,26 @@ public class ReviewServiceImpl implements ReviewService {
 	public ArrayList<ReviewVO> getReviewData() {
 		return reviewDAO.getReviewData();
 	}
+
+	@Override
+	public ReviewVO getReview(int idx) {
+		return reviewDAO.getReview(idx);
+	}
+
+	@Override
+	public void setReviewDel(int idx) {
+		reviewDAO.setReviewDel(idx);
+	}
+
+	@Override
+	public int getreviewCnt() {
+		return reviewDAO.getreviewCnt();
+	}
+
+	@Override
+	public ArrayList<ReviewVO> getReviewVOS(int startNo, int pageSize) {
+		return reviewDAO.getReviewVOS(startNo, pageSize);
+	}
 	
 	
 }

@@ -43,10 +43,6 @@ public interface SongDAO {
 
 	public ArrayList<SongVO> getRank();
 
-	public int[] getTop10();
-
-	public int getSumPlayCnt(int idx);
-
 	public void insertSong(@Param("vo") SongVO vo);
 
 	public int isSong(@Param("title") String title, @Param("artist") String artist);

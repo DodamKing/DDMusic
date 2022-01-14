@@ -41,7 +41,7 @@
 	                        <td><div class="imgBox"><img name="top100Img" src="${vo.img }" alt=""></div></td>
 	                        <td>
 	                            <div name="top100Title">
-	                            	<a href="${ctp }/song/infor?idx=${vo.idx }">
+	                            	<a href="${ctp }/infor?idx=${vo.idx }">
 	                            		${fn:replace(vo.title, srchKwd, active) }
 	                            		<%-- <c:if test="${fn:contains(vo.title, srchKwdU) }">
 			                            	${fn:replace(vo.title, srchKwdU, activeU) }
@@ -67,7 +67,7 @@
 	                            	</c:if> --%>
 	                            </div>
 	                        </td> 
-	                        <td><button name="add_btn" type="button" class="btn" onclick="addf(${vo.idx}, ${vo.isFile })"><i title="곡 추가" class="fas fa-plus"></i></button></td>
+	                        <td class="align-middle"><button name="add_btn" type="button" class="btn" onclick="addf(${vo.idx}, ${vo.isFile })"><i title="곡 추가" class="fas fa-plus"></i></button></td>
 	                    </tr>
                     </c:forEach>
                 </table>
