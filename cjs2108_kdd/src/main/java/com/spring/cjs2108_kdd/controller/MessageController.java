@@ -63,4 +63,25 @@ public class MessageController {
 		model.addAttribute("url", "user/profile/" + idx);
 		return "include/message";
 	}
+
+	@RequestMapping("/writesuccess")
+	public String successGet(Model model) {
+		model.addAttribute("msg", "정상 등록 되었습니다.");
+		model.addAttribute("url", "review/list");
+		return "include/message";
+	}
+
+	@RequestMapping("/reviewdelsuccess")
+	public String reviewdelsuccess(Model model) {
+		model.addAttribute("msg", "정상 삭제 되었습니다.");
+		model.addAttribute("url", "review/list");
+		return "include/message";
+	}
+	
+	@RequestMapping("/updatesuccess")
+	public String updatesuccess(Model model, int idx) {
+		model.addAttribute("msg", "정상 수정 되었습니다.");
+		model.addAttribute("url", "review/" + idx);
+		return "include/message";
+	}
 }

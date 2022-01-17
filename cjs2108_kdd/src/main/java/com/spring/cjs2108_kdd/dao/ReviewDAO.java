@@ -19,5 +19,15 @@ public interface ReviewDAO {
 	public int getreviewCnt();
 
 	public ArrayList<ReviewVO> getReviewVOS(@Param("startNo") int startNo, @Param("pageSize") int pageSize);
+
+	public ReviewVO getReviewVO(int idx);
+
+	public void setReviewUpdate(@Param("vo") ReviewVO vo);
+
+	public void setLikeCnt(int idx);
+
+	public ArrayList<ReviewVO> getSrchResult(@Param("reviewsrch") String reviewsrch, @Param("srchClass") String srchClass, @Param("startNo") int startNo, @Param("pageSize") int pageSize);
+
+	public int getSrchResultCnt(@Param("srchClass") String srchClass, @Param("reviewsrch") String reviewsrch);
 	
 }

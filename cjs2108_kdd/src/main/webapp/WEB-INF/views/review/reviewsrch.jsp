@@ -9,7 +9,7 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>DD Music 사용자 리뷰</title>
+	<title>DD Music 사용자 리뷰 검색 결과</title>
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="${ctp }/resources/css/main.css?v=2">
@@ -35,7 +35,7 @@
 	<section>
 		<div class="container">
 			<div class="card-body" style="padding-bottom: 300px;">
-				<h2 class="mt-5 mb-5">사용자 리뷰</h2>
+				<h2 class="mt-5 mb-5">사용자 리뷰 ${reviewsrch } 검색 결과</h2>
 				<table class="table">
 					<tr class="">
 						<td colspan="6">
@@ -47,15 +47,17 @@
 										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	    							</div>
 	    								<select name="srchClass" class="custom-select">
-											<option value="title">-- 선택 --</option>
-											<option value="title">제목</option>
+											<option value="">-- 선택 --</option>
+											<option value="title" <c:if test="${srchClass == 'title' }">selected</c:if>>제목</option>
 											<option value="content">내용</option>
 											<option value="nickNm">작성자</option>
-											<option value="title">제목 + 내용</option>
+											<option value="">제목 + 내용</option>
 										</select>
-										<input id="reviewsrch" name="reviewsrch" type="text" class="form-control" placeholder="사용자 리뷰 검색" maxlength="30">
+										<input id="reviewsrch" name="reviewsrch" type="text" class="form-control" placeholder="사용자 리뷰 검색" maxlength="30" value="${reviewsrch }">
 								  		<div class="input-group-append">
 									    	<button id="reviewsrch_btn" class="btn btn-dark" type="button">검색</button>
 								  		</div>
@@ -71,16 +73,6 @@
 						<td class="text-center">작성일</td>
 						<td class="text-center">조회</td>
 					</tr>
-					<c:forEach var="vo" items="${temp }">
-						<tr>
-							<td class="text-center"></td>
-							<td class="text-center">${vo.kategorie }</td>
-							<td class="ho" onclick="location.href='${ctp}/review/${vo.idx }'">${vo.title }</td>
-							<td class="text-center">${vo.nickNm }</td>
-							<td class="text-center">${fn:substring(vo.date, 0, 10) }</td>
-							<td class="text-center">${vo.likeCnt}</td>
-						</tr>
-					</c:forEach>
 					<c:forEach var="vo" items="${vos }">
 						<tr>
 							<td class="text-center">${start }</td>
@@ -96,11 +88,11 @@
 				<div class="row">
 					<div class="col"></div>
 					<ul class="pagination col">
-					    <li class="page-item"><a class="page-link bg-dark text-warning" href="${ctp }/review/list?pageNo=1">First</a></li>
-					    <li class="page-item"><a class="page-link bg-dark text-warning" href="${ctp }/review/list?pageNo=<c:if test="${pageNo != 1 }">${pageNo - 1 }</c:if><c:if test="${pageNo == 1 }">1</c:if> ">Previous</a></li>
+					    <li class="page-item"><a class="page-link bg-dark text-warning" href="${ctp }/review/srch?pageNo=1&reviewsrch=${reviewsrch}">First</a></li>
+					    <li class="page-item"><a class="page-link bg-dark text-warning" href="${ctp }/review/srch?pageNo=<c:if test="${pageNo != 1 }">${pageNo - 1 }</c:if><c:if test="${pageNo == 1 }">1</c:if>&reviewsrch=${reviewsrch}">Previous</a></li>
 					    <li class="page-item"><a class="page-link bg-secondary text-danger">${pageNo }</a></li>
-					    <li class="page-item"><a class="page-link bg-dark text-warning" href="${ctp }/review/list?pageNo=<c:if test="${pageNo + 1 > lastPageNo }">${pageNo }</c:if><c:if test="${pageNo + 1 <= lastPageNo }">${pageNo + 1}</c:if>">Next</a></li>
-					    <li class="page-item"><a class="page-link bg-dark text-warning" href="${ctp }/review/list?pageNo=${lastPageNo }">Last</a></li>
+					    <li class="page-item"><a class="page-link bg-dark text-warning" href="${ctp }/review/srch?pageNo=<c:if test="${pageNo + 1 > lastPageNo }">${pageNo }</c:if><c:if test="${pageNo + 1 <= lastPageNo }">${pageNo + 1}</c:if>&reviewsrch=${reviewsrch}">Next</a></li>
+					    <li class="page-item"><a class="page-link bg-dark text-warning" href="${ctp }/review/srch?pageNo=${lastPageNo }&reviewsrch=${reviewsrch}">Last</a></li>
 		 	 		</ul>
 		 	 		<div class="col"></div>
 				</div>

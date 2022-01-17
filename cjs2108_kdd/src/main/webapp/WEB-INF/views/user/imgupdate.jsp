@@ -49,7 +49,8 @@
 						</div>
 					</c:if>
 					<div class="mt-3">
-						<input class="btn btn-dark" type="file" id="imgUpdate" name="imgUpdate" value="사진변경" >
+						<input class="btn btn-dark" type="file" id="imgUpdate" name="imgUpdate" style="display: none;">
+						<input class="btn btn-dark" type="button" value="사진변경" onclick="imgUpdate.click()">
 						<input class="btn btn-dark" type="button" value="삭제" onclick="imgDelete()" >
 					</div>
 				</div>

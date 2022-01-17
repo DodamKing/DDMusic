@@ -57,7 +57,7 @@ public class UserController {
 			session.setAttribute("sMid", vo.getUserId());
 			session.setAttribute("sVO", vo);
 			if (flag != null) {
-				if (flag.equals("write")) return "redirect:/" + flag;
+				if (flag.equals("write")) return "redirect:/review/write";
 			}
 			return "redirect:/index";
 		}

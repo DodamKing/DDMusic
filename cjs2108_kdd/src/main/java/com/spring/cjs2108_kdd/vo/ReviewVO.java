@@ -10,6 +10,8 @@ public class ReviewVO {
 	private String content;
 	private String date;
 	private String hostIp;
+	private int likeCnt;
+	private String kategorie;
 	private int visible;
 	
 	private String userId;

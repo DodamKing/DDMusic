@@ -23,41 +23,32 @@
 	<section>
 		<div class="container">
 			<div class="card-body" style="padding-bottom: 100px;">
-				<h2 class="mt-5 mb-5">사용자 리뷰 글쓰기</h2>
+				<h2 class="mt-5 mb-5">사용자 리뷰 글쓰기 수정</h2>
 				<form method="post" name="myform">
-					<select id="kategorie" name="kategorie" class="custom-select">
-						<option value="자유">-- 분류 --</option>
-						<c:if test="${sVO.membership == -1}"><option value="공지">공지</option></c:if>
-						<option value="자유">자유</option>
-						<option value="건의">건의</option>
-						<option value="신청곡">신청곡</option>
-					</select>
 					<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
-						<tr>
-						</tr>
-						<tr>
-							<td><input type="text" class="form-control" placeholder="제목을 입력하세요" id="title" name="title" maxlength="50"></td>
-						</tr>
-						<tr>
-							<td>
-								<textarea class="form-control" placeholder="내용을 입력하세요" id="CKEDITOR" name="content" maxlength="2048" style="height: 400px;"></textarea>
-								<script>
-									CKEDITOR.replace("content", {
-										height : 460
-								  		/* uploadUrl: "${ctp}/imageUpload",
-								  		filebrowserUploadUrl : "${ctp}/imageUpload",
-								  		height:460 */
-								  	});
-								</script>
-							</td>
-						</tr>
+						<tbody>
+							<tr>
+								<td><input type="text" class="form-control" value="${vo.title }" id="title" name="title" maxlength="50"></td>
+							</tr>
+							<tr>
+								<td>
+									<textarea class="form-control" id="CKEDITOR" name="content" maxlength="2048" style="height: 400px;">${vo.content }</textarea>
+									<script>
+										CKEDITOR.replace("content", {
+											height : 460
+									  		/* uploadUrl: "${ctp}/imageUpload",
+									  		filebrowserUploadUrl : "${ctp}/imageUpload",
+									  		height:460 */
+									  	});
+									</script>
+								</td>
+							</tr>
+						</tbody>
 					</table>
-					<input type="hidden" name="userIdx" value="${sVO.idx }">
-					<input type="hidden" name="hostIp" value="<%=request.getRemoteAddr()%>">
 					<div class="row">
-						<input type="button" class="btn btn-dark col-2 ml-3" value="등록" onclick="submitfn()">
+						<input type="button" class="btn btn-dark col-2 ml-3" value="수정" onclick="submitfn()">
 						<div class="col"></div>
-						<a onclick="return confirm('작성하던 게시글은 저장 되지 않습니다.\n정말 이동하시겠습니까?')" href="${ctp }/review/list" class="btn btn-dark col-2 mr-3">돌아가기</a>
+						<a onclick="return confirm('작성하던 게시글은 저장 되지 않습니다.\n정말 이동하시겠습니까?')" href="${ctp }/review/${vo.idx}" class="btn btn-dark col-2 mr-3">돌아가기</a>
 					</div>
 				</form>
 			</div>
@@ -73,7 +64,7 @@
 	
 	<script>
 		function submitfn() {
-			if (confirm("작성 내용을 등록 하시겠습니까?")) {
+			if (confirm("작성 내용을 수정 하시겠습니까?")) {
 				if (title.value.trim() == "") {
 					alert("제목을 입력해 주세요.");
 					return;
@@ -84,7 +75,6 @@
 					return;
 				}
 				
-				
 				$("form[name='myform']").submit();
 			}
 		}
@@ -94,7 +84,7 @@
 				e.preventDefault();
 			}
 		});
-		
+				
 		
 	</script>
 	

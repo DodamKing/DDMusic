@@ -42,6 +42,31 @@ public class ReviewServiceImpl implements ReviewService {
 	public ArrayList<ReviewVO> getReviewVOS(int startNo, int pageSize) {
 		return reviewDAO.getReviewVOS(startNo, pageSize);
 	}
+
+	@Override
+	public ReviewVO getReviewVO(int idx) {
+		return reviewDAO.getReviewVO(idx);
+	}
+
+	@Override
+	public void setReviewUpdate(ReviewVO vo) {
+		reviewDAO.setReviewUpdate(vo);
+	}
+
+	@Override
+	public void setLikeCnt(int idx) {
+		reviewDAO.setLikeCnt(idx);
+	}
+
+	@Override
+	public ArrayList<ReviewVO> getSrchResult(String reviewsrch, String srchClass, int startNo, int pageSize) {
+		return reviewDAO.getSrchResult(reviewsrch, srchClass, startNo, pageSize);
+	}
+
+	@Override
+	public int getSrchResultCnt(String srchClass, String reviewsrch) {
+		return reviewDAO.getSrchResultCnt(srchClass, reviewsrch);
+	}
 	
 	
 }

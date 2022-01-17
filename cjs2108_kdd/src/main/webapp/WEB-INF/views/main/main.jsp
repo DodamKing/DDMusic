@@ -3,7 +3,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <% pageContext.setAttribute("enter", "\n"); %>
 <c:set var="ctp" value="<%=request.getContextPath() %>" />
+<link rel="stylesheet" href="${ctp }/resources/css/loader.css">
 
+<div class="loader"></div>
 <div id="mainBody">
 	<c:if test="${flag == 'today'}">
 		<jsp:include page="/WEB-INF/views/main/today.jsp" />
@@ -20,14 +22,8 @@
 	<c:if test="${flag == 'rank'}">
 		<jsp:include page="/WEB-INF/views/song/songrank.jsp" />
 	</c:if>
-	<c:if test="${flag == 'review'}">
-		<jsp:include page="/WEB-INF/views/review/review.jsp" />
-	</c:if>
 	<c:if test="${flag == 'comming'}">
 		<jsp:include page="/WEB-INF/views/main/comming.jsp" />
-	</c:if>
-	<c:if test="${flag == 'write'}">
-		<jsp:include page="/WEB-INF/views/review/write.jsp" />
 	</c:if>
 	<c:if test="${flag == 'content'}">
 		<jsp:include page="/WEB-INF/views/review/content.jsp" />
@@ -44,6 +40,10 @@
 	let sw;
 	let player;
 	
+	 $(document).ready(() => {
+        $('.loader').fadeOut();
+	 });
+		
 	function addf(idx, isFile) {
 		if (idx == 0 || isFile == 0) {
 			alert("아직 준비 중인 곡입니다.");

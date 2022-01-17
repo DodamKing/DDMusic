@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.spring.cjs2108_kdd.dao.ReviewDAO">
 	<insert id="setReviewData">
-		insert into review values (default, #{vo.userIdx}, #{vo.title}, #{vo.content}, default, #{vo.hostIp}, default);
+		insert into review values (default, #{vo.userIdx}, #{vo.title}, #{vo.content}, default, #{vo.hostIp}, default, #{vo.kategorie}, default);
 	</insert>
 	
 	<select id="getReviewData" resultType="com.spring.cjs2108_kdd.vo.ReviewVO">
@@ -23,6 +23,26 @@
 	
 	<select id="getReviewVOS" resultType="com.spring.cjs2108_kdd.vo.ReviewVO">
 		select * from review r left join user u on r.userIdx = u.idx where visible = 1 order by r.idx desc limit #{startNo}, #{pageSize};
+	</select>
+	
+	<select id="getReviewVO" resultType="com.spring.cjs2108_kdd.vo.ReviewVO">
+		select * from review where idx = #{idx} and visible = 1;
+	</select>
+	
+	<update id="setReviewUpdate">
+		update review set title = #{vo.title}, content = #{vo.content} where idx = #{vo.idx};
+	</update>
+	
+	<update id="setLikeCnt">
+		update review set likeCnt = likeCnt + 1 where idx = #{idx};
+	</update> 
+	
+	<select id="getSrchResult" resultType="com.spring.cjs2108_kdd.vo.ReviewVO">
+		select * from review r left join user u on r.userIdx = u.idx where visible = 1 and ${srchClass} like '%${reviewsrch}%' order by r.idx desc limit #{startNo}, #{pageSize};
+	</select>
+	
+	<select id="getSrchResultCnt" resultType="int">
+		select count(*) from review r left join user u on r.userIdx = u.idx where visible = 1 and ${srchClass} like '%${reviewsrch}%';
 	</select>
 	
 </mapper>

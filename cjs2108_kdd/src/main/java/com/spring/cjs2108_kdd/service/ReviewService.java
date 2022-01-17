@@ -17,5 +17,15 @@ public interface ReviewService {
 	int getreviewCnt();
 
 	ArrayList<ReviewVO> getReviewVOS(int startNo, int pageSize);
+
+	ReviewVO getReviewVO(int idx);
+
+	void setReviewUpdate(ReviewVO vo);
+
+	void setLikeCnt(int idx);
+
+	ArrayList<ReviewVO> getSrchResult(String reviewsrch, String srchClass, int startNo, int pageSize);
+
+	int getSrchResultCnt(String srchClass, String reviewsrch);
 	
 }

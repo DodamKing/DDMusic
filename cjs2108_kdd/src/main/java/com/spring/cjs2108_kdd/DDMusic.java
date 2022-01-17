@@ -28,7 +28,7 @@ public class DDMusic {
 	@Autowired
 	ReviewService reviewService;
 	
-	@RequestMapping(value={"/", "index"})
+	@RequestMapping("/")
 	public String mainPage(Model model) {
 		model.addAttribute("flag", "intro");
 		return "main/main";
@@ -44,8 +44,13 @@ public class DDMusic {
 //	}
 	
 	@RequestMapping("/{flag}")
-	public String mainGet(Model model, HttpSession session , @PathVariable String flag, String srchKwd, String idx, String pageNo) throws FileNotFoundException, IOException, ParseException {
-		if (flag.equals("chart")) {
+	public String mainGet(Model model, HttpSession session , @PathVariable String flag, String srchKwd, String idx) throws FileNotFoundException, IOException, ParseException {
+		if (flag.equals("") || flag.equals("index")) {
+			model.addAttribute("flag", "intro");
+			return "main/main";
+		}
+
+		else if (flag.equals("chart")) {
 			ArrayList<SongVO> vos = songService.getChartJson();
 			model.addAttribute("vos", vos);
 		}
@@ -70,54 +75,28 @@ public class DDMusic {
 			model.addAttribute("vos", vos);
 		}
 		
-		else if (flag.equals("review")) {
-			int pageSize = 10;
-			int intPageNo = 1;
-			if (pageNo != null) intPageNo = Integer.parseInt(pageNo);
-			int startNo = (intPageNo - 1) * pageSize;
-			int lastPageNo = reviewService.getreviewCnt() / pageSize + 1;
-			if (reviewService.getreviewCnt() % 10 == 0) lastPageNo--;
-			model.addAttribute("vos", reviewService.getReviewVOS(startNo, pageSize));
-			model.addAttribute("lastPageNo", lastPageNo);
-			model.addAttribute("pageNo", intPageNo);
-			
+//		else if (flag.equals("review")) {
+//			int pageSize = 10;
+//			int intPageNo = 1;
+//			if (pageNo != null) intPageNo = Integer.parseInt(pageNo);
+//			int startNo = (intPageNo - 1) * pageSize;
+//			int lastPageNo = reviewService.getreviewCnt() / pageSize + 1;
+//			if (reviewService.getreviewCnt() % 10 == 0) lastPageNo--;
+//			model.addAttribute("vos", reviewService.getReviewVOS(startNo, pageSize));
+//			model.addAttribute("lastPageNo", lastPageNo);
+//			model.addAttribute("pageNo", intPageNo);
+//			
 //			ArrayList<ReviewVO> vos = new ArrayList<ReviewVO>();
 //			vos = reviewService.getReviewData();
 //			model.addAttribute("vos", vos);
-		}
+//		}
 
 		else if (flag.equals("comming")) {
 			
 		}
 
-		else if (flag.equals("write")) {
-			if (session.getAttribute("sMid") == null) {
-				return "redirect:/index";
-			}
-			
-		}
-		
 		model.addAttribute("flag", flag);
 		return "main/main";
 	}
 	
-	@RequestMapping("/review/{idx}")
-	public String reviewGet(Model model, @PathVariable int idx) {
-		model.addAttribute("vo", reviewService.getReview(idx));
-		model.addAttribute("flag", "content");
-		return "main/main";
-	}
-	
-	@RequestMapping(value="/{flag}", method = RequestMethod.POST)
-	public String mainPost(Model model, @PathVariable String flag, ReviewVO vo) {
-		if (flag.equals("write")) {
-			if (vo.getTitle() == null || vo.getContent() ==null) {
-				return "redirect:/message/reviewnoinput";
-			}
-			reviewService.setReviewData(vo);
-			model.addAttribute("flag", "review");
-			return "redirect:/review";
-		}
-		return "redirect:/" + flag;
-	}
 }
