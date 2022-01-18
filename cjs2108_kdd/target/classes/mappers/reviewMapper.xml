@@ -18,11 +18,21 @@
 	</update>
 	
 	<select id="getreviewCnt" resultType="int">
-		select count(*) from review where visible = 1; 
+		<if test='kategorie == null or kategorie.equals("")'>
+			select count(*) from review where visible = 1; 
+		</if>
+		<if test='kategorie != null and !kategorie.equals("")'>
+			select count(*) from review where visible = 1 and kategorie = #{kategorie};
+		</if>
 	</select>
 	
 	<select id="getReviewVOS" resultType="com.spring.cjs2108_kdd.vo.ReviewVO">
-		select * from review r left join user u on r.userIdx = u.idx where visible = 1 order by r.idx desc limit #{startNo}, #{pageSize};
+		<if test='kategorie == null or kategorie == ""'>
+			select * from review r left join user u on r.userIdx = u.idx where visible = 1 order by r.idx desc limit #{startNo}, #{pageSize};
+		</if>
+		<if test="kategorie != null and kategorie != ''">
+			select * from review r left join user u on r.userIdx = u.idx where visible = 1 and kategorie = #{kategorie} order by r.idx desc limit #{startNo}, #{pageSize};
+		</if>
 	</select>
 	
 	<select id="getReviewVO" resultType="com.spring.cjs2108_kdd.vo.ReviewVO">
@@ -38,11 +48,50 @@
 	</update> 
 	
 	<select id="getSrchResult" resultType="com.spring.cjs2108_kdd.vo.ReviewVO">
-		select * from review r left join user u on r.userIdx = u.idx where visible = 1 and ${srchClass} like '%${reviewsrch}%' order by r.idx desc limit #{startNo}, #{pageSize};
+		<if test="kategorie == null or kategorie == ''">
+			select * from review r left join user u on r.userIdx = u.idx where visible = 1 and 
+			<if test="srchClass == 'all'">
+				(title like '%${reviewsrch}%' or content like '%${reviewsrch}%')
+			</if>
+			<if test="srchClass != 'all'">
+				${srchClass} like '%${reviewsrch}%'
+			</if> 
+		</if>
+		<if test="kategorie != null and kategorie != ''">
+			select * from review r left join user u on r.userIdx = u.idx where visible = 1 and kategorie = #{kategorie} and 
+			<if test="srchClass == 'all'">
+				(title like '%${reviewsrch}%' or content like '%${reviewsrch}%')
+			</if>
+			<if test="srchClass != 'all'">
+				${srchClass} like '%${reviewsrch}%'
+			</if>  
+		</if>
+			order by r.idx desc limit #{startNo}, #{pageSize};
 	</select>
 	
 	<select id="getSrchResultCnt" resultType="int">
-		select count(*) from review r left join user u on r.userIdx = u.idx where visible = 1 and ${srchClass} like '%${reviewsrch}%';
+		<if test="kategorie == null or kategorie == ''">
+			select count(*) from review r left join user u on r.userIdx = u.idx where visible = 1 and
+			<if test="srchClass == 'all'">
+				(title like '%${reviewsrch}%' or content like '%${reviewsrch}%');
+			</if>
+			<if test="srchClass != 'all'">
+				${srchClass} like '%${reviewsrch}%';
+			</if>
+		</if>
+		<if test="kategorie != null and kategorie != ''">
+			select count(*) from review r left join user u on r.userIdx = u.idx where visible = 1 and kategorie = #{kategorie} and 
+			<if test="srchClass == 'all'">
+				(title like '%${reviewsrch}%' or content like '%${reviewsrch}%');
+			</if>
+			<if test="srchClass != 'all'">
+				${srchClass} like '%${reviewsrch}%';
+			</if>
+		</if>
 	</select>
+	
+	<insert id="setComment">
+		insert into r_comment values (default, #{vo.reviewIdx}, #{vo.userIdx}, #{vo.content}, default);
+	</insert>
 	
 </mapper>

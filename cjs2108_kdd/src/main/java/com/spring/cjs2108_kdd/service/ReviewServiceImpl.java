@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.cjs2108_kdd.dao.ReviewDAO;
+import com.spring.cjs2108_kdd.vo.CommentVO;
 import com.spring.cjs2108_kdd.vo.ReviewVO;
 
 @Service
@@ -34,13 +35,8 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public int getreviewCnt() {
-		return reviewDAO.getreviewCnt();
-	}
-
-	@Override
-	public ArrayList<ReviewVO> getReviewVOS(int startNo, int pageSize) {
-		return reviewDAO.getReviewVOS(startNo, pageSize);
+	public ArrayList<ReviewVO> getReviewVOS(int startNo, int pageSize, String kategorie) {
+		return reviewDAO.getReviewVOS(startNo, pageSize, kategorie);
 	}
 
 	@Override
@@ -59,13 +55,23 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public ArrayList<ReviewVO> getSrchResult(String reviewsrch, String srchClass, int startNo, int pageSize) {
-		return reviewDAO.getSrchResult(reviewsrch, srchClass, startNo, pageSize);
+	public ArrayList<ReviewVO> getSrchResult(String reviewsrch, String srchClass, int startNo, int pageSize, String kategorie) {
+		return reviewDAO.getSrchResult(reviewsrch, srchClass, startNo, pageSize, kategorie);
 	}
 
 	@Override
-	public int getSrchResultCnt(String srchClass, String reviewsrch) {
-		return reviewDAO.getSrchResultCnt(srchClass, reviewsrch);
+	public int getSrchResultCnt(String srchClass, String reviewsrch, String kategorie) {
+		return reviewDAO.getSrchResultCnt(srchClass, reviewsrch, kategorie);
+	}
+
+	@Override
+	public int getreviewCnt(String kategorie) {
+		return reviewDAO.getreviewCnt(kategorie);
+	}
+
+	@Override
+	public void setComment(CommentVO vo) {
+		reviewDAO.setComment(vo);
 	}
 	
 	

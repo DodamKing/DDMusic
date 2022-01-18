@@ -35,6 +35,7 @@
 						</td>
 						<td>${fn:substring(vo.date, 0, 10) }</td>
 						<td>${vo.hostIp }</td>
+						<td>조회수 : ${vo.likeCnt }</td>
 						<td class="text-right">
 							<c:if test="${sVO.idx == vo.userIdx}"><a onclick="return confirm('수정 하시겠습니까?')" href="${ctp }/review/update?idx=${vo.idx}" class="btn btn-dark">수정</a></c:if>
 							<c:if test="${sVO.membership == -1 || sVO.idx == vo.userIdx}"><a onclick="return confirm('정말 삭제 하시겠습니까?')" href="${ctp }/review/reviewdel?idx=${vo.idx}" class="btn btn-dark">삭제</a></c:if>
@@ -44,14 +45,22 @@
 				<div class="mt-5">${vo.content }</div>
 				<div class="row mt-5">
 					<div class="col"></div>
-					<div class="col-2"><a href="${ctp }/review/list" class="btn btn-dark">돌아가기</a></div>
+					<%-- <div class="col-2"><a href="${ctp }/review/list?pageNo=${pageNo}&reviewsrch=${reviewsrch}&kategorie=${kategorie}&srchClass=${srchClass}" class="btn btn-dark">돌아가기</a></div> --%>
+					<div class="col-2"><a href="javascript:history.back()" class="btn btn-dark">돌아가기</a></div>
 				</div>
-				<div class="mt-5 p-3" style="background: #333;">
-					<textarea id="reviewComment" name="reviewComment" rows="5" class="form-control" style="background: #333; border: none;" placeholder="댓글을 입력해 주세요."></textarea>
+				<div class="mt-3" style="background: #333; border-top: 1px solid;">
+					<textarea id="reviewComment" name="reviewComment" rows="5" class="form-control mt-3" style="background: #333; border: none; " placeholder="댓글을 입력해 주세요."></textarea>
 					<div class="row">
 						<div class="col"></div>
 						<button class="btn btn-dark mr-3 col-1" onclick="commentset()">등록</button>
 					</div>
+				</div>
+				<div class="mt-3">
+					<table style="border-top: 1px solid;" class="table table-borderless table-sm">
+						<tr><td class="pt-5">별명(아이디)</td></tr>
+						<tr><td>날짜</td></tr>
+						<tr><td>내용</td></tr>
+					</table>
 				</div>
 			</div>
 		</div>
@@ -67,8 +76,29 @@
 	<script>
 		function commentset() {
 			if (reviewComment.value == "") return;
-				
-			alert("구현중");
+			
+			/* if (${empty sVO.idx}) {
+				alert("로그인 안됨");
+				return;
+			} */
+			
+			let data = {
+				content : reviewComment.value,
+				reviewIdx : ${vo.idx}
+			}
+			
+			$.ajax({
+				type : "post",
+				url : "${ctp}/review/comment",
+				data : data,
+				success : (data) => {
+					if (data == "no") {
+						alert("로그인이 필요합니다.");
+						return;
+					}
+					location.reload();
+				}
+			});	
 		}
 	</script>
 	

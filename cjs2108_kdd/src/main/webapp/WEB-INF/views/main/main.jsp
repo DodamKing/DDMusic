@@ -2,15 +2,28 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <% pageContext.setAttribute("enter", "\n"); %>
+<% pageContext.setAttribute("chart", "<jsp:include page='/WEB-INF/views/main/chart.jsp' />"); %>
 <c:set var="ctp" value="<%=request.getContextPath() %>" />
 <link rel="stylesheet" href="${ctp }/resources/css/loader.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-<div class="loader"></div>
+<!-- <div class="loader"></div> -->
 <div id="mainBody">
 	<c:if test="${flag == 'today'}">
 		<jsp:include page="/WEB-INF/views/main/today.jsp" />
 	</c:if>
 	<c:if test="${flag == 'chart'}">
+		<!-- <div class="loader"></div>
+		<script>
+			$.ajax({
+				type : "post",
+				url : "${ctp}/song/getchart",
+				success : () => {
+			        $('.loader').fadeOut();
+			         mainBody.innerHTML = "${chart}";
+				}
+			});
+		</script> -->
 		<jsp:include page="/WEB-INF/views/main/chart.jsp" />
 	</c:if>
 	<c:if test="${flag == 'srch'}">
@@ -40,9 +53,9 @@
 	let sw;
 	let player;
 	
-	 $(document).ready(() => {
+	/*  $(document).ready(() => {
         $('.loader').fadeOut();
-	 });
+	 }); */
 		
 	function addf(idx, isFile) {
 		if (idx == 0 || isFile == 0) {

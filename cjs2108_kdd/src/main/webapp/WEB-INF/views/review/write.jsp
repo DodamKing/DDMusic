@@ -30,6 +30,7 @@
 						<c:if test="${sVO.membership == -1}"><option value="공지">공지</option></c:if>
 						<option value="자유">자유</option>
 						<option value="건의">건의</option>
+						<option value="버그">버그</option>
 						<option value="신청곡">신청곡</option>
 					</select>
 					<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">

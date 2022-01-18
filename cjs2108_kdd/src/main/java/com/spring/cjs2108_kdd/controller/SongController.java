@@ -1,11 +1,14 @@
 package com.spring.cjs2108_kdd.controller;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -124,6 +127,13 @@ public class SongController {
 	public void clseosPost(HttpSession session) {
 		session.removeAttribute("player");
 		session.setAttribute("player", false);
+	}
+	
+	@RequestMapping("/getchart")
+	@ResponseBody
+	public void getchartPost(Model model) throws FileNotFoundException, IOException, ParseException {
+		ArrayList<SongVO> vos = songService.getChartJson();
+		model.addAttribute("vos", vos);
 	}
 	
 }

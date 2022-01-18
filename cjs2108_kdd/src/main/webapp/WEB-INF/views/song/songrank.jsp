@@ -52,6 +52,9 @@
 					</div>
 				</div>
 				<table class="table">
+					<tr style="border-top: none;">
+						<td class="text-right" colspan="7"><button id="add_btn" class="btn btn-dark" type="button">선택추가</button></td>
+					</tr>
 					<tr>
 						<th class="text-center align-middle"><input id="allch" type="checkbox"></th>
 						<th class="text-center align-middle">순위</th>
@@ -79,9 +82,6 @@
 							<td class="align-middle text-center">${vo.playCntSum }</td>
 						</tr>
 					</c:forEach>
-					<tr>
-						<td class="text-right" colspan="7"><button class="btn btn-dark" type="button" onclick="addsel()">버튼</button></td>
-					</tr>
 				</table>
 			</div>
 		</div>
@@ -94,10 +94,6 @@
 	<script src="${ctp }/resources/js/main.js"></script>
 	
     <script>
-    	function addsel() {
-			alert("선택 추가 하기 만들어야 함");
-		}
-    
 	  //전체선택
 		allch.addEventListener("click", () => {
 			if (allch.checked) {
@@ -117,6 +113,44 @@
 				}
 			}
 		});
+		
+		add_btn.addEventListener("click", () => {
+			let idxs = "";
+			
+			<c:forEach var="vo" items="${vos}" varStatus="st">
+				if($("input:checkbox[name='tch']")[${st.index}].checked) {
+					idxs += ${vo.idx} + "/";
+				}
+			</c:forEach>
+			
+			if (!sw) {
+				let url = "${ctp}/song/player?idxs=" + idxs;
+				player = window.open(url, "player", "width=1100px, height=800px, left=50px, top=150px");
+				sw = true;
+			}
+			else {
+				if (!player.closed && sw) {
+					let idx_list = idxs.split("/");
+					for (let i=0; i<idx_list.length - 1; i++) {
+						$.ajax({
+							type : "post",
+							url : "${ctp}/song/player",
+							data : {idx : idx_list[i]},
+							success : (data) => {
+								player.addList(data);
+								player.setList();
+							}
+						});
+					}
+				}
+				else {
+					let url = "${ctp}/song/player?idxs=" + idxs;
+					player = window.open(url, "player", "width=1100px, height=800px, left=50px, top=150px");
+					sw = true;
+				}
+			}
+		});
+		
     </script>
 </body>
 

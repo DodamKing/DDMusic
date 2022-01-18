@@ -2,6 +2,7 @@ package com.spring.cjs2108_kdd.service;
 
 import java.util.ArrayList;
 
+import com.spring.cjs2108_kdd.vo.CommentVO;
 import com.spring.cjs2108_kdd.vo.ReviewVO;
 
 public interface ReviewService {
@@ -14,9 +15,9 @@ public interface ReviewService {
 
 	void setReviewDel(int idx);
 
-	int getreviewCnt();
+	int getreviewCnt(String kategorie);
 
-	ArrayList<ReviewVO> getReviewVOS(int startNo, int pageSize);
+	ArrayList<ReviewVO> getReviewVOS(int startNo, int pageSize, String kategorie);
 
 	ReviewVO getReviewVO(int idx);
 
@@ -24,8 +25,10 @@ public interface ReviewService {
 
 	void setLikeCnt(int idx);
 
-	ArrayList<ReviewVO> getSrchResult(String reviewsrch, String srchClass, int startNo, int pageSize);
+	ArrayList<ReviewVO> getSrchResult(String reviewsrch, String srchClass, int startNo, int pageSize, String kategorie);
 
-	int getSrchResultCnt(String srchClass, String reviewsrch);
+	int getSrchResultCnt(String srchClass, String reviewsrch, String kategorie);
+
+	void setComment(CommentVO vo);
 	
 }

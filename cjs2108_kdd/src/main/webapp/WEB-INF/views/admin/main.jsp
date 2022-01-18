@@ -270,6 +270,7 @@
 						data : data,
 						success : () => {
 							alert("파일이 업로드 되었습니다.");
+							location.reload();
 						}
 					})
 				}

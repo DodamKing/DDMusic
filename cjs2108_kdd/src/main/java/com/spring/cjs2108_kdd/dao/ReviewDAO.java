@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.spring.cjs2108_kdd.vo.CommentVO;
 import com.spring.cjs2108_kdd.vo.ReviewVO;
 
 public interface ReviewDAO {
@@ -16,9 +17,7 @@ public interface ReviewDAO {
 
 	public void setReviewDel(int idx);
 
-	public int getreviewCnt();
-
-	public ArrayList<ReviewVO> getReviewVOS(@Param("startNo") int startNo, @Param("pageSize") int pageSize);
+	public ArrayList<ReviewVO> getReviewVOS(@Param("startNo") int startNo, @Param("pageSize") int pageSize, @Param("kategorie") String kategorie);
 
 	public ReviewVO getReviewVO(int idx);
 
@@ -26,8 +25,12 @@ public interface ReviewDAO {
 
 	public void setLikeCnt(int idx);
 
-	public ArrayList<ReviewVO> getSrchResult(@Param("reviewsrch") String reviewsrch, @Param("srchClass") String srchClass, @Param("startNo") int startNo, @Param("pageSize") int pageSize);
+	public ArrayList<ReviewVO> getSrchResult(@Param("reviewsrch") String reviewsrch, @Param("srchClass") String srchClass, @Param("startNo") int startNo, @Param("pageSize") int pageSize, @Param("kategorie") String kategorie);
 
-	public int getSrchResultCnt(@Param("srchClass") String srchClass, @Param("reviewsrch") String reviewsrch);
+	public int getSrchResultCnt(@Param("srchClass") String srchClass, @Param("reviewsrch") String reviewsrch, @Param("kategorie") String kategorie);
+
+	public int getreviewCnt(String kategorie);
+
+	public void setComment(@Param("vo") CommentVO vo);
 	
 }

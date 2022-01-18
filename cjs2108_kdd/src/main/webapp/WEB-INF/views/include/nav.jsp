@@ -15,7 +15,7 @@
 	            	<c:if test="${!empty sVO.profileImg }">
 		           		<div class="col-2 mr-2" style="margin-top: -2px;"><img src="${ctp }/resources/img/${sVO.profileImg}"></div>
 	            	</c:if>
-		            <div class="col" id="dropMenu" >
+		            <div class="col ho" id="dropMenu" >
 		            	<c:if test="${!empty sVO.nickNm }">${sVO.nickNm }</c:if>
 		            	<c:if test="${empty sVO.nickNm }">${sMid}</c:if>
 		            	<i class="fa-solid fa-caret-down"></i>

@@ -114,7 +114,7 @@
 					return;
 				}
 				alert("정상 등록 되었습니다.");
-				location.reload;
+				location.reload();
 			}
 		});
 	}
