@@ -118,6 +118,7 @@ public class AdminController {
 	public void uploadPost(int idx, MultipartFile file) throws IOException {
 		songService.songUpload(idx, file);
 		songService.setIsfile(idx);
+		songService.setSongUpdate(idx);
 	}
 
 	@RequestMapping("/insertsong")
@@ -129,5 +130,21 @@ public class AdminController {
 			songService.insertSong(vo); 
 			return "yes";
 		}
+	}
+
+	@RequestMapping("/isFileUpdate")
+	public String isFileUpdateGet(Model model, int sw, int pageNo) {
+		songService.isFileUpdate();
+		model.addAttribute("sw", sw);
+		model.addAttribute("pageNo", pageNo);
+		return "redirect:/admin/main";
+	}
+
+	@RequestMapping("/srch")
+	public String srchGet(Model model, String srch, int sw) {
+		model.addAttribute("vos", songService.getSongSrch(srch));
+		model.addAttribute("sw", sw);
+		model.addAttribute("flag", "srch");
+		return "admin/main";
 	}
 }

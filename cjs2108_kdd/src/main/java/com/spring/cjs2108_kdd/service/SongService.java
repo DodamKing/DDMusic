@@ -51,4 +51,10 @@ public interface SongService {
 
 	void setIsfile(int idx);
 
+	void isFileUpdate();
+
+	void setSongUpdate(int idx);
+
+	ArrayList<SongVO> getUpdateSong();
+
 }

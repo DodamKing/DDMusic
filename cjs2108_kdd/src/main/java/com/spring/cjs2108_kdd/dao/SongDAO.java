@@ -49,4 +49,14 @@ public interface SongDAO {
 
 	public void setIsfile(int idx);
 
+	public void isFileUpdate(@Param("idx") int idx, @Param("sw") int i);
+
+	public int getLastIdx();
+
+	public ArrayList<SongVO> getSrchResult(String srch);
+
+	public void setSongUpdate(int idx);
+
+	public ArrayList<SongVO> getUpdateSong();
+
 }

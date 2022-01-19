@@ -36,7 +36,11 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Override
 	public ArrayList<ReviewVO> getReviewVOS(int startNo, int pageSize, String kategorie) {
-		return reviewDAO.getReviewVOS(startNo, pageSize, kategorie);
+		ArrayList<ReviewVO> vos = reviewDAO.getReviewVOS(startNo, pageSize, kategorie);
+		for (int i=0; i<vos.size(); i++) {
+			vos.get(i).setCommentCnt(reviewDAO.getCommentCnt(vos.get(i).getIdx()));
+		}
+		return vos;
 	}
 
 	@Override
@@ -56,7 +60,11 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Override
 	public ArrayList<ReviewVO> getSrchResult(String reviewsrch, String srchClass, int startNo, int pageSize, String kategorie) {
-		return reviewDAO.getSrchResult(reviewsrch, srchClass, startNo, pageSize, kategorie);
+		ArrayList<ReviewVO> vos = reviewDAO.getSrchResult(reviewsrch, srchClass, startNo, pageSize, kategorie);
+		for (int i=0; i<vos.size(); i++) {
+			vos.get(i).setCommentCnt(reviewDAO.getCommentCnt(vos.get(i).getIdx()));
+		}
+		return vos;
 	}
 
 	@Override
@@ -72,6 +80,21 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	public void setComment(CommentVO vo) {
 		reviewDAO.setComment(vo);
+	}
+
+	@Override
+	public ArrayList<CommentVO> getComment(int idx) {
+		return reviewDAO.getComment(idx);
+	}
+
+	@Override
+	public void setCommentDel(int idx) {
+		reviewDAO.setCommentDel(idx);
+	}
+
+	@Override
+	public void setCommentUpdate(int idx, String content) {
+		reviewDAO.setCommentUpdate(idx, content);
 	}
 	
 	

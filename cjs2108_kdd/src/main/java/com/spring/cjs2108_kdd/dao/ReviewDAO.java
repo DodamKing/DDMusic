@@ -32,5 +32,13 @@ public interface ReviewDAO {
 	public int getreviewCnt(String kategorie);
 
 	public void setComment(@Param("vo") CommentVO vo);
+
+	public ArrayList<CommentVO> getComment(int idx);
+
+	public void setCommentDel(int idx);
+
+	public int getCommentCnt(int idx);
+
+	public void setCommentUpdate(@Param("idx") int idx, @Param("content") String content);
 	
 }

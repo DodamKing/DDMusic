@@ -285,6 +285,25 @@
 				location.reload();
 			}
 		}
+		
+		// 검색 내용 없을 때 엔터 막기
+		$("#srch").keydown((e) => {
+			if (e.keyCode == 13) {
+				if ($("#srch").val().trim() == "") {
+					e.preventDefault();
+				}
+			}
+		});
+		
+		// 검색 내용 없을 때 버튼 클릭 비활성
+		$("#srch_btn").click((e) => {
+			if ($("#srch").val().trim() == "") {
+				return;
+			}
+			
+			$("#myform").submit();
+		});
+		
 	</script>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

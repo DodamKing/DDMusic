@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 import com.spring.cjs2108_kdd.dao.SongDAO;
+import com.spring.cjs2108_kdd.method.Method;
 import com.spring.cjs2108_kdd.vo.PlayVO;
 import com.spring.cjs2108_kdd.vo.SongVO;
 import com.spring.cjs2108_kdd.vo.UserVO;
@@ -168,6 +169,36 @@ public class SongServiceImpl implements SongService {
 	@Override
 	public void setIsfile(int idx) {
 		songDAO.setIsfile(idx);
+	}
+
+	@Override
+	public void isFileUpdate() {
+		Method method = new Method();
+		int last = songDAO.getLastIdx();
+		System.out.println(last);
+		for (int i=0; i<last + 1; i++) {
+			SongVO vo = songService.getSongInfor(i);
+			if (vo != null) {
+				if (method.isFile(vo.getTitle(), vo.getArtist())) {
+					songDAO.isFileUpdate(vo.getIdx(), 1);
+				}
+				
+				else {
+					songDAO.isFileUpdate(vo.getIdx(), 0);
+				}
+				System.out.println(i);
+			}
+		}
+	}
+
+	@Override
+	public void setSongUpdate(int idx) {
+		songDAO.setSongUpdate(idx);
+	}
+
+	@Override
+	public ArrayList<SongVO> getUpdateSong() {
+		return songDAO.getUpdateSong();
 	}
 
 }

@@ -30,5 +30,11 @@ public interface ReviewService {
 	int getSrchResultCnt(String srchClass, String reviewsrch, String kategorie);
 
 	void setComment(CommentVO vo);
+
+	ArrayList<CommentVO> getComment(int idx);
+
+	void setCommentDel(int idx);
+
+	void setCommentUpdate(int idx, String content);
 	
 }

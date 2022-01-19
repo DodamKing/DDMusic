@@ -17,4 +17,6 @@ public class ReviewVO {
 	private String userId;
 	private String nickNm;
 	private String profileImg;
+	
+	private int commentCnt;
 }

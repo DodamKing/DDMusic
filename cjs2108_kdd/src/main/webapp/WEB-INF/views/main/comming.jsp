@@ -23,7 +23,13 @@
 		<div class="container">
 			<div class="card-body" style="padding-bottom: 300px;">
 				<h2 class="mt-5 mb-5">커밍쑨 DDMusic</h2>
-				<div>
+				<p>${vos[0].date } 업데이트</p>
+				<c:forEach var="vo" items="${vos }">
+					<div>
+						<p>${vo.title } - ${vo.artist } </p>
+					</div>
+				</c:forEach>
+				<div class="mt-5">
 					<p>2022.01.14 업데이트</p>
 					<p>뿌리 (Feat. JUSTHIS) (Prod. GroovyRoom) - 쿤디판다(Khundi Panda) </p>
 					<p>개똥벌레 - 신형원</p>

@@ -87,8 +87,8 @@
 								<c:if test="${vo.kategorie != '공지'}">${vo.kategorie }</c:if>
 							</td>
 							<td class="ho" onclick="location.href='${ctp}/review/${vo.idx }?pageNo=${pageNo}&kategorie=${kategorie}&srchClass=${srchClass}'">
-								<c:if test="${vo.kategorie == '공지'}"><font color="yellow">${vo.title }</font></c:if>
-								<c:if test="${vo.kategorie != '공지'}">${vo.title }</c:if>
+								<c:if test="${vo.kategorie == '공지'}"><font color="yellow">${vo.title } <c:if test="${vo.commentCnt != 0 }"><font color="red">(${vo.commentCnt })</font></c:if></font></c:if>
+								<c:if test="${vo.kategorie != '공지'}">${vo.title } <c:if test="${vo.commentCnt != 0 }"><font color="red">(${vo.commentCnt })</font></c:if></c:if>
 							</td>
 							<td class="text-center">${vo.nickNm }</td>
 							<td class="text-center">${fn:substring(vo.date, 0, 10) }</td>

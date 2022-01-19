@@ -74,8 +74,29 @@
 	</select>
 	
 	<update id="setIsfile">
-		update song set isFile = 1 where idx = ${idx}
+		update song set isFile = 1 where idx = ${idx};
 	</update>
+
+	<update id="isFileUpdate">
+		<if test="sw == 0">
+			update song set isFile = 0 where idx = ${idx};
+		</if>
+		<if test="sw == 1">
+			update song set isFile = 1 where idx = ${idx};
+		</if>
+	</update>
+	
+	<select id="getLastIdx" resultType="int">
+		select idx from song order by idx desc limit 1;
+	</select>
+	
+	<insert id="setSongUpdate">
+		insert into song_update values (default, #{idx}, default);
+	</insert>
+	
+	<select id="getUpdateSong" resultType="com.spring.cjs2108_kdd.vo.SongVO">
+		select * from song s left join song_update u on s.idx = u.songIdx where date_format(date, "%Y-%m-%d") = curdate();
+	</select>
 	
 <!-- 	<select id="getSong100" resultType="com.spring.cjs2108_kdd.vo.SongVO" parameterType="java.util.ArrayList">
 		<foreach collection="vos" item="vo">

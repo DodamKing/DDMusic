@@ -13,17 +13,29 @@
 <body>
 	<div class="container mt-5 ml-5">
 		<h2>음원파일</h2>
-		<div class="sticky">
-			<ul class="pagination">
-			    <li class="page-item"><a class="page-link bg-dark text-warning" href="${ctp }/admin/main?sw=3&pageNo=1">First</a></li>
-			    <li class="page-item"><a class="page-link bg-dark text-warning" href="${ctp }/admin/main?sw=3&pageNo=<c:if test="${pageNo != 1 }">${pageNo - 1 }</c:if><c:if test="${pageNo == 1 }">1</c:if> ">Previous</a></li>
-			    <li class="page-item"><a class="page-link bg-secondary text-danger">${pageNo }</a></li>
-			    <li class="page-item"><a class="page-link bg-dark text-warning" href="${ctp }/admin/main?sw=3&pageNo=<c:if test="${pageNo + 1 > lastPageNo }">${pageNo }</c:if><c:if test="${pageNo + 1 <= lastPageNo }">${pageNo + 1}</c:if>">Next</a></li>
-			    <li class="page-item"><a class="page-link bg-dark text-warning" href="${ctp }/admin/main?sw=3&pageNo=${lastPageNo }">Last</a></li>
- 	 		</ul>
-		</div>
+		<c:if test="${empty flag }">
+			<div class="sticky">
+				<ul class="pagination">
+				    <li class="page-item"><a class="page-link bg-dark text-warning" href="${ctp }/admin/main?sw=3&pageNo=1">First</a></li>
+				    <li class="page-item"><a class="page-link bg-dark text-warning" href="${ctp }/admin/main?sw=3&pageNo=<c:if test="${pageNo != 1 }">${pageNo - 1 }</c:if><c:if test="${pageNo == 1 }">1</c:if> ">Previous</a></li>
+				    <li class="page-item"><a class="page-link bg-secondary text-danger">${pageNo }</a></li>
+				    <li class="page-item"><a class="page-link bg-dark text-warning" href="${ctp }/admin/main?sw=3&pageNo=<c:if test="${pageNo + 1 > lastPageNo }">${pageNo }</c:if><c:if test="${pageNo + 1 <= lastPageNo }">${pageNo + 1}</c:if>">Next</a></li>
+				    <li class="page-item"><a class="page-link bg-dark text-warning" href="${ctp }/admin/main?sw=3&pageNo=${lastPageNo }">Last</a></li>
+	 	 		</ul>
+			</div>
+		</c:if>
 		<div class="mt-5">
 			<audio id="player" src="" controls="controls"></audio>
+			<form id="myform" action="${ctp }/admin/srch">
+				<div class="input-group mb-3 mr-5">
+					<div style="width: 50%"></div>
+					<input id="srch" name="srch" type="text" class="form-control" placeholder="검색">
+			  		<div class="input-group-append">
+				    	<button id="srch_btn" class="btn btn-dark" type="button">검색</button>
+			  		</div>
+		  		</div>
+		  		<input type="hidden" name="sw" value="${sw }">
+	  		</form>
 			<table class="table text-center">
 				<tr>
 					<th>#</th>
@@ -54,6 +66,7 @@
 					</tr>
 				</c:forEach>
 			</table>
+			<button class="btn btn-warning pull-right" type="button" onclick="javascript:location.href='${ctp}/admin/isFileUpdate?sw=${sw}&pageNo=${pageNo}'">업데이트</button>
 		</div>
 	</div>
 </body>

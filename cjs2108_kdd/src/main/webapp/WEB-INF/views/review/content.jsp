@@ -43,13 +43,14 @@
 					</tr>
 				</table>
 				<div class="mt-5">${vo.content }</div>
-				<div class="row mt-5">
+				<div class="row mt-5" style="border-bottom: 1px solid;">
 					<div class="col"></div>
 					<%-- <div class="col-2"><a href="${ctp }/review/list?pageNo=${pageNo}&reviewsrch=${reviewsrch}&kategorie=${kategorie}&srchClass=${srchClass}" class="btn btn-dark">돌아가기</a></div> --%>
-					<div class="col-2"><a href="javascript:history.back()" class="btn btn-dark">돌아가기</a></div>
+					<div class="col-2"><a href="javascript:history.back()" class="btn btn-dark mb-3">돌아가기</a></div>
 				</div>
+				<h4 class="mt-3">댓글 ${fn:length(vos) }</h4>
 				<div class="mt-3" style="background: #333; border-top: 1px solid;">
-					<textarea id="reviewComment" name="reviewComment" rows="5" class="form-control mt-3" style="background: #333; border: none; " placeholder="댓글을 입력해 주세요."></textarea>
+					<textarea id="reviewComment" name="reviewComment" rows="5" maxlength="500" class="form-control mt-3" style="background: #333; border: none; " placeholder="댓글을 입력해 주세요."></textarea>
 					<div class="row">
 						<div class="col"></div>
 						<button class="btn btn-dark mr-3 col-1" onclick="commentset()">등록</button>
@@ -57,16 +58,30 @@
 				</div>
 				<div class="mt-3">
 					<table style="border-top: 1px solid;" class="table table-borderless table-sm">
-						<tr><td class="pt-5">별명(아이디)</td></tr>
-						<tr><td>날짜</td></tr>
-						<tr><td>내용</td></tr>
+						<c:forEach var="vo" items="${vos }">
+							<tr>
+								<td class="pt-3"><font color="#ccc"><b>${vo.nickNm}(${fn:substring(vo.userId, 0, 4)}****)</b></font></td>
+								<c:if test="${sVO.idx == vo.userIdx }">
+									<td id="update1_${vo.idx }" class="text-right ho pt-3" onclick="goupdate('${vo.idx}', '${fn:replace(vo.content, enter, '엔454%$#^&*@!123터')}')">수정</td>
+									<td id="update2_${vo.idx }" style="display: none;" class="text-right pt-3">
+										<span class="ho" onclick="commentupdate(${vo.idx})">수정</span>
+										<span>|</span>
+										<span class="ho" onclick="commentdel(${vo.idx})">삭제</span>
+										<span>|</span>
+										<span class="ho" onclick="javascript:location.reload();">취소</span>
+									</td>
+								</c:if>
+								<c:if test="${sVO.membership == -1 }"><td class="text-right ho pt-3" onclick="commentdel(${vo.idx})">X</td></c:if>
+							</tr>
+							<tr><td colspan="3"><font color="#444">${vo.date}</font></td></tr>
+							<tr><td id="content_${vo.idx }" colspan="3" class="pb-3" style="border-bottom: 1px solid #333;">${fn:replace(vo.content, enter, "<br>") }</td></tr>
+						</c:forEach>
 					</table>
 				</div>
 			</div>
 		</div>
 		<jsp:include page="/WEB-INF/views/include/sFooter.jsp" />
     </section>
-    
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -76,11 +91,6 @@
 	<script>
 		function commentset() {
 			if (reviewComment.value == "") return;
-			
-			/* if (${empty sVO.idx}) {
-				alert("로그인 안됨");
-				return;
-			} */
 			
 			let data = {
 				content : reviewComment.value,
@@ -100,6 +110,51 @@
 				}
 			});	
 		}
+		
+		function commentdel(idx) {
+			if (confirm("삭제 하시겠습니까?")) {
+				$.ajax({
+					type : "post",
+					url : "${ctp}/review/commentdel",
+					data : {idx : idx},
+					success : () => {
+						location.reload();
+					}
+				});
+			}
+		}
+		
+		function goupdate(idx, content) {
+			let res = '<textarea id="commentupdate_' + idx + '" name="commentupdate" rows="5" maxlength="500" class="form-control mt-3" style="background: #333; border: none;">';
+			res += content.replaceAll("엔454%$#^&*@!123터", "\n");
+			res += "</textarea>";
+			$("#content_" + idx).html(res);
+			
+			let len = $("#commentupdate_" + idx).val().length;
+			$("#commentupdate_" + idx).focus();
+			$("#commentupdate_" + idx)[0].setSelectionRange(0, len);
+			
+			$("#update1_" + idx).hide();
+			$("#update2_" + idx).show();
+		}
+		
+		function commentupdate(idx) {
+			let data = {
+				idx : idx,
+				content : $("#commentupdate_" + idx).val()
+			}
+			if (confirm("수정 하시겠습니까?")) {
+				$.ajax({
+					type : "post",
+					url : "${ctp}/review/commentupdate",
+					data : data,
+					success : () => {
+						location.reload();
+					}
+				});
+			}
+		}
+		
 	</script>
 	
 </body>

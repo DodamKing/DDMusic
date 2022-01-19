@@ -9,4 +9,7 @@ public class CommentVO {
 	private int userIdx;
 	private String content;
 	private String date;
+	
+	private String userId;
+	private String nickNm;
 }

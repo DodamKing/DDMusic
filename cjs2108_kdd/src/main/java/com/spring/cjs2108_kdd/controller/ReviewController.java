@@ -54,6 +54,7 @@ public class ReviewController {
 		if (vo.getTitle() == null || vo.getContent() ==null) {
 			return "redirect:/message/reviewnoinput";
 		}
+		vo.setTitle(vo.getTitle().replaceAll("<", "&lt;").replaceAll(">", "&gt;"));
 		reviewService.setReviewData(vo);
 		return "redirect:/message/writesuccess";
 	}
@@ -69,6 +70,7 @@ public class ReviewController {
 		model.addAttribute("kategorie", kategorie);
 		model.addAttribute("srchClass", srchClass);
 		model.addAttribute("reviewsrch", reviewsrch);
+		model.addAttribute("vos", reviewService.getComment(idx));
 		return "review/content";
 	}
 
@@ -114,7 +116,21 @@ public class ReviewController {
 		UserVO userVO = (UserVO) session.getAttribute("sVO");
 		if (userVO == null) return "no";
 		vo.setUserIdx(userVO.getIdx());
+		vo.setContent(vo.getContent().replaceAll("<", "&lt;").replaceAll(">", "&gt;"));
 		reviewService.setComment(vo);
 		return "";
+	}
+	
+	@RequestMapping("/commentdel")
+	@ResponseBody
+	public void commentdelPost(int idx) {
+		reviewService.setCommentDel(idx);
+	}
+
+	@RequestMapping("/commentupdate")
+	@ResponseBody
+	public void commentupdatePost(int idx, String content) {
+		content = content.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+		reviewService.setCommentUpdate(idx, content);
 	}
 }

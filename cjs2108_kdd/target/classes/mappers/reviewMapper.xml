@@ -94,4 +94,20 @@
 		insert into r_comment values (default, #{vo.reviewIdx}, #{vo.userIdx}, #{vo.content}, default);
 	</insert>
 	
+	<select id="getComment" resultType="com.spring.cjs2108_kdd.vo.CommentVO">
+		select * from r_comment c left join user u on c.userIdx = u.idx where c.reviewIdx = #{idx};
+	</select>
+	
+	<delete id="setCommentDel">
+		delete from r_comment where idx = #{idx};
+	</delete>
+	
+	<select id="getCommentCnt" resultType="int">
+		select count(*) from r_comment where reviewIdx = #{idx};
+	</select>
+	
+	<update id="setCommentUpdate">
+		update r_comment set content = #{content} where idx = #{idx};
+	</update>
+	
 </mapper>

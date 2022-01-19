@@ -92,7 +92,8 @@ public class DDMusic {
 //		}
 
 		else if (flag.equals("comming")) {
-			
+			ArrayList<SongVO> vos = songService.getUpdateSong();
+			model.addAttribute("vos", vos);
 		}
 
 		model.addAttribute("flag", flag);

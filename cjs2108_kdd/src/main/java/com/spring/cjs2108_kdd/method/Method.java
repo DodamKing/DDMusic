@@ -9,7 +9,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 public class Method {
 	public String getImgSize(String img, String size) {
-		String img_ = img.replace("50", size);
+		String img_ = img.replaceFirst("50", size);
 		return img_;
 	}
 	

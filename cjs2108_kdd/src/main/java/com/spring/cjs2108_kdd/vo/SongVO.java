@@ -21,4 +21,6 @@ public class SongVO {
 	
 	private int playCnt;
 	private int playCntSum;
+	
+	private String date;
 }
