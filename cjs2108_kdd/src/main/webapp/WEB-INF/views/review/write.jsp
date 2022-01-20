@@ -44,11 +44,10 @@
 								<textarea class="form-control" placeholder="내용을 입력하세요" id="CKEDITOR" name="content" maxlength="2048" style="height: 400px;"></textarea>
 								<script>
 									CKEDITOR.replace("content", {
-										height : 460
-								  		/* uploadUrl: "${ctp}/imageUpload",
-								  		filebrowserUploadUrl : "${ctp}/imageUpload",
-								  		height:460 */
-								  	});
+								  		uploadUrl: "${ctp}/review/imageUpload",
+								  		filebrowserUploadUrl : "${ctp}/review/imageUpload",
+								  		disallowedContent : 'img{width,height}'
+									});
 								</script>
 							</td>
 						</tr>

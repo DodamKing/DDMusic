@@ -70,7 +70,7 @@
 		}
 		
 		let data = {
-			userIdx : ${sVO.idx},
+			userIdx : "${sVO.idx}",
 			listNm : listNm.value,
 			comment : comment.value,
 			content : content.value

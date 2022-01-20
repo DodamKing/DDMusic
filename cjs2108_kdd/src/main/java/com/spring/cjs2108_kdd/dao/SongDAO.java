@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.spring.cjs2108_kdd.vo.PlayVO;
 import com.spring.cjs2108_kdd.vo.SongVO;
 
 public interface SongDAO {

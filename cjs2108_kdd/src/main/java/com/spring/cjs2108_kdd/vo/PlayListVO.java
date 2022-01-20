@@ -6,7 +6,7 @@ import lombok.Data;
 public class PlayListVO {
 	private int idx;
 	private int userIdx;
-	private int listNm;
+	private String listNm;
 	private String comment;
 	private String content;
 	

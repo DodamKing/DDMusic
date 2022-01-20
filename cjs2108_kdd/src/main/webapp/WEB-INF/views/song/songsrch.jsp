@@ -34,7 +34,8 @@
     	%>
         <div class="container">
             <div class="card-body" style="padding-bottom: 300px;">
-                <h2 class="mt-5 mb-5">DD Music 검색결과</h2>
+                <h2 class="mt-5 mb-5">DD Music '${srchKwd }' 검색결과</h2>
+                <c:if test="${empty vos }">검색 결과가 없습니다.</c:if>
                 <table class="table" style="width: 80%; margin: auto;">
                     <c:forEach var="vo" items="${vos }" varStatus="st">
 	                    <tr>

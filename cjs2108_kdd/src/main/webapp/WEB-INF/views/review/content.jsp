@@ -13,6 +13,12 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="${ctp }/resources/css/main.css?v=2">
+    <style>
+    	div#ck img {
+    		max-width: 100%;
+    		max-height: auto;
+    	}
+    </style>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/include/searchBar.jsp" />
@@ -23,30 +29,31 @@
 		<div class="container">
 			<div class="card-body" style="padding-bottom: 300px; background: #222;">
 				<h2 class="mt-5 mb-5">사용자 리뷰</h2>
-				<table class="table table-borderless">
-					<tr>
-						<td colspan="3" style="font-size: 32px;">${vo.title }</td>
-					</tr>
-					<tr style="border-bottom: 1px solid;">
-						<td>
-							<c:if test="${!empty vo.profileImg }"><img style="width: 30px; border-radius: 100%;" src="${ctp }/resources/img/${vo.profileImg}"></c:if>
-							<c:if test="${empty vo.profileImg }"><i class="fa-solid fa-user"></i></c:if>
-							${vo.nickNm }
-						</td>
-						<td>${fn:substring(vo.date, 0, 10) }</td>
-						<td>${vo.hostIp }</td>
-						<td>조회수 : ${vo.likeCnt }</td>
-						<td class="text-right">
-							<c:if test="${sVO.idx == vo.userIdx}"><a onclick="return confirm('수정 하시겠습니까?')" href="${ctp }/review/update?idx=${vo.idx}" class="btn btn-dark">수정</a></c:if>
-							<c:if test="${sVO.membership == -1 || sVO.idx == vo.userIdx}"><a onclick="return confirm('정말 삭제 하시겠습니까?')" href="${ctp }/review/reviewdel?idx=${vo.idx}" class="btn btn-dark">삭제</a></c:if>
-						</td>
-					</tr>
-				</table>
-				<div class="mt-5">${vo.content }</div>
-				<div class="row mt-5" style="border-bottom: 1px solid;">
+				<div class="row">
+					<div class="col-2"><a href="${ctp }/review/list" class="btn btn-dark mb-3">목록</a></div>
 					<div class="col"></div>
-					<%-- <div class="col-2"><a href="${ctp }/review/list?pageNo=${pageNo}&reviewsrch=${reviewsrch}&kategorie=${kategorie}&srchClass=${srchClass}" class="btn btn-dark">돌아가기</a></div> --%>
-					<div class="col-1"><a href="${ctp }/review/list" class="btn btn-dark mb-3">목록</a></div>
+					<div class="col-2 text-right">
+						<c:if test="${sVO.idx == vo.userIdx}"><a onclick="return confirm('수정 하시겠습니까?')" href="${ctp }/review/update?idx=${vo.idx}" class="btn btn-dark">수정</a></c:if>
+						<c:if test="${sVO.membership == -1 || sVO.idx == vo.userIdx}"><a onclick="return confirm('정말 삭제 하시겠습니까?')" href="${ctp }/review/reviewdel?idx=${vo.idx}" class="btn btn-dark">삭제</a></c:if>
+					</div>
+				</div>
+				<div style="border-bottom: 1px solid;">
+					<table class="table table-borderless">
+						<tr>
+							<td colspan="3" style="font-size: 32px;">${vo.title }</td>
+						</tr>
+						<tr style="border-bottom: 1px solid;">
+							<td>
+								<c:if test="${!empty vo.profileImg }"><img style="width: 30px; border-radius: 100%;" src="${ctp }/resources/img/${vo.profileImg}"></c:if>
+								<c:if test="${empty vo.profileImg }"><i class="fa-solid fa-user"></i></c:if>
+								${vo.nickNm }
+							</td>
+							<td>${fn:substring(vo.date, 0, 10) }</td>
+							<td>${vo.hostIp }</td>
+							<td>조회수 : ${vo.likeCnt }</td>
+						</tr>
+					</table>
+					<div id="ck" class="mt-5">${vo.content }</div>
 				</div>
 				<h4 class="mt-3">댓글 ${fn:length(vos) }</h4>
 				<div class="mt-3" style="background: #333; border-top: 1px solid;">
@@ -81,6 +88,7 @@
 						</c:forEach>
 					</table>
 				</div>
+				<div class="pull-right"><a href="${ctp }/review/list" class="btn btn-dark mb-3">목록</a></div>
 			</div>
 		</div>
 		<jsp:include page="/WEB-INF/views/include/sFooter.jsp" />
