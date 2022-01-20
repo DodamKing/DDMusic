@@ -64,6 +64,10 @@
 	<select id="getRank" resultType="com.spring.cjs2108_kdd.vo.SongVO">
 		select *, sum(playCnt) as playCntSum from song s left join play p on s.idx = p.songIdx group by s.idx order by sum(playCnt) desc limit 10;
 	</select>
+
+	<select id="getMyRank" resultType="com.spring.cjs2108_kdd.vo.SongVO">
+		select * from song s left join play p on s.idx = p.songIdx where userIdx = #{idx} and playCnt > 0 order by playCnt desc limit 20;
+	</select>
 	
 	<insert id="insertSong">
 		insert into song values (default, #{vo.img}, #{vo.title}, #{vo.artist}, #{vo.album}, #{vo.releaseDate}, #{vo.genre}, #{vo.music}, #{vo.words}, #{vo.arranger}, #{vo.lyrics}, default, default, default);
@@ -95,7 +99,8 @@
 	</insert>
 	
 	<select id="getUpdateSong" resultType="com.spring.cjs2108_kdd.vo.SongVO">
-		select * from song s left join song_update u on s.idx = u.songIdx where date_format(date, "%Y-%m-%d") = curdate();
+		<!-- select * from song s left join song_update u on s.idx = u.songIdx where date_format(date, "%Y-%m-%d") = curdate(); -->
+		select * from song_update u left join song s on s.idx = u.songIdx order by date desc;
 	</select>
 	
 <!-- 	<select id="getSong100" resultType="com.spring.cjs2108_kdd.vo.SongVO" parameterType="java.util.ArrayList">

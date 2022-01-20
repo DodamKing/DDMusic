@@ -111,6 +111,7 @@
 			}
 		    
 		    play_list.innerHTML = res;
+		    listCnt.innerHTML = idx_list.length + " 곡";
 		}
 
 		// 로드

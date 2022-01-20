@@ -3,6 +3,8 @@ package com.spring.cjs2108_kdd.service;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +16,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.cjs2108_kdd.dao.UserDAO;
+import com.spring.cjs2108_kdd.vo.PlayListVO;
 import com.spring.cjs2108_kdd.vo.UserVO;
 
 @Service
@@ -62,11 +65,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public String getNextMembershipDate(Integer idx) {
-		return userDAO.getNextMembershipDate(idx);
-	}
-
-	@Override
 	public String getUserId(String userNm, String phoneNb, String email) {
 		String mid = userDAO.getUserId(userNm, phoneNb, email);
 		mid = mid.replace(mid.substring(0, 4), "****");
@@ -103,6 +101,21 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void setUserDel(Integer idx) {
 		userDAO.setUserDel(idx);
+	}
+
+	@Override
+	public void setMemberShipReset(int idx) {
+		userDAO.setMemberShipReset(idx);
+	}
+
+	@Override
+	public ArrayList<PlayListVO> getPlayListVOS(int idx) {
+		return userDAO.getPlayListVOS(idx);
+	}
+
+	@Override
+	public void setPlayList(PlayListVO vo) {
+		userDAO.setPlayList(vo);
 	}
 
 }

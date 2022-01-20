@@ -1,5 +1,7 @@
 package com.spring.cjs2108_kdd.vo;
 
+import java.sql.Date;
+
 import lombok.Data;
 
 @Data
@@ -18,5 +20,5 @@ public class UserVO {
 	private int withdrawal;
 	private String profileImg;
 	
-	private String nextMembershipDate;
+	private Date nextMembershipDate;
 }

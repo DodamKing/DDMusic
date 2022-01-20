@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.spring.cjs2108_kdd.dao.UserDAO">
 	<select id="getUserVO" resultType="com.spring.cjs2108_kdd.vo.UserVO">
-		select * from user where idx = #{idx};
+		select *, date_add(membershipDate, interval 1 month) as nextMembershipDate from user where idx = #{idx};
 	</select>
 	
 	<select id="idCheck" resultType="int">
@@ -33,10 +33,6 @@
 		update user set membership = 1, membershipDate = now(), membershipCnt = membershipCnt + 1 where idx = #{idx};
 	</update>
 	
-	<select id="getNextMembershipDate" resultType="String">
-		select date_add(membershipDate, interval 1 month) from user where idx = #{idx};
-	</select>
-	
 	<select id="getUserId" resultType="String">
 		select userId from user where userNm = #{userNm} and phoneNb = #{phoneNb} and email = #{email} and withdrawal = 0;
 	</select>
@@ -52,6 +48,18 @@
 	<delete id="setUserDel">
 		delete from user where idx = #{idx}; 
 	</delete>
+	
+	<update id="setMemberShipReset">
+		update user set memberShip = 0 , membershipDate = default where idx = #{idx};
+	</update>
+	
+	<select id="getPlayListVOS" resultType="com.spring.cjs2108_kdd.vo.PlayListVO">
+		select * from playlist where useridx = #{idx};
+	</select>
+	
+	<insert id="setPlayList">
+		insert into playlist values (default, #{vo.userIdx}, #{vo.listNm}, #{vo.comment}, #{vo.content});
+	</insert>
 	
 
 </mapper>

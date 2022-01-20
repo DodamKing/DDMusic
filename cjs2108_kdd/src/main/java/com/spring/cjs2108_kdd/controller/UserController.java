@@ -1,6 +1,10 @@
 package com.spring.cjs2108_kdd.controller;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Locale;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -17,7 +21,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -25,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.cjs2108_kdd.method.RandomPwd;
 import com.spring.cjs2108_kdd.service.UserService;
+import com.spring.cjs2108_kdd.vo.PlayListVO;
 import com.spring.cjs2108_kdd.vo.UserVO;
 
 @Controller
@@ -54,8 +58,15 @@ public class UserController {
 			if (!bCryptPasswordEncoder.matches(pwd, vo.getPwd())) {
 				return "redirect:/message/pwdFalse";
 			}
+			
+			if (vo.getNextMembershipDate() != null) {
+				if (vo.getNextMembershipDate().before(new Date(System.currentTimeMillis()))) {
+					userService.setMemberShipReset(vo.getIdx());
+				}
+			}
 			session.setAttribute("sMid", vo.getUserId());
 			session.setAttribute("sVO", vo);
+				
 			if (flag != null) {
 				if (flag.equals("write")) return "redirect:/review/write";
 			}
@@ -114,8 +125,9 @@ public class UserController {
 	}
 
 	@RequestMapping(value="/update/{idx}", method = RequestMethod.POST)
-	public String updatePost(UserVO vo, @PathVariable Integer idx) {
+	public String updatePost(HttpSession session, UserVO vo, @PathVariable Integer idx) {
 		userService.setuserUpdate(idx, vo);
+		session.setAttribute("sVO", userService.getUserVO(idx));
 		return "redirect:/message/userupdatesuccess/" + idx;
 	}
 	
@@ -127,8 +139,9 @@ public class UserController {
 	}
 
 	@RequestMapping(value="/imgupdate/{idx}", method = RequestMethod.POST)
-	public String imgupdatePost(@PathVariable Integer idx, MultipartFile imgUpdate) throws IOException {
+	public String imgupdatePost(HttpSession session, @PathVariable Integer idx, MultipartFile imgUpdate) throws IOException {
 		userService.setImgUpdate(idx, imgUpdate);
+		session.setAttribute("sVO", userService.getUserVO(idx));
 		return "redirect:/message/userupdatesuccess/" + idx;
 	}
 	
@@ -151,15 +164,15 @@ public class UserController {
 	@RequestMapping("/membership/{idx}")
 	public String membershiptGet(Model model, @PathVariable Integer idx) {
 		UserVO vo = userService.getUserVO(idx);
-		vo.setNextMembershipDate(userService.getNextMembershipDate(idx));
 		model.addAttribute("vo", vo);
 		return "user/membership";
 	}
 
 	@RequestMapping(value="/membership/{idx}", method = RequestMethod.POST)
 	@ResponseBody
-	public String membershiptPost(@PathVariable Integer idx) {
+	public String membershiptPost(HttpSession session, @PathVariable Integer idx) {
 		userService.setMembership(idx);
+		session.setAttribute("sVO", userService.getUserVO(idx));
 		return "ok";
 	}
 	
@@ -210,8 +223,19 @@ public class UserController {
 	}
 		
 	@RequestMapping("/playlist")
-	public String playlistGet() {
+	public String playlistGet(HttpSession session, Model model) {
+		UserVO vo = (UserVO) session.getAttribute("sVO");
+		if (vo != null) {
+			ArrayList<PlayListVO> vos = userService.getPlayListVOS(vo.getIdx());
+			model.addAttribute("vos", vos);
+		}
 		return "user/playlist";
+	}
+	
+	@RequestMapping("/savelist")
+	@ResponseBody
+	public void savelistPost(PlayListVO vo) {
+		userService.setPlayList(vo);
 	}
 	
 }

@@ -40,11 +40,11 @@
 	            <button id="like_btn1" class="btn" type="button" title="좋아요"><i class="fa-regular fa-heart"></i></button>
 	            <button id="like_btn2" style="display: none;" class="btn" type="button"><i class="fa-solid fa-heart text-danger"></i></button>
         	</c:if>
-        	<c:if test="${fn:contains(vo.likeList, sMid) && !empty sMid }">
+        	<c:if test="${(fn:contains(vo.likeList, sMid) && !empty sMid) || (fn:contains(vos[0].likeList, sMid) && !empty sMid)}">
 	            <button id="like_btn1" style="display: none;" class="btn" type="button" title="좋아요"><i class="fa-regular fa-heart"></i></button>
 	            <button id="like_btn2" class="btn" type="button"><i class="fa-solid fa-heart text-danger"></i></button>
         	</c:if>
-        	<c:if test="${!fn:contains(vo.likeList, sMid) && !empty sMid }">
+        	<c:if test="${(!fn:contains(vo.likeList, sMid) && !empty sMid) || (!fn:contains(vos[0].likeList, sMid) && !empty sMid) }">
 	            <button id="like_btn1" class="btn" type="button" title="좋아요"><i class="fa-regular fa-heart"></i></button>
 	            <button id="like_btn2" style="display: none;" class="btn" type="button"><i class="fa-solid fa-heart text-danger"></i></button>
         	</c:if>

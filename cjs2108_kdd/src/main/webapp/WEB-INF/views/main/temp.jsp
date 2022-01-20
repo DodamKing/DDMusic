@@ -9,10 +9,16 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>커밍쑨 DDMusic</title>
+	<title>DD Music</title>
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="${ctp }/resources/css/main.css?v=2">
+    <style>
+    	.ho:hover {
+    		cursor: pointer;
+    		opacity: 0.7;
+    	}
+    </style>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/include/searchBar.jsp" />
@@ -22,17 +28,9 @@
 	<section>
 		<div class="container">
 			<div class="card-body" style="padding-bottom: 300px;">
-				<h2 class="mt-5 mb-5">커밍쑨 DDMusic</h2>
-				<c:forEach var="vo" items="${vos }">
-					<div>
-						<p>${fn:replace(fn:split(vo.date, " ")[0], "-", ".") } 업데이트</p>
-						<p>${vo.title } - ${vo.artist } </p>
-					</div>
-				</c:forEach>
-				<div class="mt-5">
-					<p>2022.01.14 업데이트</p>
-					<p>뿌리 (Feat. JUSTHIS) (Prod. GroovyRoom) - 쿤디판다(Khundi Panda) </p>
-					<p>개똥벌레 - 신형원</p>
+				<h2 class="mt-5 mb-5">준비중</h2>
+				<div>
+					<p>페이지 준비중 입니다. 곧 준비 하도록 하겠습니다.</p>
 				</div>
 			</div>
 		</div>
@@ -44,9 +42,6 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<script src="${ctp }/resources/js/main.js?v=1"></script>
-	
-	<script>
-	</script>
 	
 </body>
 </html>

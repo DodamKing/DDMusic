@@ -12,13 +12,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.spring.cjs2108_kdd.method.Method;
 import com.spring.cjs2108_kdd.service.ReviewService;
 import com.spring.cjs2108_kdd.service.SongService;
-import com.spring.cjs2108_kdd.vo.ReviewVO;
 import com.spring.cjs2108_kdd.vo.SongVO;
+import com.spring.cjs2108_kdd.vo.UserVO;
 
 @Controller
 public class DDMusic {
@@ -45,8 +44,8 @@ public class DDMusic {
 	
 	@RequestMapping("/{flag}")
 	public String mainGet(Model model, HttpSession session , @PathVariable String flag, String srchKwd, String idx) throws FileNotFoundException, IOException, ParseException {
-		if (flag.equals("") || flag.equals("index")) {
-			model.addAttribute("flag", "intro");
+		if (flag.equals("index")) {
+			model.addAttribute("flag", "today");
 			return "main/main";
 		}
 
@@ -75,25 +74,21 @@ public class DDMusic {
 			model.addAttribute("vos", vos);
 		}
 		
-//		else if (flag.equals("review")) {
-//			int pageSize = 10;
-//			int intPageNo = 1;
-//			if (pageNo != null) intPageNo = Integer.parseInt(pageNo);
-//			int startNo = (intPageNo - 1) * pageSize;
-//			int lastPageNo = reviewService.getreviewCnt() / pageSize + 1;
-//			if (reviewService.getreviewCnt() % 10 == 0) lastPageNo--;
-//			model.addAttribute("vos", reviewService.getReviewVOS(startNo, pageSize));
-//			model.addAttribute("lastPageNo", lastPageNo);
-//			model.addAttribute("pageNo", intPageNo);
-//			
-//			ArrayList<ReviewVO> vos = new ArrayList<ReviewVO>();
-//			vos = reviewService.getReviewData();
-//			model.addAttribute("vos", vos);
-//		}
-
 		else if (flag.equals("comming")) {
 			ArrayList<SongVO> vos = songService.getUpdateSong();
 			model.addAttribute("vos", vos);
+		}
+
+		else if (flag.equals("myranking")) {
+			UserVO vo = (UserVO) session.getAttribute("sVO");
+			if (vo != null) {
+				ArrayList<SongVO> vos = songService.getMyRank(vo.getIdx());
+				Method method = new Method();
+				vos.get(0).setImg(method.getImgSize(vos.get(0).getImg(), "300"));
+				vos.get(1).setImg(method.getImgSize(vos.get(1).getImg(), "200"));
+				vos.get(2).setImg(method.getImgSize(vos.get(2).getImg(), "200"));
+				model.addAttribute("vos", vos);
+			}
 		}
 
 		model.addAttribute("flag", flag);

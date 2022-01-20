@@ -201,4 +201,9 @@ public class SongServiceImpl implements SongService {
 		return songDAO.getUpdateSong();
 	}
 
+	@Override
+	public ArrayList<SongVO> getMyRank(int idx) {
+		return songDAO.getMyRank(idx);
+	}
+
 }

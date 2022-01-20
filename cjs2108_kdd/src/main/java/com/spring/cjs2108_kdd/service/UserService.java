@@ -1,12 +1,15 @@
 package com.spring.cjs2108_kdd.service;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.mail.MessagingException;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.spring.cjs2108_kdd.vo.PlayListVO;
 import com.spring.cjs2108_kdd.vo.UserVO;
 
 public interface UserService {
@@ -27,8 +30,6 @@ public interface UserService {
 
 	void setMembership(Integer idx);
 
-	String getNextMembershipDate(Integer idx);
-
 	String getUserId(String userNm, String phoneNb, String email);
 
 	List<UserVO> getUserVOS();
@@ -36,5 +37,11 @@ public interface UserService {
 	void setImgUpdate(Integer idx, MultipartFile imgUpdate) throws IOException;
 
 	void setUserDel(Integer idx);
+
+	void setMemberShipReset(int idx);
+
+	ArrayList<PlayListVO> getPlayListVOS(int idx);
+
+	void setPlayList(PlayListVO vo);
 
 }

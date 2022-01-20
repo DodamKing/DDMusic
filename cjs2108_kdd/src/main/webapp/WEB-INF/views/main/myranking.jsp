@@ -29,7 +29,64 @@
 		<div class="container">
 			<div class="card-body" style="padding-bottom: 300px;">
 				<h2 class="mt-5 mb-5">#내돈내듣</h2>
-				페이지 준비중 입니다.
+				<c:if test="${empty sVO }">
+					<div>로그인을 하고 지금 나의 차트를 확인 하세요</div>
+				</c:if>
+				<c:if test="${!empty sVO }">
+					<h4><font color="yellow;">${sVO.nickNm }</font>님이 즐겨 듣는 곡을 모아 봤어요!!</h4>
+					<div style="width: 350px; margin: auto;" class="mt-5 mb-5 text-center ho" onclick="javascript:location.href='infor?idx=${vos[0].idx }'">
+						<div><img src="${vos[0].img }"></div>
+						<div>${vos[0].title }</div>
+						<div>${vos[0].artist }</div>
+						<div>재생수 : ${vos[0].playCnt }</div>
+					</div>
+					<div class="row mb-5">
+						<div class="col text-center ho" onclick="javascript:location.href='infor?idx=${vos[1].idx }'">
+							<div><img src="${vos[1].img }"></div>
+							<div>${vos[1].title }</div>
+							<div>${vos[1].artist }</div>
+							<div>재생수 : ${vos[1].playCnt }</div>
+						</div>
+						<div class="col text-center ho" onclick="javascript:location.href='infor?idx=${vos[2].idx }'">
+							<div><img src="${vos[2].img }"></div>
+							<div>${vos[2].title }</div>
+							<div>${vos[2].artist }</div>
+							<div>재생수 : ${vos[2].playCnt }</div>
+						</div>
+					</div>
+					<table class="table">
+						<tr style="border-top: none;">
+							<td class="text-right" colspan="7"><button id="add_btn" class="btn btn-dark" type="button">선택추가</button></td>
+						</tr>
+						<tr>
+							<th class="text-center align-middle"><input id="allch" type="checkbox"></th>
+							<th class="text-center align-middle">순위</th>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th class="text-center align-middle">재생수</th>
+						</tr>
+						<c:forEach var="vo" items="${vos}" varStatus="st">
+							<tr>
+								<td class="text-center align-middle"><input name="tch" type="checkbox"></td>
+								<td class="text-center align-middle">${st.count }</td>
+								<c:if test="${st.index <= 2}"><td class="align-middle"><img style="width: 50px;" src="${vo.img }"></td></c:if>
+								<c:if test="${st.index > 2}"><td class="align-middle"><img src="${vo.img }"></td></c:if>
+								<td class="align-middle" title="${vo.title }">
+									<a href="infor?idx=${vo.idx }">
+										<c:if test="${fn:length(vo.title) < 20 }">${vo.title }</c:if>
+										<c:if test="${fn:length(vo.title) >= 20 }">${fn:substring(vo.title, 0, 20) }...</c:if>
+									</a>
+								</td>
+								<td class="align-middle" title="${vo.artist }">
+									<c:if test="${fn:length(vo.artist) < 20 }">${vo.artist }</c:if>
+									<c:if test="${fn:length(vo.artist) >= 20 }">${fn:substring(vo.artist, 0, 20) }...</c:if>
+								</td>
+								<td class="align-middle text-center">${vo.playCnt }</td>
+							</tr>
+						</c:forEach>
+					</table>
+				</c:if>
 			</div>
 		</div>
 		<jsp:include page="/WEB-INF/views/include/sFooter.jsp" />
@@ -40,6 +97,66 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<script src="${ctp }/resources/js/main.js?v=1"></script>
+	
+	<script>
+	  //전체선택
+		allch.addEventListener("click", () => {
+			if (allch.checked) {
+				$("input:checkbox[name='tch']").prop("checked", true);
+			}
+			else {
+				$("input:checkbox[name='tch']").prop("checked", false);
+			}
+		});
+		
+		//전체선택 해제
+		$("input:checkbox[name='tch']").click(() => {
+			for (let i=0; i<100; i++) {
+				if (!$("input:checkbox[name='tch']")[i].checked) {
+					$("#allch").prop("checked", false);
+					return;
+				}
+			}
+		});
+		
+		add_btn.addEventListener("click", () => {
+			let idxs = "";
+			
+			<c:forEach var="vo" items="${vos}" varStatus="st">
+				if($("input:checkbox[name='tch']")[${st.index}].checked) {
+					idxs += ${vo.idx} + "/";
+				}
+			</c:forEach>
+			
+			if (!sw) {
+				let url = "${ctp}/song/player?idxs=" + idxs;
+				player = window.open(url, "player", "width=1100px, height=800px, left=50px, top=150px");
+				sw = true;
+			}
+			else {
+				if (!player.closed && sw) {
+					let idx_list = idxs.split("/");
+					for (let i=0; i<idx_list.length - 1; i++) {
+						$.ajax({
+							type : "post",
+							url : "${ctp}/song/player",
+							data : {idx : idx_list[i]},
+							success : (data) => {
+								player.addList(data);
+								player.setList();
+							}
+						});
+					}
+				}
+				else {
+					let url = "${ctp}/song/player?idxs=" + idxs;
+					player = window.open(url, "player", "width=1100px, height=800px, left=50px, top=150px");
+					sw = true;
+				}
+			}
+		});
+		
+    </script>
 	
 </body>
 </html>

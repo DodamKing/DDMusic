@@ -25,11 +25,12 @@
             <div class="card-body">
                 <h2 class="mt-5 mb-5">DD Music Top 100</h2>
                 <div id="top_btn" class="btn btn-dark" style="position: fixed; right: 30px; bottom: 100px;">top</div>
+                <div id="add_btn" class="btn btn-dark btn-sm" style="position: sticky; right: 30px; top: 50px; float: right;">선택추가</div>
                 <table class="table">
-                	<tr style="border-top: none;">
-                		<td><input id="allch" type="checkbox" ></td>
-                		<td colspan="2" style="vertical-align: middle;">전체선택</td>
-                		<td colspan="2" class="text-right"><div id="add_btn" class="btn btn-dark btn-sm" >선택추가</div></td>
+                	<tr>
+                		<td style="border-top: none;"><input id="allch" type="checkbox" ></td>
+                		<td colspan="2" style="vertical-align: middle; border-top: none;">전체선택</td>
+                		<!-- <td colspan="2" class="text-right" style="border-top: none;"><div id="add_btn" class="btn btn-dark btn-sm" style="position: sticky; position: -webkit-sticky; right: 30px; top: 50px;">선택추가</div></td> -->
             		</tr>
                     <c:forEach var="vo" items="${vos }" varStatus="st">
 	                    <tr>

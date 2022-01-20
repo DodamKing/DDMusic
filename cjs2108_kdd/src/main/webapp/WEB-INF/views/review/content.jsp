@@ -46,11 +46,11 @@
 				<div class="row mt-5" style="border-bottom: 1px solid;">
 					<div class="col"></div>
 					<%-- <div class="col-2"><a href="${ctp }/review/list?pageNo=${pageNo}&reviewsrch=${reviewsrch}&kategorie=${kategorie}&srchClass=${srchClass}" class="btn btn-dark">돌아가기</a></div> --%>
-					<div class="col-2"><a href="javascript:history.back()" class="btn btn-dark mb-3">돌아가기</a></div>
+					<div class="col-1"><a href="${ctp }/review/list" class="btn btn-dark mb-3">목록</a></div>
 				</div>
 				<h4 class="mt-3">댓글 ${fn:length(vos) }</h4>
 				<div class="mt-3" style="background: #333; border-top: 1px solid;">
-					<textarea id="reviewComment" name="reviewComment" rows="5" maxlength="500" class="form-control mt-3" style="background: #333; border: none; " placeholder="댓글을 입력해 주세요."></textarea>
+					<textarea id="reviewComment" name="reviewComment" rows="5" maxlength="500" class="form-control mt-3" style="background: #333; border: none; color: #bbb;" placeholder="댓글을 입력해 주세요."></textarea>
 					<div class="row">
 						<div class="col"></div>
 						<button class="btn btn-dark mr-3 col-1" onclick="commentset()">등록</button>
@@ -71,7 +71,10 @@
 										<span class="ho" onclick="javascript:location.reload();">취소</span>
 									</td>
 								</c:if>
-								<c:if test="${sVO.membership == -1 }"><td class="text-right ho pt-3" onclick="commentdel(${vo.idx})">X</td></c:if>
+								<c:if test="${sVO.membership == -1 }">
+									<c:if test="${sVO.idx != vo.userIdx }"><td class="text-right ho pt-3" ></td></c:if>
+									<td class="text-right ho pt-3 close" onclick="commentdel(${vo.idx})">&times;</td>
+								</c:if>
 							</tr>
 							<tr><td colspan="3"><font color="#444">${vo.date}</font></td></tr>
 							<tr><td id="content_${vo.idx }" colspan="3" class="pb-3" style="border-bottom: 1px solid #333;">${fn:replace(vo.content, enter, "<br>") }</td></tr>
@@ -125,14 +128,14 @@
 		}
 		
 		function goupdate(idx, content) {
-			let res = '<textarea id="commentupdate_' + idx + '" name="commentupdate" rows="5" maxlength="500" class="form-control mt-3" style="background: #333; border: none;">';
+			let res = '<textarea id="commentupdate_' + idx + '" name="commentupdate" rows="5" maxlength="500" class="form-control mt-3" style="background: #333; border: none; color: #bbb;">';
 			res += content.replaceAll("엔454%$#^&*@!123터", "\n");
 			res += "</textarea>";
 			$("#content_" + idx).html(res);
 			
 			let len = $("#commentupdate_" + idx).val().length;
 			$("#commentupdate_" + idx).focus();
-			$("#commentupdate_" + idx)[0].setSelectionRange(0, len);
+			$("#commentupdate_" + idx)[0].setSelectionRange(len, len);
 			
 			$("#update1_" + idx).hide();
 			$("#update2_" + idx).show();

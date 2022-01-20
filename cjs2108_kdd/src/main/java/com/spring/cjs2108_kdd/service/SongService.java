@@ -57,4 +57,6 @@ public interface SongService {
 
 	ArrayList<SongVO> getUpdateSong();
 
+	ArrayList<SongVO> getMyRank(int idx);
+
 }

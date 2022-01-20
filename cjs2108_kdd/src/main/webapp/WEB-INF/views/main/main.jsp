@@ -47,6 +47,9 @@
 	<c:if test="${flag == 'myranking'}">
 		<jsp:include page="/WEB-INF/views/main/myranking.jsp" />
 	</c:if>
+	<c:if test="${flag == 'temp'}">
+		<jsp:include page="/WEB-INF/views/main/temp.jsp" />
+	</c:if>
 </div>
 
 <script>

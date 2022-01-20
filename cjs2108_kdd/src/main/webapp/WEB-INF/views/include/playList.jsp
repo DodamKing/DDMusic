@@ -7,6 +7,12 @@
 		opacity: 0.7;
 		cursor: pointer;
 	}
+	
+	#listCnt {
+		position: fixed;
+		top: 15px;
+		right: 50px;
+	}
 </style>
 <div id="play_listContainer">
 	<img id="play_listbg" src="${img2000 }">
@@ -17,6 +23,10 @@
 		</div>
 	</div>
 	<div id="play_listBox">
+		<div id="listCnt">
+			<c:if test="${!empty vo }">1 곡</c:if>
+			<c:if test="${!empty vos }">${fn:length(vos) } 곡</c:if>
+		</div>
 	    <div class="mt-3">
 	        <div id="play_list" class="pfc" tabindex="0">
 				<c:if test="${!empty vo }">

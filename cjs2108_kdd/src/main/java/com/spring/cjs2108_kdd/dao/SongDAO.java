@@ -59,4 +59,6 @@ public interface SongDAO {
 
 	public ArrayList<SongVO> getUpdateSong();
 
+	public ArrayList<SongVO> getMyRank(int idx);
+
 }
