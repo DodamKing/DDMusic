@@ -7,7 +7,9 @@
 <link rel="stylesheet" href="${ctp }/resources/css/loader.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-<!-- <div class="loader"></div> -->
+<jsp:include page="/WEB-INF/views/include/addlist.jsp" />
+<button id="hiden_btn" type="button" data-toggle="modal" data-target="#addlist" style="display: none;" onclick=""></button>
+<div class="loader"></div>
 <div id="mainBody">
 	<c:if test="${flag == 'today'}">
 		<jsp:include page="/WEB-INF/views/main/today.jsp" />
@@ -56,9 +58,9 @@
 	let sw;
 	let player;
 	
-	/*  $(document).ready(() => {
+	 $(document).ready(() => {
         $('.loader').fadeOut();
-	 }); */
+	 });
 		
 	function addf(idx, isFile) {
 		if (idx == 0 || isFile == 0) {
@@ -106,4 +108,20 @@
 			}
 		}
 	}
+	
+	$("button[name='add_btn']").click(() => {
+		$('#hiden_btn').click();
+	});
+	
+	function senddata(idx, isFile) {
+		idx_box.innerHTML = idx;
+		isFile_box.innerHTML = isFile;
+	}
+	
+	function godata() {
+		let idx = idx_box.innerHTML;
+		let isFile = isFile_box.innerHTML;
+		addf(idx, isFile);
+	}
+	
 </script>

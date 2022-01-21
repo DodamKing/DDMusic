@@ -35,10 +35,9 @@
 									<textarea class="form-control" id="CKEDITOR" name="content" maxlength="2048" style="height: 400px;">${vo.content }</textarea>
 									<script>
 										CKEDITOR.replace("content", {
-											height : 460
-									  		/* uploadUrl: "${ctp}/imageUpload",
-									  		filebrowserUploadUrl : "${ctp}/imageUpload",
-									  		height:460 */
+									  		uploadUrl: "${ctp}/review/imageUpload",
+									  		filebrowserUploadUrl : "${ctp}/review/imageUpload",
+									  		height: 400
 									  	});
 									</script>
 								</td>

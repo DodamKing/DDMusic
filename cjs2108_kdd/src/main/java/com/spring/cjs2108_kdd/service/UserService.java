@@ -44,4 +44,8 @@ public interface UserService {
 
 	void setPlayList(PlayListVO vo);
 
+	void setVisitDate(int idx);
+
+	PlayListVO getPlayListVO(int idx);
+
 }

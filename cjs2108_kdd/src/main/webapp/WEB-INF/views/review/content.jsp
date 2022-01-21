@@ -18,6 +18,10 @@
     		max-width: 100%;
     		max-height: auto;
     	}
+    	
+    	#ck {
+    		min-height: 400px;
+    	}
     </style>
 </head>
 <body>
@@ -37,7 +41,7 @@
 						<c:if test="${sVO.membership == -1 || sVO.idx == vo.userIdx}"><a onclick="return confirm('정말 삭제 하시겠습니까?')" href="${ctp }/review/reviewdel?idx=${vo.idx}" class="btn btn-dark">삭제</a></c:if>
 					</div>
 				</div>
-				<div style="border-bottom: 1px solid;">
+				<div style="border-bottom: 1px solid;" class="pb-3">
 					<table class="table table-borderless">
 						<tr>
 							<td colspan="3" style="font-size: 32px;">${vo.title }</td>

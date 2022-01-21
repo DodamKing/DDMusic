@@ -21,4 +21,8 @@ public class UserVO {
 	private String profileImg;
 	
 	private Date nextMembershipDate;
+	
+	private Date visitDate;
+	private String lastDate;
+	private int visitCnt;
 }

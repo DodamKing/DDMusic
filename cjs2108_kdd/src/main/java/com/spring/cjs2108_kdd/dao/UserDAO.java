@@ -42,5 +42,9 @@ public interface UserDAO {
 
 	void setPlayList(@Param("vo") PlayListVO vo);
 
+	void setVisitDate(int idx);
+
+	PlayListVO getPlayListVO(int idx);
+
 
 }

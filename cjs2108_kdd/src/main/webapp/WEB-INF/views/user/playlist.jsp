@@ -30,8 +30,17 @@
 		    			<div style="width: 200px;" class="mt-3 text-center">새 플레이리스트 추가</div>
 		    		</div>
 		    		<c:forEach var="vo" items="${vos }">
-		    			<div class="p-3 ho" title="${vo.comment }" onclick="">
-			    			<div style="width: 200px; height: 200px; border: 1px solid white;" class="ho">이미지</div>
+		    			<div class="p-3 ho" title="${vo.comment }" onclick="javacript:location.href='${ctp}/user/playlist/${vo.idx }'">
+			    			<div style="width: 200px; height: 200px;" class="ho">
+			    				<div class="row" style="margin-left: 0px;">
+				    				<div><img src="${vo.thum1 }"></div>
+				    				<div><img src="${vo.thum2 }"></div>
+			    				</div>
+			    				<div class="row" style="margin-left: 0px;">
+				    				<div><img src="${vo.thum3 }"></div>
+				    				<div><img src="${vo.thum4 }"></div>
+			    				</div>
+			    			</div>
 			    			<div style="width: 200px;" class="mt-3 text-center">${vo.listNm }</div>
 		    			</div>
 		    		</c:forEach>

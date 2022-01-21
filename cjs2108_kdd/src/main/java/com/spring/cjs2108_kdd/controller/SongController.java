@@ -35,12 +35,11 @@ public class SongController {
 //		return "song/songinfor";
 //	}
 	
-//	@RequestMapping("srch")
-//	public String srchPost(Model model, String srchKwd) {
-//		model.addAttribute("srchKwd", srchKwd);
-//		model.addAttribute("vos", songService.getSongSrch(srchKwd));
-//		return "song/songsrch";
-//	}
+	@RequestMapping("srch")
+	@ResponseBody
+	public ArrayList<SongVO> srchPost(Model model, String srchKwd) {
+		return songService.getSongSrch(srchKwd);
+	}
 	
 	@RequestMapping(value="/player", method = RequestMethod.GET)
 	public String playerGet(HttpServletRequest request, HttpSession session, Model model, String idx, String idxs) {
@@ -134,6 +133,12 @@ public class SongController {
 	public void getchartPost(Model model) throws FileNotFoundException, IOException, ParseException {
 		ArrayList<SongVO> vos = songService.getChartJson();
 		model.addAttribute("vos", vos);
+	}
+	
+	@RequestMapping("/getaddsong")
+	@ResponseBody
+	public SongVO getaddsongPost(int idx) {
+		return songService.getSongInfor(idx);
 	}
 	
 }

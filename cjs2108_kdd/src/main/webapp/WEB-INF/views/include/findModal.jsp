@@ -3,38 +3,38 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <c:set var="ctp" value="<%=request.getContextPath() %>" />
 <!DOCTYPE html>
-
- <div class="modal" id="myModal1">
+<div class="loader" style="display: none;"></div>
+<div class="modal" id="myModal1">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title">계정찾기</h4>
 				<button type="button" class="close" data-dismiss="modal" onclick="vClear()">&times;</button>
 			</div>
-			<div class="modal-body">
-				<div class="input-group">
-					<div class="input-group-prepend mb-3">
-						<span class="input-group-text"> 이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;름</span>
-					</div>
-					<input id="userNm1" name="userNm1" type="text" class="form-control"/>
+		<div class="modal-body">
+			<div class="input-group">
+				<div class="input-group-prepend mb-3">
+					<span class="input-group-text"> 이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;름</span>
 				</div>
-				<div class="input-group">
-					<div class="input-group-prepend mb-3">
-						<span class="input-group-text">휴대폰 번호</span>
-					</div>
-					<input id="phoneNb1" name="phoneNb1" type="text" class="form-control"/>
-				</div>
-				<div class="input-group">
-					<div class="input-group-prepend mb-3">
-						<span class="input-group-text">이메일 주소</span>
-					</div>
-					<input id="email1" name="email1" type="text" class="form-control"/>
-				</div>
-				<div id="demo11" class="form-control"></div>
+				<input id="userNm1" name="userNm1" type="text" class="form-control"/>
 			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-danger" onclick="findUserId()" >확인</button>
-				<button type="button" class="btn btn-danger" data-dismiss="modal" onclick="vClear()">Close</button>
+			<div class="input-group">
+				<div class="input-group-prepend mb-3">
+					<span class="input-group-text">휴대폰 번호</span>
+				</div>
+				<input id="phoneNb1" name="phoneNb1" type="text" class="form-control"/>
+			</div>
+			<div class="input-group">
+				<div class="input-group-prepend mb-3">
+					<span class="input-group-text">이메일 주소</span>
+				</div>
+				<input id="email1" name="email1" type="text" class="form-control"/>
+			</div>
+			<div id="demo11" class="form-control"></div>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-danger" onclick="findUserId()" >확인</button>
+			<button type="button" class="btn btn-danger" data-dismiss="modal" onclick="vClear()">Close</button>
 			</div>
 		</div>
 	</div>
@@ -100,6 +100,7 @@
 	}
 	
 	function findUserPwd() {
+		$('.loader').fadeIn();
 		let data = {
 				userId : userId2.value,
 				/* phoneNb : phoneNb2.value, */
@@ -120,6 +121,7 @@
 					else if (data == "2") {
 						demo21.innerHTML = "이메일 주소가 일치 하지 않습니다.";
 					}
+					$('.loader').fadeOut();
 				}
 			});	
 	}

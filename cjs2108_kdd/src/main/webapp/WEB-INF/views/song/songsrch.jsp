@@ -68,7 +68,8 @@
 	                            	</c:if> --%>
 	                            </div>
 	                        </td> 
-	                        <td class="align-middle"><button name="add_btn" type="button" class="btn" onclick="addf(${vo.idx}, ${vo.isFile })"><i title="곡 추가" class="fas fa-plus"></i></button></td>
+	                        <td class="align-middle"><button name="add_btn" type="button" class="btn" onclick="senddata(${vo.idx}, ${vo.isFile })"><i title="곡 추가" class="fas fa-plus"></i></button></td>
+	                        <%-- <td class="align-middle"><button name="add_btn" type="button" class="btn" onclick="addf(${vo.idx}, ${vo.isFile })"><i title="곡 추가" class="fas fa-plus"></i></button></td> --%>
 	                    </tr>
                     </c:forEach>
                 </table>

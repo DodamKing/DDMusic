@@ -8,5 +8,5 @@
 </style>
 <div id="title_search" class="row">
     <h4 class="col"><a href="${ctp }/today">DD Music</a></h4>
-    <div class="col-1"><i class="fa-solid fa-magnifying-glass"></i></div>
+    <div id="main_srch" class="col-1"><i class="fa-solid fa-magnifying-glass"></i></div>
 </div>

@@ -46,7 +46,8 @@
 									CKEDITOR.replace("content", {
 								  		uploadUrl: "${ctp}/review/imageUpload",
 								  		filebrowserUploadUrl : "${ctp}/review/imageUpload",
-								  		disallowedContent : 'img{width,height}'
+								  		disallowedContent : 'img{width,height}',
+								  		height: 400
 									});
 								</script>
 							</td>

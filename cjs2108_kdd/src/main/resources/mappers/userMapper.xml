@@ -38,7 +38,7 @@
 	</select>
 
 	<select id="getUserVOS" resultType="com.spring.cjs2108_kdd.vo.UserVO">
-		select * from user order by idx desc;
+		select *, count(visitDate) as visitCnt, max(visitDate) as lastDate from user u left join visit v on userIdx = u.idx group by u.idx order by u.idx desc;
 	</select>
 	
 	<update id="setImgUpdate">
@@ -60,6 +60,14 @@
 	<insert id="setPlayList">
 		insert into playlist values (default, #{vo.userIdx}, #{vo.listNm}, #{vo.comment}, #{vo.content});
 	</insert>
+	
+	<insert id="setVisitDate">
+		insert into visit values (default, #{idx}, default);
+	</insert>
+	
+	<select id="getPlayListVO" resultType="com.spring.cjs2108_kdd.vo.PlayListVO">
+		select * from playlist where idx = #{idx};
+	</select>
 	
 
 </mapper>

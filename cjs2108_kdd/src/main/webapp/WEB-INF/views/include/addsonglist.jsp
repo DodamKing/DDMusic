@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <% pageContext.setAttribute("enter", "\n"); %>
 <c:set var="ctp" value="<%=request.getContextPath() %>" />
 
@@ -18,7 +19,7 @@
 	        	<h2>새 플레이리스트 추가</h2>
 	        </div>
       		<div class="modal-header">
-      			공개설정
+      			나만의 플레이 리스트를 만들어 보세요!
 	        </div>
 	        
 	        <!-- Modal body -->
@@ -29,16 +30,22 @@
 		        <div class="form-group">
 		          	<div id="modal_c" class="mt-3" style="color: gray;"><input id="comment" class="form-control" type="text" placeholder="플레이리스트 설명을 입력해 주세요."></div>
 		        </div>
-		        <div class="text-danger ho" onclick="alert('구현중')">
+		        <div class="text-danger ho" onclick="showsrch()">
 		        	<div class="btn btn-danger btn-sm"><i title="새로운 곡 추가" class="fas fa-plus"></i></div>
 		        	<span class="ml-2">새로운 곡 추가</span>
 	        	</div>
+	        	<div id="playlist_"></div>
 	        	<div class="mt-3">
-	        		<div>
-	        			<i class="fa-solid fa-magnifying-glass"></i> 검색기를 넣고
+	        		<div id="srchform" name="srchform" style="display: none;">
+	        			<div class="input-group mb-3">
+					  		<input type="text" class="form-control" placeholder="Search" id="srchKwd">
+					  		<div class="input-group-append">
+					    		<button class="btn btn-danger" type="button" onclick="getres()"><i class="fa-solid fa-magnifying-glass"></i></button>
+					  		</div>
+						</div>
 	        		</div>
-		        	<div class="form-group">
-		        		<div>여기에 표시해주고</div>
+		        	<div name="srchform" class="form-group" style="display: none;">
+		        		<div id="srchResult"></div>
 		        		<input type="hidden" id="content">
 		        	</div>
 	        	</div>
@@ -57,6 +64,9 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
+	let playlist_res = "";
+	let idx_list = [];
+	
 	function goClose() {
 		if (confirm("변경사항을 저장하지 않고 편집을 종료합니다. 정말 나가시겠어요?")) {
 			$("#close_btn").click();
@@ -66,6 +76,7 @@
 	function saveList() {
 		if (listNm.value == "") {
 			alert("플레이 리스트 제목을 입력하세요.");
+			listNm.focus();
 			return;
 		}
 		
@@ -73,7 +84,7 @@
 			userIdx : "${sVO.idx}",
 			listNm : listNm.value,
 			comment : comment.value,
-			content : content.value
+			content : content.value,
 		}
 		
 		$.ajax({
@@ -85,6 +96,83 @@
 			}
 		});
 	}
+	
+	function showsrch() {
+		$("div[name='srchform']").toggle();
+	}
+	
+	function getres() {
+		if ($("#srchKwd").val().trim() == "") return;
+		$.ajax({
+			type : "post",
+			url : "${ctp}/song/srch",
+			data : {srchKwd : $("#srchKwd").val()},
+			success : (data) => {
+				let res = "";
+				data.forEach((e) => {
+					res += "<div id='p_" + e.idx +"' class='d-flex p-3'>";
+					res += "<div class='imgBox mr-3'>";
+					res += "<img src='" + e.img + "'>";
+					res += "</div>";
+					res += "<div>";
+					res += "<div class='playlist_t' title='" + e.title + "'>";
+					res += e.title;
+					res += "</div>";
+					res += "<div class='playlist_a' title='" + e.artist + "'>";
+					res += e.artist;
+					res += "</div>";
+					res += "</div>";
+					res += "<div class='ml-auto'>";
+					res += "<button name='add_btn' type='button' class='btn'><i title='곡 추가' class='fas fa-plus' onclick='setpl(" + e.idx + ")'></i></button>";
+					res += "</div>";
+					res += "</div>";
+					
+				});
+				srchResult.innerHTML = res;
+			}
+		});
+	}
+	
+	function setpl(idx) {
+		playlist_res = playlist_.innerHTML;
+		
+		$.ajax({
+			type : "post",
+			url : "${ctp}/song/getaddsong",
+			data : {idx : idx},
+			success : (data) => {
+				if (!idx_list.includes(data.idx)) {
+					idx_list.push(data.idx);
+					
+					playlist_res += "<div class='d-flex p-3'>";
+					playlist_res += "<div class='imgBox mr-3'>";
+					playlist_res += "<img src='" + data.img + "'>";
+					playlist_res += "</div>";
+					playlist_res += "<div>";
+					playlist_res += "<div class='playlist_t' title='" + data.title + "'>";
+					playlist_res += data.title;
+					playlist_res += "</div>";
+					playlist_res += "<div class='playlist_a' title='" + data.artist + "'>";
+					playlist_res += data.artist;
+					playlist_res += "</div>";
+					playlist_res += "</div>";
+					playlist_res += "</div>";
+					
+					playlist_.innerHTML = playlist_res;
+					
+					content.value = content.value + data.idx + "/";
+					
+					alert("플레이리스트에 추가 되었습니다.");
+				}
+			}
+		});
+	}
+	
+	$("#srchKwd").keyup((e) => {
+		if (e.keyCode == 13) {
+			getres();
+		}
+	});
 	
 	$("#close_btn").click(() => {
 		listNm.value = "";

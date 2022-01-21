@@ -25,8 +25,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.cjs2108_kdd.method.RandomPwd;
+import com.spring.cjs2108_kdd.service.SongService;
 import com.spring.cjs2108_kdd.service.UserService;
 import com.spring.cjs2108_kdd.vo.PlayListVO;
+import com.spring.cjs2108_kdd.vo.SongVO;
 import com.spring.cjs2108_kdd.vo.UserVO;
 
 @Controller
@@ -34,6 +36,9 @@ import com.spring.cjs2108_kdd.vo.UserVO;
 public class UserController {
 	@Autowired
 	UserService userService;
+
+	@Autowired
+	SongService songService;
 	
 	@Autowired
 	BCryptPasswordEncoder bCryptPasswordEncoder; 
@@ -62,6 +67,7 @@ public class UserController {
 					userService.setMemberShipReset(vo.getIdx());
 				}
 			}
+			userService.setVisitDate(vo.getIdx());
 			session.setAttribute("sMid", vo.getUserId());
 			session.setAttribute("sVO", vo);
 				
@@ -229,12 +235,27 @@ public class UserController {
 		}
 		return "user/playlist";
 	}
+
+	@RequestMapping("/playlist/{idx}")
+	public String playlistOneGet(Model model, @PathVariable int idx) {
+			PlayListVO listVO = userService.getPlayListVO(idx);
+			String[] idx_list = listVO.getContent().split("/");
+			ArrayList<SongVO> vos = new ArrayList<SongVO>();
+			
+			for (int i=0; i<idx_list.length; i++) {
+				SongVO vo = songService.getSongInfor(Integer.parseInt(idx_list[i]));
+				vos.add(vo);
+			}
+			model.addAttribute("vo", listVO);
+			model.addAttribute("vos", vos);
+		return "user/playlistone";
+	}
 	
 	@RequestMapping("/savelist")
 	@ResponseBody
-	public void savelistPost(PlayListVO vo) {
+	public void savelistPost(PlayListVO vo, String[] idx_list) {
 		userService.setPlayList(vo);
 	}
-	
+
 }
 

@@ -34,14 +34,15 @@
             		</tr>
                     <c:forEach var="vo" items="${vos }" varStatus="st">
 	                    <tr>
-	                    	<td><input name="tch" type="checkbox" value="${vo.idx }"></td>
+	                    	<td><input name="tch" type="checkbox" value="${vo.idx }" <c:if test="${vo.isFile == 0 }">disabled</c:if>></td>
 	                        <td style="text-align: center; vertical-align: middle;">${st.index + 1}</td>
 	                        <td><div class="imgBox"><a href="${fn:replace(vo.img, 50, 800) }" target="_blank"><img name="top100Img" src="${vo.img }" alt=""></a></div></td>
 	                        <td>
 	                            <div name="top100Title"><a href="${ctp }/infor?idx=${vo.idx }">${vo.title }</a></div>
 	                            <div name="top100Artist">${vo.artist }</div>
 	                        </td>
-	                        <td class="align-middle"><button name="add_btn" type="button" class="btn" onclick="addf(${vo.idx}, ${vo.isFile })"><i title="곡 추가" class="fas fa-plus"></i></button></td>
+	                        <td class="align-middle"><button name="add_btn" type="button" class="btn" onclick="senddata(${vo.idx}, ${vo.isFile })"><i title="곡 추가" class="fas fa-plus"></i></button></td>
+	                        <%-- <td class="align-middle"><button name="add_btn" type="button" class="btn" onclick="addf(${vo.idx}, ${vo.isFile })"><i title="곡 추가" class="fas fa-plus"></i></button></td> --%>
 	                    </tr>
                     </c:forEach>
                 </table>
