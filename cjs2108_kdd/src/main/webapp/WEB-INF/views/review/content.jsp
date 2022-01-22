@@ -52,7 +52,7 @@
 								<c:if test="${empty vo.profileImg }"><i class="fa-solid fa-user"></i></c:if>
 								${vo.nickNm }
 							</td>
-							<td>${fn:substring(vo.date, 0, 10) }</td>
+							<td>${vo.date }</td>
 							<td>${vo.hostIp }</td>
 							<td>조회수 : ${vo.likeCnt }</td>
 						</tr>

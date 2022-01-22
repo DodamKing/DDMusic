@@ -25,7 +25,7 @@
             <div class="card-body">
                 <h2 class="mt-5 mb-5">DD Music Top 100</h2>
                 <div id="top_btn" class="btn btn-dark" style="position: fixed; right: 30px; bottom: 100px;">top</div>
-                <div id="add_btn" class="btn btn-dark btn-sm" style="position: sticky; right: 30px; top: 50px; float: right;">선택추가</div>
+                <div id="add_btn" class="btn btn-dark btn-sm" style="position: sticky; right: 30px; top: 50px; float: right;" onclick="">선택추가</div>
                 <table class="table">
                 	<tr>
                 		<td style="border-top: none;"><input id="allch" type="checkbox" ></td>

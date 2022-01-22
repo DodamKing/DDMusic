@@ -117,7 +117,7 @@ public class UserServiceImpl implements UserService {
 		
 		for (int i=0; i<vos.size(); i++) {
 			String idxs[] = vos.get(i).getContent().split("/");
-			if (idxs.length == 4) {
+			if (idxs.length >= 4) {
 				vos.get(i).setThum1(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[0])).getImg(), "100"));
 				vos.get(i).setThum2(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[1])).getImg(), "100"));
 				vos.get(i).setThum3(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[2])).getImg(), "100"));
@@ -157,7 +157,7 @@ public class UserServiceImpl implements UserService {
 		
 		String idxs[] = vo.getContent().split("/");
 		
-		if (idxs.length == 4) {
+		if (idxs.length >= 4) {
 			vo.setThum1(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[0])).getImg(), "100"));
 			vo.setThum2(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[1])).getImg(), "100"));
 			vo.setThum3(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[2])).getImg(), "100"));
@@ -177,6 +177,13 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		return vo;
+	}
+
+	@Override
+	public void setAddMyList(int idx, int songIdx) {
+		String content = userDAO.getPlayListVO(idx).getContent();
+		content += songIdx + "/";
+		userDAO.setAddMyList(idx, content);
 	}
 
 }

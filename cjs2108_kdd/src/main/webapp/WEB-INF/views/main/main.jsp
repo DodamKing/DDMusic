@@ -109,11 +109,13 @@
 		}
 	}
 	
-	$("button[name='add_btn']").click(() => {
-		$('#hiden_btn').click();
-	});
-	
 	function senddata(idx, isFile) {
+		if (idx == 0 || isFile == 0) {
+			alert("아직 준비 중인 곡입니다.");
+			return;
+		}
+		
+		$('#hiden_btn').click();
 		idx_box.innerHTML = idx;
 		isFile_box.innerHTML = isFile;
 	}

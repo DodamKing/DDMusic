@@ -35,7 +35,7 @@
 					<button type="button" class="btn btn-dark mr-3">삭제</button>
 				</div>
 				<div class="p-3 row">
-	    			<div style="width: 200px; height: 200px;" class="ho">
+	    			<div style="width: 200px; height: 200px;">
 	    				<div class="row" style="margin-left: 0px;">
 		    				<div><img src="${vo.thum1 }"></div>
 		    				<div><img src="${vo.thum2 }"></div>
@@ -126,7 +126,10 @@
 			
 			if (idxs == "") return;
 			
-			if (!sw) {
+			let url = "${ctp}/song/player?idxs=" + idxs;
+			player = window.open(url, "player", "width=1100px, height=800px, left=50px, top=150px");
+			
+			/* if (!sw) {
 				let url = "${ctp}/song/player?idxs=" + idxs;
 				player = window.open(url, "player", "width=1100px, height=800px, left=50px, top=150px");
 				sw = true;
@@ -151,7 +154,7 @@
 					player = window.open(url, "player", "width=1100px, height=800px, left=50px, top=150px");
 					sw = true;
 				}
-			}
+			} */
 		};
 		
 		function shuffle() {

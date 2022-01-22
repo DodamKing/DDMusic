@@ -26,7 +26,7 @@
 		</c:if>
 		<div class="mt-5">
 			<audio id="player" src="" controls="controls"></audio>
-			<form id="myform" action="${ctp }/admin/srch">
+			<form id="srchform" action="${ctp }/admin/srch">
 				<div class="input-group mb-3 mr-5">
 					<div style="width: 50%"></div>
 					<input id="srch" name="srch" type="text" class="form-control" placeholder="검색">

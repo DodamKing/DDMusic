@@ -25,14 +25,15 @@
 				<h2 class="mt-5 mb-5">커밍쑨 DDMusic</h2>
 				<c:forEach var="vo" items="${vos }">
 					<div>
-						<p>${fn:replace(fn:split(vo.date, " ")[0], "-", ".") } 업데이트</p>
-						<p>${vo.title } - ${vo.artist } </p>
+						<c:if test="${date != fn:split(vo.date, ' ')[0]}"><br><p style="font-size: 28px;">${fn:replace(fn:split(vo.date, " ")[0], "-", ".") } 업데이트</p></c:if>
+						<p style="color: #bbb;">${vo.title } - ${vo.artist } </p>
 					</div>
+					<c:set var="date" value="${fn:split(vo.date, ' ')[0] }" />
 				</c:forEach>
 				<div class="mt-5">
-					<p>2022.01.14 업데이트</p>
-					<p>뿌리 (Feat. JUSTHIS) (Prod. GroovyRoom) - 쿤디판다(Khundi Panda) </p>
-					<p>개똥벌레 - 신형원</p>
+					<p style="font-size: 28px;">2022.01.14 업데이트</p>
+					<p style="color: #bbb;">뿌리 (Feat. JUSTHIS) (Prod. GroovyRoom) - 쿤디판다(Khundi Panda) </p>
+					<p style="color: #bbb;">개똥벌레 - 신형원</p>
 				</div>
 			</div>
 		</div>

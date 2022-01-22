@@ -48,4 +48,6 @@ public interface UserService {
 
 	PlayListVO getPlayListVO(int idx);
 
+	void setAddMyList(int idx, int songIdx);
+
 }

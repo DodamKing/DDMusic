@@ -301,7 +301,7 @@
 				return;
 			}
 			
-			$("#myform").submit();
+			$("#srchform").submit();
 		});
 		
 	</script>

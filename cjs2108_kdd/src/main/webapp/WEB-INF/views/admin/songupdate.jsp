@@ -12,23 +12,35 @@
 <body>
 	<div class="mt-5">
 		<h2 class="ml-5">음원정보</h2>
-		<div class="sticky">
-			<ul class="pagination">
-			    <li class="page-item"><a class="page-link bg-dark text-warning" href="${ctp }/admin/main?sw=2&pageNo=1">First</a></li>
-			    <li class="page-item"><a class="page-link bg-dark text-warning" href="${ctp }/admin/main?sw=2&pageNo=<c:if test="${pageNo != 1 }">${pageNo - 1 }</c:if><c:if test="${pageNo == 1 }">1</c:if> ">Previous</a></li>
-			    <li class="page-item"><a class="page-link bg-secondary text-danger">${pageNo }</a></li>
-			    <!-- <li class="page-item"><a class="page-link bg-dark text-warning" href="#">1</a></li>
-			    <li class="page-item"><a class="page-link bg-secondary text-danger" href="#">2</a></li>
-			    <li class="page-item"><a class="page-link bg-dark text-warning" href="#">3</a></li> -->
-			    <li class="page-item"><a class="page-link bg-dark text-warning" href="${ctp }/admin/main?sw=2&pageNo=<c:if test="${pageNo + 1 > lastPageNo }">${pageNo }</c:if><c:if test="${pageNo + 1 <= lastPageNo }">${pageNo + 1}</c:if>">Next</a></li>
-			    <li class="page-item"><a class="page-link bg-dark text-warning" href="${ctp }/admin/main?sw=2&pageNo=${lastPageNo }">Last</a></li>
- 	 		</ul>
-		</div>
+		<c:if test="${empty flag }">
+			<div class="sticky">
+				<ul class="pagination">
+				    <li class="page-item"><a class="page-link bg-dark text-warning" href="${ctp }/admin/main?sw=2&pageNo=1">First</a></li>
+				    <li class="page-item"><a class="page-link bg-dark text-warning" href="${ctp }/admin/main?sw=2&pageNo=<c:if test="${pageNo != 1 }">${pageNo - 1 }</c:if><c:if test="${pageNo == 1 }">1</c:if> ">Previous</a></li>
+				    <li class="page-item"><a class="page-link bg-secondary text-danger">${pageNo }</a></li>
+				    <!-- <li class="page-item"><a class="page-link bg-dark text-warning" href="#">1</a></li>
+				    <li class="page-item"><a class="page-link bg-secondary text-danger" href="#">2</a></li>
+				    <li class="page-item"><a class="page-link bg-dark text-warning" href="#">3</a></li> -->
+				    <li class="page-item"><a class="page-link bg-dark text-warning" href="${ctp }/admin/main?sw=2&pageNo=<c:if test="${pageNo + 1 > lastPageNo }">${pageNo }</c:if><c:if test="${pageNo + 1 <= lastPageNo }">${pageNo + 1}</c:if>">Next</a></li>
+				    <li class="page-item"><a class="page-link bg-dark text-warning" href="${ctp }/admin/main?sw=2&pageNo=${lastPageNo }">Last</a></li>
+	 	 		</ul>
+			</div>
+		</c:if>
 	    <div class="sticky2">
 	    	<input class="btn btn-warning" type="button" value="추가" data-toggle="modal" data-target="#addSongModal">
 	    	<input class="btn btn-warning" type="button" value="변경사항 적용" onclick="commit()">
     	</div>
 		<div class="mt-3">
+			<form id="srchform" action="${ctp }/admin/srch">
+				<div class="input-group mb-3 mr-5">
+					<div style="width: 50%"></div>
+					<input id="srch" name="srch" type="text" class="form-control" placeholder="검색">
+			  		<div class="input-group-append">
+				    	<button id="srch_btn" class="btn btn-dark" type="button">검색</button>
+			  		</div>
+		  		</div>
+		  		<input type="hidden" name="sw" value="${sw }">
+	  		</form>
 			<form method="post" name="myform">
 			<div>수정 하려는 항목을 더블 클릭 하세요!</div>
 				<table class="table table-bordered" style="width: 2000px;">
@@ -51,14 +63,17 @@
 	                    <tr>
 	                        <td class="text-right align-middle">${vo.idx}</td>
 	                        <td class="text-center"><div class="imgBox"><img src="${vo.img }" alt=""></div></td>
-	                        <td class="align-middle" style="overflow: hidden;" title="${vo.title }">${fn:substring(vo.title, 0, 35) }</td>
+	                        <td class="align-middle" style="overflow: hidden;" title="${vo.title }">
+	                        	<c:if test="${fn:length(vo.title) > 35 }">${fn:substring(vo.title, 0, 35) }...</c:if>
+	                        	<c:if test="${fn:length(vo.title) < 35 }">${vo.title }</c:if>
+                        	</td>
 	                        <td class="align-middle" title="${vo.artist }">${vo.artist }</td>
 	                        <td class="align-middle" ondblclick="updt_album(${vo.idx}, `${vo.album }`)" title="${vo.album }"><div class="ho" id="album_${vo.idx }" >${fn:substring(vo.album, 0, 5) }<c:if test="${!empty vo.album }">...</c:if></div></td>
-	                        <td class="align-middle" ondblclick="updt_releaseDate(${vo.idx}, `${vo.releaseDate }`)" title="${vo.releaseDate }"><div class="ho" id="releaseDate_${vo.idx }" >${fn:substring(vo.releaseDate, 0, 5) }<c:if test="${!empty vo.album }">...</c:if></div></td>
-	                        <td class="align-middle" ondblclick="updt_genre(${vo.idx}, `${vo.genre }`)" title="${vo.genre }"><div class="ho" id="genre_${vo.idx }" >${fn:substring(vo.genre, 0, 5) }<c:if test="${!empty vo.album }">...</c:if></div></td>
-	                        <td class="align-middle" ondblclick="updt_music(${vo.idx}, `${vo.music }`)" title="${vo.music }"><div class="ho" id="music_${vo.idx }" >${fn:substring(vo.music, 0, 5) }<c:if test="${!empty vo.album }">...</c:if></div></td>
-	                        <td class="align-middle" ondblclick="updt_words(${vo.idx}, `${vo.words }`)" title="${vo.words }"><div class="ho" id="words_${vo.idx }" >${fn:substring(vo.words, 0, 5) }<c:if test="${!empty vo.album }">...</c:if></div></td>
-	                        <td class="align-middle" ondblclick="updt_arranger(${vo.idx}, `${vo.arranger }`)" title="${vo.arranger }"><div class="ho" id="arranger_${vo.idx }" >${fn:substring(vo.arranger, 0, 5) }<c:if test="${!empty vo.album }">...</c:if></div></td>
+	                        <td class="align-middle" ondblclick="updt_releaseDate(${vo.idx}, `${vo.releaseDate }`)" title="${vo.releaseDate }"><div class="ho" id="releaseDate_${vo.idx }" >${fn:substring(vo.releaseDate, 0, 5) }<c:if test="${!empty vo.releaseDate }">...</c:if></div></td>
+	                        <td class="align-middle" ondblclick="updt_genre(${vo.idx}, `${vo.genre }`)" title="${vo.genre }"><div class="ho" id="genre_${vo.idx }" >${fn:substring(vo.genre, 0, 5) }<c:if test="${!empty vo.genre }">...</c:if></div></td>
+	                        <td class="align-middle" ondblclick="updt_music(${vo.idx}, `${vo.music }`)" title="${vo.music }"><div class="ho" id="music_${vo.idx }" >${fn:substring(vo.music, 0, 5) }<c:if test="${!empty vo.music }">...</c:if></div></td>
+	                        <td class="align-middle" ondblclick="updt_words(${vo.idx}, `${vo.words }`)" title="${vo.words }"><div class="ho" id="words_${vo.idx }" >${fn:substring(vo.words, 0, 5) }<c:if test="${!empty vo.words }">...</c:if></div></td>
+	                        <td class="align-middle" ondblclick="updt_arranger(${vo.idx}, `${vo.arranger }`)" title="${vo.arranger }"><div class="ho" id="arranger_${vo.idx }" >${fn:substring(vo.arranger, 0, 5) }<c:if test="${!empty vo.arranger }">...</c:if></div></td>
 	                        <td class="align-middle text-center">
 	                        	<div class="ho" onclick="more(${vo.idx })" data-toggle="modal" data-target="#myModal">더보기</div>
                         	</td>

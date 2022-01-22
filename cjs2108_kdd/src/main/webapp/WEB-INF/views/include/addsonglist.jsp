@@ -25,7 +25,7 @@
 	        <!-- Modal body -->
 	        <div class="modal-body">
 		        <div class="form-group">
-		          	<div id="modal_c" class="mt-3" style="color: gray;"><input id="listNm" class="form-control" type="text" placeholder="title1"></div>
+		          	<div id="modal_c" class="mt-3" style="color: gray;"><input id="listNm" class="form-control" type="text" placeholder="title"></div>
 		        </div>
 		        <div class="form-group">
 		          	<div id="modal_c" class="mt-3" style="color: gray;"><input id="comment" class="form-control" type="text" placeholder="플레이리스트 설명을 입력해 주세요."></div>
@@ -38,7 +38,7 @@
 	        	<div class="mt-3">
 	        		<div id="srchform" name="srchform" style="display: none;">
 	        			<div class="input-group mb-3">
-					  		<input type="text" class="form-control" placeholder="Search" id="srchKwd">
+					  		<input type="text" class="form-control" placeholder="Search" id="keyword">
 					  		<div class="input-group-append">
 					    		<button class="btn btn-danger" type="button" onclick="getres()"><i class="fa-solid fa-magnifying-glass"></i></button>
 					  		</div>
@@ -102,11 +102,11 @@
 	}
 	
 	function getres() {
-		if ($("#srchKwd").val().trim() == "") return;
+		if ($("#keyword").val().trim() == "") return;
 		$.ajax({
 			type : "post",
 			url : "${ctp}/song/srch",
-			data : {srchKwd : $("#srchKwd").val()},
+			data : {srchKwd : $("#keyword").val()},
 			success : (data) => {
 				let res = "";
 				data.forEach((e) => {
@@ -168,7 +168,7 @@
 		});
 	}
 	
-	$("#srchKwd").keyup((e) => {
+	$("#keyword").keyup((e) => {
 		if (e.keyCode == 13) {
 			getres();
 		}

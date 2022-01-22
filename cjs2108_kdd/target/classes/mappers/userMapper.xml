@@ -69,5 +69,9 @@
 		select * from playlist where idx = #{idx};
 	</select>
 	
+	<update id="setAddMyList">
+		update playlist set content = #{content} where idx = #{idx};
+	</update>
+	
 
 </mapper>

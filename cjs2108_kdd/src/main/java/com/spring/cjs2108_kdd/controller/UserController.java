@@ -256,6 +256,23 @@ public class UserController {
 	public void savelistPost(PlayListVO vo, String[] idx_list) {
 		userService.setPlayList(vo);
 	}
+	
+	@RequestMapping("/getlist")
+	@ResponseBody
+	public ArrayList<PlayListVO> getlistPost(HttpSession session) {
+		UserVO vo = (UserVO) session.getAttribute("sVO");
+		ArrayList<PlayListVO> vos = new ArrayList<PlayListVO>();
+		if (vo != null) {
+			vos = userService.getPlayListVOS(vo.getIdx());
+		}
+		return vos;
+	}
+	
+	@RequestMapping("/addmylist")
+	@ResponseBody
+	public void addmylistPost(int idx, int songIdx) {
+		userService.setAddMyList(idx, songIdx);
+	}
 
 }
 
