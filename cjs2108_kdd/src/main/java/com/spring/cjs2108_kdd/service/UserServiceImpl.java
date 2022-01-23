@@ -116,24 +116,26 @@ public class UserServiceImpl implements UserService {
 		ArrayList<PlayListVO> vos = userDAO.getPlayListVOS(idx);
 		
 		for (int i=0; i<vos.size(); i++) {
-			String idxs[] = vos.get(i).getContent().split("/");
-			if (idxs.length >= 4) {
-				vos.get(i).setThum1(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[0])).getImg(), "100"));
-				vos.get(i).setThum2(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[1])).getImg(), "100"));
-				vos.get(i).setThum3(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[2])).getImg(), "100"));
-				vos.get(i).setThum4(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[3])).getImg(), "100"));
-			}
-			else if (idxs.length == 3) {
-				vos.get(i).setThum1(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[0])).getImg(), "100"));
-				vos.get(i).setThum2(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[1])).getImg(), "100"));
-				vos.get(i).setThum3(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[2])).getImg(), "100"));
-			}
-			else if (idxs.length == 2) {
-				vos.get(i).setThum1(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[0])).getImg(), "100"));
-				vos.get(i).setThum2(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[1])).getImg(), "100"));
-			}
-			else if (idxs.length == 1) {
-				vos.get(i).setThum1(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[0])).getImg(), "100"));
+			if (!vos.get(i).getContent().equals("")) {
+					String idxs[] = vos.get(i).getContent().split("/");
+					if (idxs.length >= 4) {
+						vos.get(i).setThum1(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[0])).getImg(), "100"));
+						vos.get(i).setThum2(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[1])).getImg(), "100"));
+						vos.get(i).setThum3(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[2])).getImg(), "100"));
+						vos.get(i).setThum4(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[3])).getImg(), "100"));
+					}
+					else if (idxs.length == 3) {
+						vos.get(i).setThum1(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[0])).getImg(), "100"));
+						vos.get(i).setThum2(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[1])).getImg(), "100"));
+						vos.get(i).setThum3(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[2])).getImg(), "100"));
+					}
+					else if (idxs.length == 2) {
+						vos.get(i).setThum1(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[0])).getImg(), "100"));
+						vos.get(i).setThum2(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[1])).getImg(), "100"));
+					}
+					else if (idxs.length == 1) {
+						vos.get(i).setThum1(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[0])).getImg(), "200"));
+					}
 			}
 		}
 		
@@ -155,25 +157,27 @@ public class UserServiceImpl implements UserService {
 		Method method = new Method();
 		PlayListVO vo = userDAO.getPlayListVO(idx);
 		
-		String idxs[] = vo.getContent().split("/");
-		
-		if (idxs.length >= 4) {
-			vo.setThum1(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[0])).getImg(), "100"));
-			vo.setThum2(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[1])).getImg(), "100"));
-			vo.setThum3(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[2])).getImg(), "100"));
-			vo.setThum4(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[3])).getImg(), "100"));
-		}
-		else if (idxs.length == 3) {
-			vo.setThum1(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[0])).getImg(), "100"));
-			vo.setThum2(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[1])).getImg(), "100"));
-			vo.setThum3(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[2])).getImg(), "100"));
-		}
-		else if (idxs.length == 2) {
-			vo.setThum1(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[0])).getImg(), "100"));
-			vo.setThum2(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[1])).getImg(), "100"));
-		}
-		else if (idxs.length == 1) {
-			vo.setThum1(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[0])).getImg(), "100"));
+		if (!vo.getContent().equals("")) {
+			String idxs[] = vo.getContent().split("/");
+			
+			if (idxs.length >= 4) {
+				vo.setThum1(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[0])).getImg(), "100"));
+				vo.setThum2(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[1])).getImg(), "100"));
+				vo.setThum3(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[2])).getImg(), "100"));
+				vo.setThum4(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[3])).getImg(), "100"));
+			}
+			else if (idxs.length == 3) {
+				vo.setThum1(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[0])).getImg(), "100"));
+				vo.setThum2(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[1])).getImg(), "100"));
+				vo.setThum3(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[2])).getImg(), "100"));
+			}
+			else if (idxs.length == 2) {
+				vo.setThum1(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[0])).getImg(), "100"));
+				vo.setThum2(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[1])).getImg(), "100"));
+			}
+			else if (idxs.length == 1) {
+				vo.setThum1(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[0])).getImg(), "100"));
+			}
 		}
 		
 		return vo;

@@ -54,11 +54,11 @@
 	</update>
 	
 	<select id="getPlayListVOS" resultType="com.spring.cjs2108_kdd.vo.PlayListVO">
-		select * from playlist where useridx = #{idx};
+		select * from playlist where useridx = #{idx} and visible = 1;
 	</select>
 	
 	<insert id="setPlayList">
-		insert into playlist values (default, #{vo.userIdx}, #{vo.listNm}, #{vo.comment}, #{vo.content});
+		insert into playlist values (default, #{vo.userIdx}, #{vo.listNm}, #{vo.comment}, #{vo.content}, default);
 	</insert>
 	
 	<insert id="setVisitDate">
@@ -66,11 +66,11 @@
 	</insert>
 	
 	<select id="getPlayListVO" resultType="com.spring.cjs2108_kdd.vo.PlayListVO">
-		select * from playlist where idx = #{idx};
+		select * from playlist where idx = #{idx} and visible = 1;
 	</select>
 	
 	<update id="setAddMyList">
-		update playlist set content = #{content} where idx = #{idx};
+		update playlist set content = #{content} where idx = #{idx} and visible = 1;
 	</update>
 	
 

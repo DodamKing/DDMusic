@@ -26,7 +26,7 @@
 	            <ul>
                 	<c:if test="${sVO != null }">
 		                <li class="list-group-item list-group-item-light"><a href="${ctp }/user/membership/${sVO.idx}">My 멤버십</a></li>
-		                <li class="list-group-item list-group-item-light"><a href="">공지사항</a></li>
+		                <li class="list-group-item list-group-item-light"><a href="${ctp }/review/list?kategorie=공지">공지사항</a></li>
 		                <li class="list-group-item list-group-item-light"><a href="${ctp }/user/profile/${sVO.idx}">계정설정</a></li>
 		                <c:if test="${sVO.membership == -1}">
 			                <li class="list-group-item list-group-item-light"><a href="${ctp }/admin/main" target="_blank">관리자</a></li>

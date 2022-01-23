@@ -26,12 +26,19 @@
 	    		<h2 class="mt-5 mb-5"><font color="yellow">${sVO.nickNm }</font>님 플레이리스트</h2>
 	    		<div class="row">
 		    		<div class="p-3 ho" onclick="" data-toggle="modal" data-target="#addSonglist">
-		    			<div style="width: 200px; height: 200px; border: 1px solid white; text-align: center;"><i style="position: relative; top: 50px;" title="새 플레이리스트 추가" class="fas fa-plus fa-5x"></i></div>
+		    			<div style="width: 200px; height: 200px; border: 1px solid white; text-align: center; background: #111;"><i style="position: relative; top: 50px;" title="새 플레이리스트 추가" class="fas fa-plus fa-5x"></i></div>
 		    			<div style="width: 200px;" class="mt-3 text-center">새 플레이리스트 추가</div>
 		    		</div>
 		    		<c:forEach var="vo" items="${vos }">
 		    			<div class="p-3 ho" title="${vo.comment }" onclick="javacript:location.href='${ctp}/user/playlist/${vo.idx }'">
-			    			<div style="width: 200px; height: 200px;" class="ho">
+			    		<div style="width: 200px; height: 200px;">
+			    			<c:if test="${empty vo.thum1 }">
+			    				<div><img src="https://i1.sndcdn.com/avatars-000606604806-j6ghpm-t500x500.jpg" style="width: 100%;"></div>
+			    			</c:if>
+			    			<c:if test="${empty vo.thum2 }">
+			    				<div><img src="${vo.thum1 }"></div>
+			    			</c:if>
+			    			<c:if test="${!empty vo.thum2 }">
 			    				<div class="row" style="margin-left: 0px;">
 				    				<div><img src="${vo.thum1 }"></div>
 				    				<div><img src="${vo.thum2 }"></div>
@@ -40,6 +47,7 @@
 				    				<div><img src="${vo.thum3 }"></div>
 				    				<div><img src="${vo.thum4 }"></div>
 			    				</div>
+			    			</c:if>
 			    			</div>
 			    			<div style="width: 200px;" class="mt-3 text-center">${vo.listNm }</div>
 		    			</div>

@@ -56,30 +56,32 @@
 					<div class="col"></div>
 					<button type="button" class="btn btn-dark col" onclick="shuffle()"><i class="fas fa-random fa-2x"></i><span class="ml-5" style="font-size: 28px;">shuffle</span></button>
 				</div>
-				<table class="table">
-					<tr>
-						<th class="text-center align-middle"><input id="allch" type="checkbox" checked></th>
-						<th></th>
-						<th></th>
-						<th></th>
-					</tr>
-					<c:forEach var="vo" items="${vos}" varStatus="st">
+				<c:if test="${!empty vos }">
+					<table class="table">
 						<tr>
-							<td class="text-center align-middle"><input name="tch" type="checkbox" checked></td>
-							<td class="align-middle"><img src="${vo.img }"></td>
-							<td class="align-middle" title="${vo.title }">
-								<a href="${ctp }/infor?idx=${vo.idx }">
-									<c:if test="${fn:length(vo.title) < 20 }">${vo.title }</c:if>
-									<c:if test="${fn:length(vo.title) >= 20 }">${fn:substring(vo.title, 0, 20) }...</c:if>
-								</a>
-							</td>
-							<td class="align-middle" title="${vo.artist }">
-								<c:if test="${fn:length(vo.artist) < 20 }">${vo.artist }</c:if>
-								<c:if test="${fn:length(vo.artist) >= 20 }">${fn:substring(vo.artist, 0, 20) }...</c:if>
-							</td>
+							<th class="text-center align-middle"><input id="allch" type="checkbox" checked></th>
+							<th id="cnt_box">${fn:length(vos) } 곡 선택됨</th>
+							<th></th>
+							<th></th>
 						</tr>
-					</c:forEach>
-				</table>
+						<c:forEach var="vo" items="${vos}" varStatus="st">
+							<tr>
+								<td class="text-center align-middle"><input name="tch" type="checkbox" checked></td>
+								<td class="align-middle"><img src="${vo.img }"></td>
+								<td class="align-middle" title="${vo.title }">
+									<a href="${ctp }/infor?idx=${vo.idx }">
+										<c:if test="${fn:length(vo.title) < 20 }">${vo.title }</c:if>
+										<c:if test="${fn:length(vo.title) >= 20 }">${fn:substring(vo.title, 0, 20) }...</c:if>
+									</a>
+								</td>
+								<td class="align-middle" title="${vo.artist }">
+									<c:if test="${fn:length(vo.artist) < 20 }">${vo.artist }</c:if>
+									<c:if test="${fn:length(vo.artist) >= 20 }">${fn:substring(vo.artist, 0, 20) }...</c:if>
+								</td>
+							</tr>
+						</c:forEach>
+					</table>
+				</c:if>
 			</div>
 		</div>
 		<jsp:include page="/WEB-INF/views/include/sFooter.jsp" />
@@ -103,10 +105,12 @@
 			else {
 				$("input:checkbox[name='tch']").prop("checked", false);
 			}
+			cnt_box.innerHTML = $("input:checkbox[name='tch']:checked").length + "곡 선택됨";
 		});
 		
 		//전체선택 해제
 		$("input:checkbox[name='tch']").click(() => {
+			cnt_box.innerHTML = $("input:checkbox[name='tch']:checked").length + "곡 선택됨";
 			for (let i=0; i<$("input:checkbox[name='tch']").length; i++) {
 				if (!$("input:checkbox[name='tch']")[i].checked) {
 					$("#allch").prop("checked", false);

@@ -239,12 +239,14 @@ public class UserController {
 	@RequestMapping("/playlist/{idx}")
 	public String playlistOneGet(Model model, @PathVariable int idx) {
 			PlayListVO listVO = userService.getPlayListVO(idx);
-			String[] idx_list = listVO.getContent().split("/");
 			ArrayList<SongVO> vos = new ArrayList<SongVO>();
-			
-			for (int i=0; i<idx_list.length; i++) {
-				SongVO vo = songService.getSongInfor(Integer.parseInt(idx_list[i]));
-				vos.add(vo);
+			if (!listVO.getContent().equals("")) {
+					String[] idx_list = listVO.getContent().split("/");
+					
+					for (int i=0; i<idx_list.length; i++) {
+						SongVO vo = songService.getSongInfor(Integer.parseInt(idx_list[i]));
+						vos.add(vo);
+					}
 			}
 			model.addAttribute("vo", listVO);
 			model.addAttribute("vos", vos);

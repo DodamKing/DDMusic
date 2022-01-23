@@ -34,11 +34,12 @@
 			<div class="card-body" style="padding-bottom: 300px; background: #222;">
 				<h2 class="mt-5 mb-5">사용자 리뷰</h2>
 				<div class="row">
-					<div class="col-2"><a href="${ctp }/review/list" class="btn btn-dark mb-3">목록</a></div>
+					<div class="ml-3"><a href="${ctp }/review/list" class="btn btn-dark mb-3">목록</a></div>
+					<div class="ml-3"><a href="${ctp }/review/list?pageNo=${pageNo}&kategorie=${kategorie}" class="btn btn-dark mb-3">돌아가기</a></div>
 					<div class="col"></div>
-					<div class="col-2 text-right">
-						<c:if test="${sVO.idx == vo.userIdx}"><a onclick="return confirm('수정 하시겠습니까?')" href="${ctp }/review/update?idx=${vo.idx}" class="btn btn-dark">수정</a></c:if>
-						<c:if test="${sVO.membership == -1 || sVO.idx == vo.userIdx}"><a onclick="return confirm('정말 삭제 하시겠습니까?')" href="${ctp }/review/reviewdel?idx=${vo.idx}" class="btn btn-dark">삭제</a></c:if>
+					<div class="text-right">
+						<c:if test="${sVO.idx == vo.userIdx}"><a onclick="return confirm('수정 하시겠습니까?')" href="${ctp }/review/update?idx=${vo.idx}" class="btn btn-dark mr-3">수정</a></c:if>
+						<c:if test="${sVO.membership == -1 || sVO.idx == vo.userIdx}"><a onclick="return confirm('정말 삭제 하시겠습니까?')" href="${ctp }/review/reviewdel?idx=${vo.idx}" class="btn btn-dark mr-3">삭제</a></c:if>
 					</div>
 				</div>
 				<div style="border-bottom: 1px solid;" class="pb-3">
@@ -92,7 +93,10 @@
 						</c:forEach>
 					</table>
 				</div>
-				<div class="pull-right"><a href="${ctp }/review/list" class="btn btn-dark mb-3">목록</a></div>
+				<div class="row">
+					<div class="ml-3"><a href="${ctp }/review/list" class="btn btn-dark mb-3">목록</a></div>
+					<div class="ml-3"><a href="${ctp }/review/list?pageNo=${pageNo}&kategorie=${kategorie}" class="btn btn-dark mb-3">돌아가기</a></div>
+				</div>
 			</div>
 		</div>
 		<jsp:include page="/WEB-INF/views/include/sFooter.jsp" />

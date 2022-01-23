@@ -60,11 +60,10 @@ public class SongController {
 			
 			for (int i=0; i<idx_list.length; i++) {
 				SongVO vo = songService.getSongInfor(Integer.parseInt(idx_list[i]));
-				if (method.isFile(vo.getTitle(), vo.getArtist())) {
+				if (vo.getIsFile() == 1) {
 					vos.add(vo);
 				}
 			}
-			
 			model.addAttribute("vos", vos);
 			model.addAttribute("img1000", method.getImgSize(vos.get(0).getImg(), "1000"));
 			model.addAttribute("img2000", method.getImgSize(vos.get(0).getImg(), "2000"));

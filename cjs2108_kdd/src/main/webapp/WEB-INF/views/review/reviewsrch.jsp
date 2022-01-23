@@ -102,7 +102,14 @@
 					<ul class="pagination col">
 					    <li class="page-item"><a class="page-link bg-dark text-warning" href="${ctp }/review/srch?pageNo=1&reviewsrch=${reviewsrch}&kategorie=${kategorie}&srchClass=${srchClass}">First</a></li>
 					    <li class="page-item"><a class="page-link bg-dark text-warning" href="${ctp }/review/srch?pageNo=<c:if test="${pageNo != 1 }">${pageNo - 1 }</c:if><c:if test="${pageNo == 1 }">1</c:if>&reviewsrch=${reviewsrch}&kategorie=${kategorie}&srchClass=${srchClass}">Previous</a></li>
-					    <li class="page-item"><a class="page-link bg-secondary text-danger">${pageNo }</a></li>
+					    <c:forEach var="i" begin="1" end="${lastPageNo }" >
+					    	<c:if test="${i == pageNo }">
+							    <li class="page-item"><a class="page-link bg-secondary text-danger" href="${ctp }/review/srch?pageNo=${i }&kategorie=${kategorie}&srchClass=${srchClass}&reviewsrch=${reviewsrch}">${i }</a></li>
+					    	</c:if>
+					    	<c:if test="${i != pageNo }">
+							    <li class="page-item"><a class="page-link bg-secondary text-warning" href="${ctp }/review/srch?pageNo=${i }&kategorie=${kategorie}&srchClass=${srchClass}&reviewsrch=${reviewsrch}">${i }</a></li>
+					    	</c:if>
+					    </c:forEach>
 					    <li class="page-item"><a class="page-link bg-dark text-warning" href="${ctp }/review/srch?pageNo=<c:if test="${pageNo + 1 > lastPageNo }">${pageNo }</c:if><c:if test="${pageNo + 1 <= lastPageNo }">${pageNo + 1}</c:if>&reviewsrch=${reviewsrch}&kategorie=${kategorie}&srchClass=${srchClass}">Next</a></li>
 					    <li class="page-item"><a class="page-link bg-dark text-warning" href="${ctp }/review/srch?pageNo=${lastPageNo }&reviewsrch=${reviewsrch}&kategorie=${kategorie}&srchClass=${srchClass}">Last</a></li>
 		 	 		</ul>

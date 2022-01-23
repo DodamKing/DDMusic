@@ -67,7 +67,7 @@
 								  		<div class="input-group-append">
 									    	<button id="reviewsrch_btn" class="btn btn-dark" type="button">검색</button>
 								  		</div>
-								  		<input type="hidden" name="pageNo" value="${pageNo }">
+								  		<%-- <input type="hidden" name="pageNo" value="${pageNo }"> --%>
 								</div>
 					  		</form>
 						</td>
