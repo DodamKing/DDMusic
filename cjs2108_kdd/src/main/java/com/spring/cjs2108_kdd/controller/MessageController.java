@@ -84,4 +84,11 @@ public class MessageController {
 		model.addAttribute("url", "review/" + idx);
 		return "include/message";
 	}
+
+	@RequestMapping("/playlistdel")
+	public String playlistdel(Model model) {
+		model.addAttribute("msg", "삭제 되었습니다.");
+		model.addAttribute("url", "user/playlist");
+		return "include/message";
+	}
 }

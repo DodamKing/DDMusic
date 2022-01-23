@@ -40,15 +40,29 @@
 					res += "<div class='d-flex justify-content-center ho mb-3' onclick='action(" + e.idx + ")'>";
 					res += '<div style="width: 50px; height: 50px;" class="col-2">';
 					res += '<div class="row" style="margin-left: 0px;">';
-					res += '<div><img width="25px" src="' + e.thum1 + '"></div>';
-					res += '<div><img width="25px" src="' + e.thum2 + '"></div>';
-					res += '</div>';
-					res += '<div class="row" style="margin-left: 0px;">';
-					res += '<div><img width="25px" src="' + e.thum3 + '"></div>';
-					res += '<div><img width="25px" src="' + e.thum4 + '"></div>';
-					res += '</div></div><div class="col">';
-					res += e.listNm;
-					res += "</div></div></div>";
+					if (e.thum1 == null) {
+						res += '<div><img width="50px" src="https://i1.sndcdn.com/avatars-000606604806-j6ghpm-t500x500.jpg"></div>';
+						res += '</div></div><div class="col">';
+						res += e.listNm;
+						res += '</div></div>';
+					}
+					else if (e.thum4 == null) {
+						res += '<div><img width="50px" src="' + e.thum1 + '"></div>';
+						res += '</div></div><div class="col">';
+						res += e.listNm;
+						res += '</div></div>';
+					}
+					else {
+						res += '<div><img width="25px" src="' + e.thum1 + '"></div>';
+						res += '<div><img width="25px" src="' + e.thum2 + '"></div>';
+						res += '</div>';
+						res += '<div class="row" style="margin-left: 0px;">';
+						res += '<div><img width="25px" src="' + e.thum3 + '"></div>';
+						res += '<div><img width="25px" src="' + e.thum4 + '"></div>';
+						res += '</div></div><div class="col">';
+						res += e.listNm;
+						res += "</div></div></div>";
+					}
 				});
 				mylist_box.innerHTML = res;
 			}

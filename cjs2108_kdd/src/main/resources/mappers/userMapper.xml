@@ -69,8 +69,12 @@
 		select * from playlist where idx = #{idx} and visible = 1;
 	</select>
 	
-	<update id="setAddMyList">
+	<update id="setUpdateMyList">
 		update playlist set content = #{content} where idx = #{idx} and visible = 1;
+	</update>
+	
+	<update id="setPlayListDel">
+		update playlist set visible = 0 where idx = #{idx};
 	</update>
 	
 

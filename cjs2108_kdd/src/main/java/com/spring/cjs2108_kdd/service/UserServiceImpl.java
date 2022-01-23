@@ -176,7 +176,7 @@ public class UserServiceImpl implements UserService {
 				vo.setThum2(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[1])).getImg(), "100"));
 			}
 			else if (idxs.length == 1) {
-				vo.setThum1(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[0])).getImg(), "100"));
+				vo.setThum1(method.getImgSize(songDAO.getSongInfor(Integer.parseInt(idxs[0])).getImg(), "200"));
 			}
 		}
 		
@@ -187,7 +187,19 @@ public class UserServiceImpl implements UserService {
 	public void setAddMyList(int idx, int songIdx) {
 		String content = userDAO.getPlayListVO(idx).getContent();
 		content += songIdx + "/";
-		userDAO.setAddMyList(idx, content);
+		userDAO.setUpdateMyList(idx, content);
+	}
+
+	@Override
+	public void setPlayListDel(int idx) {
+		userDAO.setPlayListDel(idx);
+	}
+
+	@Override
+	public void setPlayListDelSong(int idx, int songIdx) {
+		String content = userDAO.getPlayListVO(idx).getContent();
+		content = content.replace(songIdx + "/", "");
+		userDAO.setUpdateMyList(idx, content);
 	}
 
 }

@@ -50,4 +50,8 @@ public interface UserService {
 
 	void setAddMyList(int idx, int songIdx);
 
+	void setPlayListDel(int idx);
+
+	void setPlayListDelSong(int idx, int songIdx);
+
 }

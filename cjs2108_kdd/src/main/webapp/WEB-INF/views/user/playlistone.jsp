@@ -18,6 +18,10 @@
     		cursor: pointer;
     		opacity: 0.7;
     	}
+    	
+    	th {
+    		border-top: none;
+    	}
     </style>
 </head>
 <body>
@@ -32,18 +36,26 @@
 				<div class="row">
 					<button type="button" class="btn btn-dark ml-3" onclick="javascript:location.href='${ctp}/user/playlist'">목록</button>
 					<div class="col"></div>
-					<button type="button" class="btn btn-dark mr-3">삭제</button>
+					<button type="button" class="btn btn-dark mr-3" onclick="playlistdel()">삭제</button>
 				</div>
 				<div class="p-3 row">
-	    			<div style="width: 200px; height: 200px;">
-	    				<div class="row" style="margin-left: 0px;">
+					<div style="width: 200px; height: 200px;">
+						<c:if test="${empty vo.thum1 }">
+		    				<div><img src="https://i1.sndcdn.com/avatars-000606604806-j6ghpm-t500x500.jpg" style="width: 100%;"></div>
+		    			</c:if>
+		    			<c:if test="${empty vo.thum2 }">
 		    				<div><img src="${vo.thum1 }"></div>
-		    				<div><img src="${vo.thum2 }"></div>
-	    				</div>
-	    				<div class="row" style="margin-left: 0px;">
-		    				<div><img src="${vo.thum3 }"></div>
-		    				<div><img src="${vo.thum4 }"></div>
-	    				</div>
+		    			</c:if>
+		    			<c:if test="${!empty vo.thum2 }">
+		    				<div class="row" style="margin-left: 0px;">
+			    				<div><img src="${vo.thum1 }"></div>
+			    				<div><img src="${vo.thum2 }"></div>
+		    				</div>
+		    				<div class="row" style="margin-left: 0px;">
+			    				<div><img src="${vo.thum3 }"></div>
+			    				<div><img src="${vo.thum4 }"></div>
+		    				</div>
+		    			</c:if>
 	    			</div>
 	    			<div class="ml-5">
 						<h4>${vo.listNm }</h4>
@@ -63,6 +75,7 @@
 							<th id="cnt_box">${fn:length(vos) } 곡 선택됨</th>
 							<th></th>
 							<th></th>
+							<th></th>
 						</tr>
 						<c:forEach var="vo" items="${vos}" varStatus="st">
 							<tr>
@@ -78,6 +91,7 @@
 									<c:if test="${fn:length(vo.artist) < 20 }">${vo.artist }</c:if>
 									<c:if test="${fn:length(vo.artist) >= 20 }">${fn:substring(vo.artist, 0, 20) }...</c:if>
 								</td>
+								<td><button type="button" class="btn" title="플레이리스트에서 제거" onclick="playlistdelsong(${vo.idx})"><i class='fa-regular fa-trash-can'></i></button></td>
 							</tr>
 						</c:forEach>
 					</table>
@@ -163,6 +177,31 @@
 		
 		function shuffle() {
 			alert("준비중입니다.");
+		}
+		
+		function playlistdel() {
+			if (confirm("현제 플레이리스트(${vo.listNm})를 삭제 하시겠습니까?")) {
+				location.href="${ctp}/user/playlistdel?idx=${vo.idx }";
+			}
+		}
+		
+		function playlistdelsong(idx) {
+			if (confirm("이 곡을 플레이리스트에서 제거 하시겠습니까?")) {
+				let data = {
+					idx : ${vo.idx},
+					songIdx : idx
+				}
+				
+				$.ajax({
+					type : "post",
+					url : "${ctp}/user/playlistdelsong",
+					data : data,
+					success : () => {
+						location.reload();
+					}
+				});
+				
+			}
 		}
 		
     </script>

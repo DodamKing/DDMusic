@@ -276,5 +276,17 @@ public class UserController {
 		userService.setAddMyList(idx, songIdx);
 	}
 
+	@RequestMapping("/playlistdel")
+	public String playlistdelGet(int idx) {
+		userService.setPlayListDel(idx);
+		return "redirect:/message/playlistdel";
+	}
+
+	@RequestMapping("/playlistdelsong")
+	@ResponseBody
+	public void playlistdelsongGet(int idx, int songIdx) {
+		userService.setPlayListDelSong(idx, songIdx);
+	}
+
 }
 

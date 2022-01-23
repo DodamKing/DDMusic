@@ -46,7 +46,9 @@ public interface UserDAO {
 
 	PlayListVO getPlayListVO(int idx);
 
-	void setAddMyList(@Param("idx") int idx, @Param("content") String content);
+	void setUpdateMyList(@Param("idx") int idx, @Param("content") String content);
+
+	void setPlayListDel(int idx);
 
 
 }
