@@ -32,7 +32,12 @@
 				<c:if test="${empty sVO }">
 					<div>로그인을 하고 지금 나의 차트를 확인 하세요</div>
 				</c:if>
-				<c:if test="${!empty sVO }">
+				<c:if test="${empty vos }">
+					<div><p><font color="yellow">${sVO.nickNm }</font>님 아직 들으신 음악이 없으시네요~<p> 
+						 <p>DDMusic을 한번 이용해 보세요!!</p>
+					</div>
+				</c:if>
+				<c:if test="${!empty sVO && !empty vos}">
 					<h4><font color="yellow;">${sVO.nickNm }</font>님이 즐겨 듣는 곡을 모아 봤어요!!</h4>
 					<div style="width: 350px; margin: auto;" class="mt-5 mb-5 text-center ho" onclick="javascript:location.href='infor?idx=${vos[0].idx }'">
 						<div><img src="${vos[0].img }"></div>

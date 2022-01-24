@@ -89,7 +89,7 @@
 								</c:if>
 							</tr>
 							<tr><td colspan="3"><font color="#444">${vo.date}</font></td></tr>
-							<tr><td id="content_${vo.idx }" colspan="3" class="pb-3" style="border-bottom: 1px solid #333;">${fn:replace(vo.content, enter, "<br>") }</td></tr>
+							<tr><td id="content_${vo.idx }" colspan="3" class="pb-3 pl-3" style="border-bottom: 1px solid #333;">${fn:replace(vo.content, enter, "<br>") }</td></tr>
 						</c:forEach>
 					</table>
 				</div>

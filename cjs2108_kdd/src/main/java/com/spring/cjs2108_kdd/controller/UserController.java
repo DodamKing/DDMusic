@@ -272,8 +272,9 @@ public class UserController {
 	
 	@RequestMapping("/addmylist")
 	@ResponseBody
-	public void addmylistPost(int idx, int songIdx) {
-		userService.setAddMyList(idx, songIdx);
+	public int addmylistPost(int idx, int songIdx) {
+		if (userService.setAddMyList(idx, songIdx)) return 1;
+		else return 0;
 	}
 
 	@RequestMapping("/playlistdel")
@@ -288,5 +289,18 @@ public class UserController {
 		userService.setPlayListDelSong(idx, songIdx);
 	}
 
+	@RequestMapping("/dellist")
+	@ResponseBody
+	public void dellistPost(int idx, int songIdx) {
+		userService.setPlayListDelSong(idx, songIdx);
+	}
+
+	@RequestMapping("playlistoneupdate")
+	@ResponseBody
+	public void playlistoneupdatePost(int idx, String listNm, String comment) {
+		userService.setPlayListContentUpdate(idx, listNm, comment);
+	}
+	
+	
 }
 

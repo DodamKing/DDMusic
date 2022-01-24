@@ -9,7 +9,7 @@ CKEDITOR.editorConfig = function( config ) {
 	// https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_config.html
 
 	// The toolbar groups arrangement, optimized for two toolbar rows.
-	/*config.toolbarGroups = [
+	config.toolbarGroups = [
 		{ name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
 		{ name: 'editing',     groups: [ 'find', 'selection', 'spellchecker' ] },
 		{ name: 'links' },
@@ -24,11 +24,11 @@ CKEDITOR.editorConfig = function( config ) {
 		{ name: 'styles', groups: [ 'Styles', 'Format', 'Font', 'FontSize', 'FontFamily' ] },
 		{ name: 'colors', groups: ['TextColor', 'BGColor'] },
 		{ name: 'about' }
-	];*/
+	];
 	
 	// Remove some buttons provided by the standard plugins, which are
 	// not needed in the Standard(s) toolbar.
-	config.removeButtons = 'Underline,Subscript,Superscript';
+	config.removeButtons = 'Underline,Subscript,Superscript,svg,input,script';
 
 	// Set the most common block elements.
 	config.format_tags = 'p;h1;h2;h3;pre';
@@ -47,18 +47,6 @@ CKEDITOR.editorConfig = function( config ) {
 	config.enterMode = CKEDITOR.ENTER_BR;
 	config.shiftEnterMode = CKEDITOR.ENTER_P;
 	
-	config.toolbar = [
-        ['Font', 'FontSize'],
-        ['BGColor', 'TextColor' ],
-        ['Bold', 'Italic', 'Strike', 'Superscript', 'Subscript', 'Underline', 'RemoveFormat'],   
-        ['BidiLtr', 'BidiRtl'],
-        '/',
-        ['Image', 'SpecialChar', 'Smiley'],
-        ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
-        ['Blockquote', 'NumberedList', 'BulletedList'],
-        ['Link', 'Unlink'],
-        ['Source'],
-        ['Undo', 'Redo']
-	];
+	//config.allowedContent = true;
 	
 };

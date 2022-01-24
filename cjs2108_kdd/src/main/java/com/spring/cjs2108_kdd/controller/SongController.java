@@ -42,7 +42,7 @@ public class SongController {
 	}
 	
 	@RequestMapping(value="/player", method = RequestMethod.GET)
-	public String playerGet(HttpServletRequest request, HttpSession session, Model model, String idx, String idxs) {
+	public String playerGet(HttpServletRequest request, HttpSession session, Model model, String idx, String idxs, String listIdx, String play) {
 		session.setAttribute("player", true);
 		
 		if (idx != null) {
@@ -64,6 +64,8 @@ public class SongController {
 					vos.add(vo);
 				}
 			}
+			model.addAttribute("play", play);
+			model.addAttribute("listIdx", listIdx);
 			model.addAttribute("vos", vos);
 			model.addAttribute("img1000", method.getImgSize(vos.get(0).getImg(), "1000"));
 			model.addAttribute("img2000", method.getImgSize(vos.get(0).getImg(), "2000"));

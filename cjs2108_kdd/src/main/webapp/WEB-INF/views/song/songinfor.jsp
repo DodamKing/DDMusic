@@ -98,7 +98,7 @@
 				<h5><b>가사정보</b></h5>
 				<div class="text-light text-center">
 					<div id="lyrics_div">${fn:replace(vo.lyrics, enter, "<br>") }</div>
-					<button type="button" class="btn btn-dark form-control mt-5" onclick="moerLyrics()">더보기</button>
+					<button id="lyrics_more_btn" type="button" class="btn btn-dark form-control mt-5" onclick="moerLyrics()">더보기</button>
 				</div>
 			</div>
 		</div>
@@ -148,13 +148,15 @@
     		if (lyricssw == 0) {
 	    		lyrics_div.style.height = "auto";
 	    		lyrics_div.style.overflow = "auto";
-	    		lyricssw = 1;    			
+	    		lyricssw = 1;
+	    		lyrics_more_btn.innerHTML = "접기";
     		}
     		
     		else {
 	    		lyrics_div.style.height = "200px";
 	    		lyrics_div.style.overflow = "hidden";
 	    		lyricssw = 0;    			
+	    		lyrics_more_btn.innerHTML = "더보기";
     		}
 		}
     	

@@ -58,15 +58,15 @@
 		    			</c:if>
 	    			</div>
 	    			<div class="ml-5">
-						<h4>${vo.listNm }</h4>
-						<div>${vo.comment }</div>
+						<h4 id="listNm_box">${vo.listNm } <span title="수정하기" class="ho" onclick="listNm_update()"><i class="fas fa-pen-square"></i></span></h4>
+						<div id="comment_box">${vo.comment } <span title="수정하기" class="ho" onclick="comment_update()"><i class="fas fa-pen-square"></i></span></div>
 	    			</div>
 	    			
     			</div>
 				<div class="d-flex justify-content-around p-3 mt-5">
-					<button type="button" class="btn btn-dark col" onclick="listplay()"><i class="fas fa-play fa-2x"></i><span class="ml-5" style="font-size: 28px;">play</span></button>
+					<button type="button" class="btn btn-dark col" onclick="listplay(${vo.idx})"><i class="fas fa-play fa-2x"></i><span class="ml-5" style="font-size: 28px;">play</span></button>
 					<div class="col"></div>
-					<button type="button" class="btn btn-dark col" onclick="shuffle()"><i class="fas fa-random fa-2x"></i><span class="ml-5" style="font-size: 28px;">shuffle</span></button>
+					<button type="button" class="btn btn-dark col" onclick="shuffle(${vo.idx})"><i class="fas fa-random fa-2x"></i><span class="ml-5" style="font-size: 28px;">shuffle</span></button>
 				</div>
 				<c:if test="${!empty vos }">
 					<table class="table">
@@ -133,7 +133,7 @@
 			}
 		});
 		
-		function listplay() {
+		function listplay(idx) {
 			let idxs = "";
 			
 			<c:forEach var="vo" items="${vos}" varStatus="st">
@@ -144,7 +144,7 @@
 			
 			if (idxs == "") return;
 			
-			let url = "${ctp}/song/player?idxs=" + idxs;
+			let url = "${ctp}/song/player?idxs=" + idxs + "&listIdx=" + idx + "&play=1";
 			player = window.open(url, "player", "width=1100px, height=800px, left=50px, top=150px");
 			
 			/* if (!sw) {
@@ -175,8 +175,25 @@
 			} */
 		};
 		
-		function shuffle() {
-			alert("준비중입니다.");
+		function shuffle(idx) {
+			let idxs = "";
+			let idx_list = [];
+			
+			<c:forEach var="vo" items="${vos}" varStatus="st">
+				if ($("input:checkbox[name='tch']")[${st.index}].checked) {
+					idx_list.push(${vo.idx});
+				}
+			</c:forEach>
+
+			idx_list.sort(() => Math.random() - 0.5);
+			idx_list.forEach((e) => {
+				idxs += e + "/";
+			});
+			
+			if (idxs == "") return;
+			
+			let url = "${ctp}/song/player?idxs=" + idxs + "&listIdx=" + idx + "&play=1";
+			player = window.open(url, "player", "width=1100px, height=800px, left=50px, top=150px");
 		}
 		
 		function playlistdel() {
@@ -202,6 +219,52 @@
 				});
 				
 			}
+		}
+		
+		function listNm_update() {
+			listNm_box.innerHTML = "<input id='listNm_update_box' type='text' value='${vo.listNm}' style='background: #333; border: none;'><span class='ml-3 ho btn btn-outline-warning btn-sm' onclick='goupdate_listNm()'>수정</span>";
+			let len = listNm_update_box.value.length;
+			listNm_update_box.focus();
+			listNm_update_box.setSelectionRange(0, len);
+		}
+		
+		function comment_update() {
+			comment_box.innerHTML = "<input id='comment_update_box' type='text' value='${vo.comment}' style='background: #333; border: none;'><span class='ml-3 ho btn btn-outline-warning btn-sm' onclick='goupdate_comment()'>수정</span>";
+			let len = comment_update_box.value.length;
+			comment_update_box.focus();
+			comment_update_box.setSelectionRange(0, len);
+		}
+		
+		function goupdate_listNm() {
+			let data = {
+				idx : ${vo.idx},
+				listNm : listNm_update_box.value
+			}
+			
+			$.ajax({
+				type : "post",
+				url : "${ctp}/user/playlistoneupdate",
+				data : data,
+				success : () => {
+					location.reload();
+				}
+			});
+		}
+		
+		function goupdate_comment() {
+			let data = {
+				idx : ${vo.idx},
+				comment : comment_update_box.value
+			}
+			
+			$.ajax({
+				type : "post",
+				url : "${ctp}/user/playlistoneupdate",
+				data : data,
+				success : () => {
+					location.reload();
+				}
+			});
 		}
 		
     </script>

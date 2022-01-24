@@ -182,10 +182,6 @@ public class SongServiceImpl implements SongService {
 				if (method.isFile(vo.getTitle(), vo.getArtist())) {
 					songDAO.isFileUpdate(vo.getIdx(), 1);
 				}
-				
-				else {
-					songDAO.isFileUpdate(vo.getIdx(), 0);
-				}
 				System.out.println(i);
 			}
 		}

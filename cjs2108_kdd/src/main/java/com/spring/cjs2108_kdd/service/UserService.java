@@ -48,10 +48,12 @@ public interface UserService {
 
 	PlayListVO getPlayListVO(int idx);
 
-	void setAddMyList(int idx, int songIdx);
+	boolean setAddMyList(int idx, int songIdx);
 
 	void setPlayListDel(int idx);
 
 	void setPlayListDelSong(int idx, int songIdx);
+
+	void setPlayListContentUpdate(int idx, String listNm, String comment);
 
 }

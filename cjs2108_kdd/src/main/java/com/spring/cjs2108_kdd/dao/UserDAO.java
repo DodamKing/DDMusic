@@ -50,5 +50,7 @@ public interface UserDAO {
 
 	void setPlayListDel(int idx);
 
+	void setPlayListContentUpdate(@Param("idx") int idx, @Param("listNm") String listNm, @Param("comment") String comment);
+
 
 }

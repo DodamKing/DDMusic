@@ -85,7 +85,6 @@
 					return;
 				}
 				
-				
 				$("form[name='myform']").submit();
 			}
 		}

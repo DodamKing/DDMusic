@@ -32,7 +32,7 @@
 							</tr>
 							<tr>
 								<td>
-									<textarea class="form-control" id="CKEDITOR" name="content" maxlength="2048" style="height: 400px;">${vo.content }</textarea>
+									<textarea class="form-control" id="CKEDITOR" name="content" maxlength="2048" style="height: 400px;">${fn:escapeXml(vo.content) }</textarea>
 									<script>
 										CKEDITOR.replace("content", {
 									  		uploadUrl: "${ctp}/review/imageUpload",

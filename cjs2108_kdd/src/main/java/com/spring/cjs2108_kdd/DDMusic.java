@@ -83,11 +83,13 @@ public class DDMusic {
 			UserVO vo = (UserVO) session.getAttribute("sVO");
 			if (vo != null) {
 				ArrayList<SongVO> vos = songService.getMyRank(vo.getIdx());
-				Method method = new Method();
-				vos.get(0).setImg(method.getImgSize(vos.get(0).getImg(), "300"));
-				vos.get(1).setImg(method.getImgSize(vos.get(1).getImg(), "200"));
-				vos.get(2).setImg(method.getImgSize(vos.get(2).getImg(), "200"));
-				model.addAttribute("vos", vos);
+				if (vos.size() != 0) {
+					Method method = new Method();
+					vos.get(0).setImg(method.getImgSize(vos.get(0).getImg(), "300"));
+					vos.get(1).setImg(method.getImgSize(vos.get(1).getImg(), "200"));
+					vos.get(2).setImg(method.getImgSize(vos.get(2).getImg(), "200"));
+					model.addAttribute("vos", vos);
+				}
 			}
 		}
 

@@ -28,7 +28,7 @@
 		let thum_list = [];
 		let title_list = [];
 		let artist_list = [];
-	
+		
 		let songUrl;
 		let playerIndex = 0;
 		let playerIndex_ = 0;
@@ -36,6 +36,7 @@
 		let pisw1 = 0;
 		let pisw2 = 0;
 		let repeat = 0;
+		let shuffle = 0;
 	
 		<c:if test="${!empty vos }">
 			<c:forEach var="vo" items="${vos}">
@@ -51,6 +52,17 @@
 			thum_list.push("${vo.img}");
 		    title_list.push("${vo.title}");
 		    artist_list.push("${vo.artist}");
+		</c:if>
+		
+		<c:if test="${play == 1}">
+			if (sw == 0) {
+				load();
+		        sw = 1;
+		    }
+		    
+		    $(play_btn).hide();
+		    $(pause_btn).show();
+		    player.play();
 		</c:if>
 		
 		//재생수 증가
@@ -86,6 +98,19 @@
 		    artist_list.splice(index, 1);
 		    
 		    setList();
+		    
+		    if ("${listIdx}" != "") {
+			    let data = {
+			    	idx : "${listIdx}",	
+		    		songIdx : idx
+			    }
+			    
+			    $.ajax({
+			    	type : "post",
+			    	url : "${ctp}/user/dellist",
+			    	data : data
+			    });
+		    }
 		}
 
 		// 원하는 곡 재생
@@ -143,31 +168,7 @@
 			document.title = "DDMusic " + title_list[playerIndex] + " - " + artist_list[playerIndex];
 			
 			// 현재 재생 음악 포커스
-			if (pisw1 == 0) {
-				playerIndex_ = playerIndex;
-				pisw1 = 1;
-			}
-			let focu = document.getElementById("p_" + idx_list[playerIndex]);
-			
-			focu.scrollIntoView();
-			focu.style.backgroundColor = "#bbccdd";
-			focu.style.opacity = "0.7";
-			focu.style.borderRadius = "5px";
-			
-			if (pisw1 == 1) {
-				if (pisw2 == 0) {
-					pisw2 = 1;
-				}
-				else {
-					if (playerIndex != playerIndex_) {
-						let focu_ = document.getElementById("p_" + idx_list[playerIndex_]);
-						focu_.style.backgroundColor = "";
-						focu_.style.opacity = "1";
-						focu_.style.borderRadius = "0";
-						playerIndex_ = playerIndex;		
-					}
-				}
-			}
+			focus_cur()
 			
 			// 재생 수 증가
 			playCntUp(idx_list[playerIndex]);
@@ -412,19 +413,91 @@
 		//반복 재생 버튼
 		$("#repeat_btn").click(() => {
 			if (repeat == 0) {
-				alert("반복재생");
 				repeat = 1;
+				repeat_btn.style.opacity = "1";
+				$("#repeat_btn").prop("title", "반복재생");
 			}
 			
 			else if (repeat == 1) {
-				alert("한곡반복");
 				repeat = 2;
+				repeat_btn.style.opacity = "0.7";
+				$("#repeat_btn").prop("title", "한곡반복");
 			}
 			
 			else if (repeat == 2) {
-				alert("반복해제");
 				repeat = 0;
+				repeat_btn.style.opacity = "0.5";
+				$("#repeat_btn").prop("title", "반복해제");
 			}
+		});
+		
+		//셔플
+		let shuffle_sw = 0;
+		let idx_list_ = [];
+		let thum_list_ = [];
+		let title_list_ = [];
+		let artist_list_ = [];
+		
+		$("#shuffle_btn").click(() => {
+			alert("셔플때문에 킹받음");
+			
+			if (shuffle_sw == 0) {
+				idx_list_ = Object.assign([], idx_list);
+				thum_list_ = Object.assign([], thum_list);
+				title_list_ = Object.assign([], title_list);
+				artist_list_ = Object.assign([], artist_list);
+			}
+			
+			if (shuffle == 0)  {
+				let param = Math.random() - 0.5;
+				idx_list.sort(() => param);
+				thum_list.sort(() => param);
+				title_list.sort(() => param);
+				artist_list.sort(() => param);
+				
+				shuffle_btn.style.opacity = "1";
+				shuffle = 1;
+			} 
+
+			else if (shuffle == 1)  {
+				lidx_list = idx_list_;
+				thum_list = thum_list_;
+				title_list = title_list_;
+				lartist_list = artist_list_;
+				
+				shuffle_btn.style.opacity = "0.5";
+				shuffle = 0;
+			}
+			
+			setList();
+			
+			playerIndex = idx_list.indexOf(idx_list_[playerIndex]);
+			focus_cur();
+			
+			
+		});
+		
+		// 현재 음악 포커스
+		function focus_cur() {
+			let focu = document.getElementById("p_" + idx_list[playerIndex]);
+			
+			focu.scrollIntoView();
+			focu.style.backgroundColor = "#bbccdd";
+			focu.style.opacity = "0.7";
+			focu.style.borderRadius = "5px";
+			
+			if (playerIndex != playerIndex_) {
+				let focu_ = document.getElementById("p_" + idx_list[playerIndex_]);
+				focu_.style.backgroundColor = "";
+				focu_.style.opacity = "1";
+				focu_.style.borderRadius = "0";
+				playerIndex_ = playerIndex;		
+			}
+		}
+		
+		// 더보기 버튼 클릭
+		addmore_btn.addEventListener("click", () => {
+			alert("어떻게 해야 하죠?ㅜㅜ");
 		});
 		
 		// 창 닫기 이벤트

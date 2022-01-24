@@ -184,10 +184,14 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void setAddMyList(int idx, int songIdx) {
+	public boolean setAddMyList(int idx, int songIdx) {
 		String content = userDAO.getPlayListVO(idx).getContent();
-		content += songIdx + "/";
-		userDAO.setUpdateMyList(idx, content);
+		if (!content.contains(Integer.toString(songIdx))) {
+			content += songIdx + "/";
+			userDAO.setUpdateMyList(idx, content);
+			return true;
+		}
+		return false;
 	}
 
 	@Override
@@ -200,6 +204,11 @@ public class UserServiceImpl implements UserService {
 		String content = userDAO.getPlayListVO(idx).getContent();
 		content = content.replace(songIdx + "/", "");
 		userDAO.setUpdateMyList(idx, content);
+	}
+
+	@Override
+	public void setPlayListContentUpdate(int idx, String listNm, String comment) {
+		userDAO.setPlayListContentUpdate(idx, listNm, comment);
 	}
 
 }

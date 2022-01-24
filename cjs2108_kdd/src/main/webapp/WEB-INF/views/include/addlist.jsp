@@ -80,9 +80,13 @@
 				type : "post",
 				url : "${ctp}/user/addmylist",
 				data : data,
-				success : () => {
-					alert("추가 되었습니다.");
-					location.reload();
+				success : (data) => {
+					if (data == 1) {
+						alert("추가 되었습니다.");
+						location.reload();
+						return;
+					}
+					alert("이미 추가된 곡입니다.");
 				}
 			});
 		}
