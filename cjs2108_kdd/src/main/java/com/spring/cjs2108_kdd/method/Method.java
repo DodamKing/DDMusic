@@ -24,6 +24,9 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.JsonObject;
+import com.spring.cjs2108_kdd.dao.SongDAO;
+import com.spring.cjs2108_kdd.vo.ChartVO;
+import com.spring.cjs2108_kdd.vo.SongVO;
 
 public class Method {
 	public String getImgSize(String img, String size) {
@@ -86,23 +89,40 @@ public class Method {
 		 }
 	}
 	
-	public void getChartforJsoup() throws IOException {
+	public List<ChartVO> getChartTop100() throws IOException {
 		String url = "https://music.bugs.co.kr/chart/track/day/total";
 		Document data = Jsoup.connect(url).get();
 		
 		Elements imgs = data.select(".list>tbody>tr");
 		Elements titles = data.select("p.title");
 		Elements artists = data.select("p.artist");
+		Elements ranks = data.select("div.ranking > strong");
 		
 		List<String> imgList = new ArrayList<String>();
 		List<String> titleList = new ArrayList<String>();
 		List<String> artistList = new ArrayList<String>();
+		List<String> rankList = new ArrayList<String>();
+		
+		List<ChartVO> vos = new ArrayList<ChartVO>();
 		
 		for (int i=0; i<100; i++) {
-//			imgList.add(imgs.get(i).select("a>img").get(0).get("src"));
+			ChartVO vo = new ChartVO();
+			imgList.add(imgs.get(i).select("a>img").get(0).attr("src"));
 			titleList.add(titles.get(i).text());
 			artistList.add(artists.get(i).text());
+			rankList.add(ranks.get(i).text());
 		}
+		
+		for (int i=0; i<100; i++) {
+			ChartVO vo = new ChartVO();
+			vo.setImg(imgList.get(i));
+			vo.setTitle(titleList.get(i));
+			vo.setArtist(artistList.get(i));
+			vo.setRank(Integer.parseInt(rankList.get(i)));
+			vos.add(vo);
+		}
+		
+		return vos;
 	}
 	
 }

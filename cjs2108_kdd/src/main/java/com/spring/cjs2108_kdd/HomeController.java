@@ -3,6 +3,7 @@ package com.spring.cjs2108_kdd;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.spring.cjs2108_kdd.dao.SongDAO;
 import com.spring.cjs2108_kdd.method.Method;
 import com.spring.cjs2108_kdd.service.SongService;
+import com.spring.cjs2108_kdd.vo.ChartVO;
 import com.spring.cjs2108_kdd.vo.SongVO;
 
 /**
@@ -64,7 +66,8 @@ public class HomeController {
 	@RequestMapping("/test/jsoup")
 	public void test() throws IOException {
 		Method method = new Method();
-		method.getChartforJsoup();
+		List<ChartVO> vos = method.getChartTop100();
+		System.out.println(vos);
 	}
 	
 }
