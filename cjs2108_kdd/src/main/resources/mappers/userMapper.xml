@@ -78,10 +78,7 @@
 	</update>
 	
 	<update id="setPlayListContentUpdate">
-		update playlist set 
-		<if test="listNm != null">listNm = #{listNm}</if>
-		<if test="comment != null">comment = #{comment}</if> 
-		where idx = #{idx};
+		update playlist set listNm = #{listNm}, comment = #{comment} where idx = #{idx};
 	</update>
 	
 

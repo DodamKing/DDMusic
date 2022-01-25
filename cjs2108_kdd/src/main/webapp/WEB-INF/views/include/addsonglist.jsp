@@ -50,6 +50,8 @@
 		        	</div>
 	        	</div>
 	        </div>
+        	<div id="message_box1" class="text-center p-3" style="display: none;">플레이리스트에 추가 되었습니다.</div>
+        	<div id="message_box2" class="text-center p-3" style="display: none;">이미 추가 된 곡입니다.</div>
 	        
 	        <!-- Modal footer -->
 	        <div class="modal-footer">
@@ -69,7 +71,7 @@
 	
 	function goClose() {
 		if (confirm("변경사항을 저장하지 않고 편집을 종료합니다. 정말 나가시겠어요?")) {
-			$("#close_btn").click();
+			location.reload();
 		}
 	}
 
@@ -162,7 +164,12 @@
 					
 					content.value = content.value + data.idx + "/";
 					
-					alert("플레이리스트에 추가 되었습니다.");
+					$("#message_box1").slideDown(300);
+					setTimeout(() => $("#message_box1").slideUp(), 1000);
+				}
+				else {
+					$("#message_box2").slideDown(300);
+					setTimeout(() => $("#message_box2").slideUp(), 1000);
 				}
 			}
 		});
@@ -174,8 +181,4 @@
 		}
 	});
 	
-	$("#close_btn").click(() => {
-		listNm.value = "";
-		comment.value = "";
-	});
 </script>

@@ -22,6 +22,7 @@
     	th {
     		border-top: none;
     	}
+    	
     </style>
 </head>
 <body>
@@ -36,6 +37,7 @@
 				<div class="row">
 					<button type="button" class="btn btn-dark ml-3" onclick="javascript:location.href='${ctp}/user/playlist'">목록</button>
 					<div class="col"></div>
+					<button type="button" class="btn btn-dark mr-3" title="수정" onclick="update()"><i class="fas fa-pen-square"></i></button>
 					<button type="button" class="btn btn-dark mr-3" onclick="playlistdel()">삭제</button>
 				</div>
 				<div class="p-3 row">
@@ -58,8 +60,8 @@
 		    			</c:if>
 	    			</div>
 	    			<div class="ml-5">
-						<h4 id="listNm_box">${vo.listNm } <span title="수정하기" class="ho" onclick="listNm_update()"><i class="fas fa-pen-square"></i></span></h4>
-						<div id="comment_box">${vo.comment } <span title="수정하기" class="ho" onclick="comment_update()"><i class="fas fa-pen-square"></i></span></div>
+						<h4 id="listNm_box">${vo.listNm }</h4>
+						<div id="comment_box">${fn:replace(vo.comment, enter, "<br>") }</div>
 	    			</div>
 	    			
     			</div>
@@ -75,7 +77,7 @@
 							<th id="cnt_box">${fn:length(vos) } 곡 선택됨</th>
 							<th></th>
 							<th></th>
-							<th></th>
+							<th class="text-center align-middle ho"><div class="btn btn-outline-warning" onclick="listSongDel()">선택삭제</div></th>
 						</tr>
 						<c:forEach var="vo" items="${vos}" varStatus="st">
 							<tr>
@@ -91,7 +93,7 @@
 									<c:if test="${fn:length(vo.artist) < 20 }">${vo.artist }</c:if>
 									<c:if test="${fn:length(vo.artist) >= 20 }">${fn:substring(vo.artist, 0, 20) }...</c:if>
 								</td>
-								<td><button type="button" class="btn" title="플레이리스트에서 제거" onclick="playlistdelsong(${vo.idx})"><i class='fa-regular fa-trash-can'></i></button></td>
+								<td class="text-center"><button type="button" class="btn" title="플레이리스트에서 제거" onclick="playlistdelsong(${vo.idx})"><i class='fa-regular fa-trash-can'></i></button></td>
 							</tr>
 						</c:forEach>
 					</table>
@@ -197,7 +199,7 @@
 		}
 		
 		function playlistdel() {
-			if (confirm("현제 플레이리스트(${vo.listNm})를 삭제 하시겠습니까?")) {
+			if (confirm("현재 플레이리스트(${vo.listNm})를 삭제 하시겠습니까?")) {
 				location.href="${ctp}/user/playlistdel?idx=${vo.idx }";
 			}
 		}
@@ -221,50 +223,59 @@
 			}
 		}
 		
-		function listNm_update() {
-			listNm_box.innerHTML = "<input id='listNm_update_box' type='text' value='${vo.listNm}' style='background: #333; border: none;'><span class='ml-3 ho btn btn-outline-warning btn-sm' onclick='goupdate_listNm()'>수정</span>";
+		function update() {
+			listNm_box.innerHTML = "<input id='listNm_update_box' type='text' value='${vo.listNm}' style='background: #333; border: none;'><span class='ml-3 ho btn btn-outline-warning btn-sm' onclick='goupdate()'>적용</span><span class='ml-3 ho btn btn-outline-warning btn-sm' onclick='location.reload();'>취소</span>";
 			let len = listNm_update_box.value.length;
 			listNm_update_box.focus();
 			listNm_update_box.setSelectionRange(0, len);
+			comment_box.innerHTML = "<textarea id='comment_update_box' rows='6' class='form-control' style='background: #333; border: none; color: #999; white-space: pre;'>${fn:replace(vo.comment, enter, '&#10;')}</textarea>";
 		}
 		
-		function comment_update() {
-			comment_box.innerHTML = "<input id='comment_update_box' type='text' value='${vo.comment}' style='background: #333; border: none;'><span class='ml-3 ho btn btn-outline-warning btn-sm' onclick='goupdate_comment()'>수정</span>";
-			let len = comment_update_box.value.length;
-			comment_update_box.focus();
-			comment_update_box.setSelectionRange(0, len);
-		}
-		
-		function goupdate_listNm() {
-			let data = {
-				idx : ${vo.idx},
-				listNm : listNm_update_box.value
-			}
-			
-			$.ajax({
-				type : "post",
-				url : "${ctp}/user/playlistoneupdate",
-				data : data,
-				success : () => {
-					location.reload();
+		function goupdate() {
+			if (confirm("변경사항을 적용 하시겠습니까?")) {
+				let data = {
+					idx : '${vo.idx}',
+					listNm : listNm_update_box.value,
+					comment : comment_update_box.value
 				}
-			});
+				
+				$.ajax({
+					type : "post",
+					url : "${ctp}/user/playlistoneupdate",
+					data : data,
+					success : () => {
+						location.reload();
+					}
+				});
+			}
 		}
 		
-		function goupdate_comment() {
-			let data = {
-				idx : ${vo.idx},
-				comment : comment_update_box.value
-			}
+		function listSongDel() {
+			let idxs = "";
 			
-			$.ajax({
-				type : "post",
-				url : "${ctp}/user/playlistoneupdate",
-				data : data,
-				success : () => {
-					location.reload();
+			<c:forEach var="vo" items="${vos}" varStatus="st">
+				if($("input:checkbox[name='tch']")[${st.index}].checked) {
+					idxs += ${vo.idx} + "/";
 				}
-			});
+			</c:forEach>
+			
+			if (idxs == "") return;
+			
+			if (confirm("선택하신 곡을 플레이리스트에서 제거 하시겠습니까?")) {
+				let data = {
+					idx : ${vo.idx},
+					songIdxs : idxs
+				}
+				
+				$.ajax({
+					type : "post",
+					url : "${ctp}/user/playlistdelsongs",
+					data : data,
+					success : () => {
+						location.reload();
+					}
+				});
+			}
 		}
 		
     </script>

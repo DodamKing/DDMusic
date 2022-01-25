@@ -91,32 +91,8 @@
 				}
 			}
 			
-			if (!sw) {
-				let url = "${ctp}/song/player?idxs=" + idxs;
-				player = window.open(url, "player", "width=1100px, height=800px, left=50px, top=150px");
-				sw = true;
-			}
-			else {
-				if (!player.closed && sw) {
-					let idx_list = idxs.split("/");
-					for (let i=0; i<idx_list.length - 1; i++) {
-						$.ajax({
-							type : "post",
-							url : "${ctp}/song/player",
-							data : {idx : idx_list[i]},
-							success : (data) => {
-								player.addList(data);
-								player.setList();
-							}
-						});
-					}
-				}
-				else {
-					let url = "${ctp}/song/player?idxs=" + idxs;
-					player = window.open(url, "player", "width=1100px, height=800px, left=50px, top=150px");
-					sw = true;
-				}
-			}
+			$('#hiden_btn_many').click();
+			idx_box_many.innerHTML = idxs;
 		});
 		
 		top_btn.addEventListener("click", () => {

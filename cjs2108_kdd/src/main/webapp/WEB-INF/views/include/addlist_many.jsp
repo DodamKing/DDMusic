@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <c:set var="ctp" value="<%=request.getContextPath() %>" />
 <!DOCTYPE html>
-<div class="modal fade" id="addlist">
+<div class="modal fade" id="addlist_many">
 	<div class="modal-dialog">
 		<div class="modal-content" style="background: black;">
 			<!-- Modal Header -->
@@ -14,13 +14,11 @@
 	        
 	        <!-- Modal body -->
 	        <div class="modal-body">
-	        	<button type="button" class="btn btn-danger form-control" onclick="godata()">현재 재생 목록에 추가</button>
+	        	<button type="button" class="btn btn-danger form-control" onclick="godata_many()">현재 재생 목록에 추가</button>
 	        	<button type="button" class="btn btn-danger form-control mt-3" onclick="getlist()">플레이리스트에 추가</button>
-	        	<div id="idx_box" style="display: none;"></div>
-	        	<div id="isFile_box" style="display: none;"></div>
-	        	<div id="mylist_box" class="mt-5"></div>
-	        	<div id="message_box1" style="display: none;" class="text-center">추가 되었습니다</div>
-	        	<div id="message_box2" style="display: none;" class="text-center">이미 추가 된 곡입니다</div>
+	        	<div id="idx_box_many" style="display: none;"></div>
+	        	<div id="mylist_box_many" class="mt-5"></div>
+	        	<div id="message_box_many" style="display: none;" class="text-center">추가 되었습니다</div>
 	        </div>
 	        
 	        <!-- Modal footer -->
@@ -66,7 +64,7 @@
 						res += "</div></div></div>";
 					}
 				});
-				mylist_box.innerHTML = res;
+				mylist_box_many.innerHTML = res;
 			}
 		});
 	}
@@ -74,27 +72,22 @@
 	function action(idx) {
 		let data = {
 			idx : idx,
-			songIdx : idx_box.innerHTML
+			songIdxs : idx_box_many.innerHTML
 		}
 		
 		$.ajax({
 			type : "post",
-			url : "${ctp}/user/addmylist",
+			url : "${ctp}/user/addmylistmany",
 			data : data,
-			success : (data) => {
-				if (data == 1) {
-					$("#message_box1").slideDown(300);
-					setTimeout(() => $("#message_box1").slideUp(), 1000);
-					return;
-				}
-				$("#message_box2").slideDown(300);
-				setTimeout(() => $("#message_box2").slideUp(), 1000);
+			success : () => {
+				$("#message_box_many").slideDown(300);
+				setTimeout(() => $("#message_box_many").slideUp(), 1000);
 			}
 		});
 	}
 	
 	function mylist_box_re() {
-		mylist_box.innerHTML = "";
+		mylist_box_many.innerHTML = "";
 	}
 	
 	

@@ -73,6 +73,7 @@ public class UserController {
 				
 			if (flag != null) {
 				if (flag.equals("write")) return "redirect:/review/write";
+				if (flag.equals("myranking")) return "redirect:/myranking";
 			}
 			return "redirect:/index";
 		}
@@ -277,6 +278,12 @@ public class UserController {
 		else return 0;
 	}
 
+	@RequestMapping("/addmylistmany")
+	@ResponseBody
+	public void addmylistmanyPost(int idx, String songIdxs) {
+		userService.setAddMyListMany(idx, songIdxs);
+	}
+
 	@RequestMapping("/playlistdel")
 	public String playlistdelGet(int idx) {
 		userService.setPlayListDel(idx);
@@ -285,8 +292,17 @@ public class UserController {
 
 	@RequestMapping("/playlistdelsong")
 	@ResponseBody
-	public void playlistdelsongGet(int idx, int songIdx) {
+	public void playlistdelsongPost(int idx, int songIdx) {
 		userService.setPlayListDelSong(idx, songIdx);
+	}
+
+	@RequestMapping("/playlistdelsongs")
+	@ResponseBody
+	public void playlistdelsongsPost(int idx, String songIdxs) {
+		String[] idxs = songIdxs.split("/");
+		for (int i=0; i<idxs.length; i++) {
+			userService.setPlayListDelSong(idx, Integer.parseInt(idxs[i]));
+		}
 	}
 
 	@RequestMapping("/dellist")

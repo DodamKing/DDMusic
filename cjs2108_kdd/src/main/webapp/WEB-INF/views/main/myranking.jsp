@@ -30,9 +30,9 @@
 			<div class="card-body" style="padding-bottom: 300px;">
 				<h2 class="mt-5 mb-5">#내돈내듣</h2>
 				<c:if test="${empty sVO }">
-					<div>로그인을 하고 지금 나의 차트를 확인 하세요</div>
+					<div><a href="${ctp }/user/login?flag=myranking" style="color: yellow;">로그인</a>을 하고 지금 나의 차트를 확인 하세요</div>
 				</c:if>
-				<c:if test="${empty vos }">
+				<c:if test="${!empty sVO && empty vos }">
 					<div><p><font color="yellow">${sVO.nickNm }</font>님 아직 들으신 음악이 없으시네요~<p> 
 						 <p>DDMusic을 한번 이용해 보세요!!</p>
 					</div>
@@ -133,6 +133,19 @@
 				}
 			</c:forEach>
 			
+			$('#hiden_btn_many').click();
+			idx_box_many.innerHTML = idxs;
+		});
+		
+		/* add_btn.addEventListener("click", () => {
+			let idxs = "";
+			
+			<c:forEach var="vo" items="${vos}" varStatus="st">
+				if($("input:checkbox[name='tch']")[${st.index}].checked) {
+					idxs += ${vo.idx} + "/";
+				}
+			</c:forEach>
+			
 			if (!sw) {
 				let url = "${ctp}/song/player?idxs=" + idxs;
 				player = window.open(url, "player", "width=1100px, height=800px, left=50px, top=150px");
@@ -159,7 +172,7 @@
 					sw = true;
 				}
 			}
-		});
+		}); */
 		
     </script>
 	

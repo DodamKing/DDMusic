@@ -125,8 +125,13 @@ public class SongController {
 	@RequestMapping("close")
 	@ResponseBody
 	public void clseosPost(HttpSession session) {
-		session.removeAttribute("player");
 		session.setAttribute("player", false);
+	}
+
+	@RequestMapping("open")
+	@ResponseBody
+	public void openPost(HttpSession session) {
+		session.setAttribute("player", true);
 	}
 	
 	@RequestMapping("/getchart")

@@ -99,7 +99,8 @@
 		    
 		    setList();
 		    
-		    if ("${listIdx}" != "") {
+		    //플레이리스트에서도 삭제
+		   /*  if ("${listIdx}" != "") {
 			    let data = {
 			    	idx : "${listIdx}",	
 		    		songIdx : idx
@@ -110,7 +111,7 @@
 			    	url : "${ctp}/user/dellist",
 			    	data : data
 			    });
-		    }
+		    } */
 		}
 
 		// 원하는 곡 재생
@@ -506,6 +507,7 @@
 				type : "post",
 				url : "${ctp}/song/close"
 			});
+			opener.reload();
 		});
 		
 		//크기 고정

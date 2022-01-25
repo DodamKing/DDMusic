@@ -56,4 +56,6 @@ public interface UserService {
 
 	void setPlayListContentUpdate(int idx, String listNm, String comment);
 
+	void setAddMyListMany(int idx, String songIdxs);
+
 }

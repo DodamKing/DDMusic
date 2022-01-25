@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -209,6 +210,19 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void setPlayListContentUpdate(int idx, String listNm, String comment) {
 		userDAO.setPlayListContentUpdate(idx, listNm, comment);
+	}
+
+	@Override
+	public void setAddMyListMany(int idx, String songIdxs) {
+		String[] songIdxList = songIdxs.split("/");
+		
+		String content = userDAO.getPlayListVO(idx).getContent();
+		for (int i=0; i<songIdxList.length; i++) {
+			if (!content.contains(songIdxList[i])) {
+				content += songIdxList[i] + "/";
+			}
+		}
+		userDAO.setUpdateMyList(idx, content);
 	}
 
 }

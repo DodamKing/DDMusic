@@ -5,11 +5,19 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -76,6 +84,25 @@ public class Method {
 		   if(printWriter != null) { printWriter.close(); }
 		  } catch(IOException e) { e.printStackTrace(); }
 		 }
+	}
+	
+	public void getChartforJsoup() throws IOException {
+		String url = "https://music.bugs.co.kr/chart/track/day/total";
+		Document data = Jsoup.connect(url).get();
+		
+		Elements imgs = data.select(".list>tbody>tr");
+		Elements titles = data.select("p.title");
+		Elements artists = data.select("p.artist");
+		
+		List<String> imgList = new ArrayList<String>();
+		List<String> titleList = new ArrayList<String>();
+		List<String> artistList = new ArrayList<String>();
+		
+		for (int i=0; i<100; i++) {
+//			imgList.add(imgs.get(i).select("a>img").get(0).get("src"));
+			titleList.add(titles.get(i).text());
+			artistList.add(artists.get(i).text());
+		}
 	}
 	
 }

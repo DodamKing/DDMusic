@@ -123,6 +123,18 @@
 				}
 			</c:forEach>
 			
+			$('#hiden_btn_many').click();
+			idx_box_many.innerHTML = idxs;
+			
+			
+			/* let idxs = "";
+			
+			<c:forEach var="vo" items="${vos}" varStatus="st">
+				if($("input:checkbox[name='tch']")[${st.index}].checked) {
+					idxs += ${vo.idx} + "/";
+				}
+			</c:forEach>
+			
 			if (!sw) {
 				let url = "${ctp}/song/player?idxs=" + idxs;
 				player = window.open(url, "player", "width=1100px, height=800px, left=50px, top=150px");
@@ -148,7 +160,7 @@
 					player = window.open(url, "player", "width=1100px, height=800px, left=50px, top=150px");
 					sw = true;
 				}
-			}
+			} */
 		});
 		
     </script>

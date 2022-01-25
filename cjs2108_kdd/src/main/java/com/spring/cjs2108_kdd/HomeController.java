@@ -1,5 +1,6 @@
 package com.spring.cjs2108_kdd;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -59,5 +60,11 @@ public class HomeController {
 //		}
 //		System.out.println("완료");
 //	}
+	
+	@RequestMapping("/test/jsoup")
+	public void test() throws IOException {
+		Method method = new Method();
+		method.getChartforJsoup();
+	}
 	
 }
