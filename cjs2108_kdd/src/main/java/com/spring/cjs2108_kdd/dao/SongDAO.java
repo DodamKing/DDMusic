@@ -1,9 +1,11 @@
 package com.spring.cjs2108_kdd.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.spring.cjs2108_kdd.vo.ChartVO;
 import com.spring.cjs2108_kdd.vo.SongVO;
 
 public interface SongDAO {
@@ -59,5 +61,13 @@ public interface SongDAO {
 	public ArrayList<SongVO> getUpdateSong();
 
 	public ArrayList<SongVO> getMyRank(int idx);
+
+	public void setChartUpdate(@Param("vos") List<ChartVO> vos);
+
+	public ArrayList<ChartVO> getChartVOS(String date);
+
+	public String getMinDate();
+
+	public void setChartSongIdx(@Param("songIdx") int songIdx, @Param("title") String title, @Param("artist") String artist);
 
 }

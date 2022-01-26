@@ -17,26 +17,27 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.cjs2108_kdd.dao.SongDAO;
+import com.spring.cjs2108_kdd.method.Method;
 import com.spring.cjs2108_kdd.service.SongService;
 import com.spring.cjs2108_kdd.service.UserService;
+import com.spring.cjs2108_kdd.vo.ChartVO;
 import com.spring.cjs2108_kdd.vo.SongVO;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-	@Autowired
-	SongService songService;
+	@Autowired SongService songService;
 	
-	@Autowired
-	UserService userService;
+	@Autowired UserService userService;
 	
 	@RequestMapping("/main")
 	public String mainGet(Model model, 
-			@RequestParam(value = "sw", defaultValue = "1") int sw, 
+			@RequestParam(value = "sw", defaultValue = "0") int sw, 
 			@RequestParam(value = "pageNo", defaultValue = "1") int pageNo) 
 					throws IOException, ParseException {
 		if (sw == 0) {
-			model.addAttribute("vos", songService.getChartJson());
+//			model.addAttribute("vos", songService.getChartJson());
+			model.addAttribute("vos", songService.getChartVOS(null));
 		}
 		
 		else if (sw == 1) {
@@ -104,10 +105,10 @@ public class AdminController {
 
 	@RequestMapping("/addsongall")
 	@ResponseBody
-	public void addsongallPost() throws IOException, ParseException {
-		List<SongVO> vos = songService.getChartJson();
+	public void addsongallPost() {
+		List<ChartVO> vos = songService.getChartVOS(null);
 		for (int i=0; i<vos.size(); i++) {
-			if (vos.get(i).getIdx() == 0) {
+			if (vos.get(i).getSongIdx() == 0) {
 				songService.addSongDB(vos.get(i).getImg(), vos.get(i).getTitle(), vos.get(i).getArtist());
 			}
 		}
@@ -146,5 +147,20 @@ public class AdminController {
 		model.addAttribute("sw", sw);
 		model.addAttribute("flag", "srch");
 		return "admin/main";
+	}
+	
+	@RequestMapping("/chartupdate")
+	@ResponseBody
+	public void chartupdatePost() throws IOException {
+		Method method = new Method();
+		List<ChartVO> vos = method.getChartTop100();
+		for (int i=0; i<vos.size(); i++) {
+			int idx = 0;
+			if (songService.getSongIdx(vos.get(i).getTitle(), vos.get(i).getArtist()) != null) idx = songService.getSongIdx(vos.get(i).getTitle(), vos.get(i).getArtist());
+			vos.get(i).setSongIdx(idx);
+			vos.get(i).setIsFile(songService.getSongInfor(idx).getIsFile());
+			System.out.println(i);
+		}
+		songService.setChartUpdate(vos);
 	}
 }

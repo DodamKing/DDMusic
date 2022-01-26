@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.spring.cjs2108_kdd.method.Method;
 import com.spring.cjs2108_kdd.service.ReviewService;
 import com.spring.cjs2108_kdd.service.SongService;
+import com.spring.cjs2108_kdd.vo.ChartVO;
 import com.spring.cjs2108_kdd.vo.SongVO;
 import com.spring.cjs2108_kdd.vo.UserVO;
 
@@ -43,15 +44,17 @@ public class DDMusic {
 //	}
 	
 	@RequestMapping("/{flag}")
-	public String mainGet(Model model, HttpSession session , @PathVariable String flag, String srchKwd, String idx) throws FileNotFoundException, IOException, ParseException {
+	public String mainGet(Model model, HttpSession session , @PathVariable String flag, String srchKwd, String idx, String date) throws FileNotFoundException, IOException, ParseException {
 		if (flag.equals("index")) {
 			model.addAttribute("flag", "today");
 			return "main/main";
 		}
 
 		else if (flag.equals("chart")) {
-			ArrayList<SongVO> vos = songService.getChartJson();
+//			ArrayList<SongVO> vos = songService.getChartJson();
+			ArrayList<ChartVO> vos = songService.getChartVOS(date);
 			model.addAttribute("vos", vos);
+			model.addAttribute("minDate", songService.getMinDate());
 		}
 		
 		else if (flag.equals("srch")) {
@@ -60,9 +63,11 @@ public class DDMusic {
 		}
 		
 		else if (flag.equals("infor")) {
-			SongVO vo = songService.getSongInfor(Integer.parseInt(idx));
-			if (vo != null) vo.setImg(vo.getImg().replaceFirst("50", "300"));
-			model.addAttribute("vo", vo);
+			if (Integer.parseInt(idx) != 0) {
+				SongVO vo = songService.getSongInfor(Integer.parseInt(idx));
+				if (vo != null) vo.setImg(vo.getImg().replaceFirst("50", "300"));
+				model.addAttribute("vo", vo);
+			}
 		}
 		
 		else if (flag.equals("rank")) {

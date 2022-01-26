@@ -103,11 +103,27 @@
 		select * from song_update u left join song s on s.idx = u.songIdx order by date desc;
 	</select>
 	
-<!-- 	<select id="getSong100" resultType="com.spring.cjs2108_kdd.vo.SongVO" parameterType="java.util.ArrayList">
-		<foreach collection="vos" item="vo">
-			select * from song where title = #{vo.title} and artist = #{vo.artist}
-		</foreach>
+	<insert id="setChartUpdate">
+		insert into chart values
+		<foreach collection="vos" item="vo" separator=",">(default, #{vo.img}, #{vo.title}, #{vo.artist}, #{vo.rank}, #{vo.songIdx}, #{vo.isFile}, default)</foreach>
 		;
-	</select> -->
+	</insert>
+	
+	<select id="getChartVOS" resultType="com.spring.cjs2108_kdd.vo.ChartVO">
+		<if test="date == null">
+			select * from chart where date = (select max(date) from chart) order by rank;
+		</if>
+		<if test="date != null">
+			select * from chart where date(date) = #{date} order by rank;
+		</if>
+	</select>
+	
+	<select id="getMinDate" resultType="String">
+		select date_format(min(date), "%Y-%m-%d") from chart;
+	</select>
+	
+	<update id="setChartSongIdx">
+		update chart set songIdx = #{songIdx} where title = #{title} and artist = #{artist};
+	</update>
 	
 </mapper>

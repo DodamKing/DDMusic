@@ -58,7 +58,7 @@
 
 		.sticky2 {
 			position: fixed;
-			top: 60px;
+			bottom: 10px;
 			right: 10px;
 		}
 	</style>
@@ -303,6 +303,19 @@
 			
 			$("#srchform").submit();
 		});
+		
+		// 차트 업데이트
+		function chartUpdate() {
+			if (confirm("현재 시각으로 차트를 업테이트 하시겠습니까?")) {
+				$.ajax({
+					type : "post",
+					url : "${ctp}/admin/chartupdate",
+					success : () => {
+						location.reload();
+					}
+				});
+			}
+		}
 		
 	</script>
 

@@ -37,40 +37,40 @@
         </div>
         <div class="col-3 p-3 mt-1">
         	<c:if test="${empty sMid }">
-	            <button id="like_btn1" class="btn" type="button" title="좋아요"><i class="fa-regular fa-heart"></i></button>
-	            <button id="like_btn2" style="display: none;" class="btn" type="button"><i class="fa-solid fa-heart text-danger"></i></button>
+	            <button id="like_btn1" class="btn" type="button" title="좋아요"><i class="fa-regular fa-heart" style="color: #fff;"></i></button>
+	            <button id="like_btn2" style="display: none;" class="btn" type="button"><i class="fa-solid fa-heart text-danger" style="color: #fff;"></i></button>
         	</c:if>
         	<c:if test="${(fn:contains(vo.likeList, sMid) && !empty sMid) || (fn:contains(vos[0].likeList, sMid) && !empty sMid)}">
-	            <button id="like_btn1" style="display: none;" class="btn" type="button" title="좋아요"><i class="fa-regular fa-heart"></i></button>
-	            <button id="like_btn2" class="btn" type="button"><i class="fa-solid fa-heart text-danger"></i></button>
+	            <button id="like_btn1" style="display: none;" class="btn" type="button" title="좋아요"><i class="fa-regular fa-heart" style="color: #fff;"></i></button>
+	            <button id="like_btn2" class="btn" type="button"><i class="fa-solid fa-heart text-danger" style="color: #fff;"></i></button>
         	</c:if>
         	<c:if test="${(!fn:contains(vo.likeList, sMid) && !empty sMid) || (!fn:contains(vos[0].likeList, sMid) && !empty sMid) }">
-	            <button id="like_btn1" class="btn" type="button" title="좋아요"><i class="fa-regular fa-heart"></i></button>
-	            <button id="like_btn2" style="display: none;" class="btn" type="button"><i class="fa-solid fa-heart text-danger"></i></button>
+	            <button id="like_btn1" class="btn" type="button" title="좋아요"><i class="fa-regular fa-heart" style="color: #fff;"></i></button>
+	            <button id="like_btn2" style="display: none;" class="btn" type="button"><i class="fa-solid fa-heart text-danger" style="color: #fff;"></i></button>
         	</c:if>
-            <button id="lyrics_btn" class="btn" type="button" title="가사" data-toggle="modal" data-target="#myModal"><i class="fa-solid fa-music"></i></button>
-            <button id="addmore_btn" class="btn" type="button" title="더보기"><i class="fa-solid fa-ellipsis"></i></button>
+            <button id="lyrics_btn" class="btn" type="button" title="가사" data-toggle="modal" data-target="#myModal"><i class="fa-solid fa-music" style="color: #fff;"></i></button>
+            <button id="addmore_btn" class="btn" type="button" title="더보기"><i class="fa-solid fa-ellipsis" style="color: #fff;"></i></button>
         </div>
         <div class="col pt-2">
             <div id="shuffle_btn" class="btn" title="재생 방법 변경" style="background: #222; opacity: 0.5;"><i
                     class="fa-solid fa-shuffle" style="color: #fff;"></i></div>
-            <button id="back_btn" class="btn" type="button"><i class="fa-solid fa-backward-step fa-2x"></i></button>
+            <button id="back_btn" class="btn" type="button"><i class="fa-solid fa-backward-step fa-2x" style="color: #fff;"></i></button>
             <button id="play_btn" class="btn" type="button" title="재생/일시정지 선택"><i
                     class="fa-regular fa-circle-play fa-3x"></i></button>
             <button id="pause_btn" style="display: none;" class="btn" type="button"><i
                     class="fa-regular fa-circle-pause fa-3x"></i></button>
-            <button id="next_btn" class="btn" type="button"><i class="fa-solid fa-forward-step fa-2x"></i></button>
+            <button id="next_btn" class="btn" type="button"><i class="fa-solid fa-forward-step fa-2x" style="color: #fff;"></i></button>
             <div id="repeat_btn" class="btn" title="반복 재생 설정" style="background: #222; opacity: 0.5;"><i
                     class="fa-solid fa-repeat" style="color: #fff;"></i></div>
         </div>
         <div class="ml-auto d-flex mt-4 mr-3">
             <div id="controls_time" class="mt-2">00:00 / 00:00</div>
             <div id="mute_btn1" class="ml-2"><button class="btn" type="button"><i
-                        class="fa-solid fa-volume-high"></i></button></div>
+                        class="fa-solid fa-volume-high" style="color: #fff;"></i></button></div>
             <div id="mute_btn2" class="ml-2" style="display: none;"><button class="btn" type="button"><i
-                        class="fa-solid fa-volume-xmark"></i></button></div>
-            <div class="ml-1 mt-1"><input id="volume_bar" type="range" min="0" max="100" value="20" /></div>
+                        class="fa-solid fa-volume-xmark" style="color: #fff;"></i></button></div>
+            <div class="ml-1 mt-1"><input id="volume_bar" type="range" min="0" max="100" value="100"/></div>
         </div>
     </div>
-    <audio id="player" src="" onloadstart="this.volume=0.2"></audio>
+    <audio id="player" src=""></audio>
 </footer>

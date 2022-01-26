@@ -14,14 +14,14 @@
 		<h2>업데이트 필요한 곡</h2>
 		<div class="mt-5">
 			<c:set var="ok" value="0" />
-			<c:if test="${vo.idx == 0 }">
+			<%-- <c:if test="${vo.idx == 0 }"> --%>
 				<table class="table">
 						<tr>
-							<td></td>
+							<td><div type="button" class="btn btn-outline-warning" onclick="chartUpdate()">차트 업데이트</div></td>
 							<td><button class="btn btn-warning" type="button" onclick="addall()">모두 추가</button></td>
 						</tr>
 					<c:forEach var="vo" items="${vos }" varStatus="st">
-						<c:if test="${vo.idx == 0 }">
+						<c:if test="${vo.songIdx == 0 }">
 							<tr>
 								<td>
 									<c:if test="${fn:length(vo.title) < 20 }">${vo.title }</c:if> 
@@ -38,7 +38,7 @@
 						</c:if>
 					</c:forEach>
 				</table>
-			</c:if>
+			<%-- </c:if> --%>
 			<c:if test="${ok == 0 }">업데이트가 필요한 곡이 없습니다.</c:if>
 		</div>
 	</div>

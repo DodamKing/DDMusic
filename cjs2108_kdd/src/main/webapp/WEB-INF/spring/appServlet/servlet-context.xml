@@ -3,9 +3,14 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
+	
+	xmlns:task="http://www.springframework.org/schema/task"
+	
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+		
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
@@ -24,6 +29,7 @@
 	
 	<context:component-scan base-package="com.spring.cjs2108_kdd" />
 	<context:component-scan base-package="com.spring.cjs2108_kdd.controller" />
+	<context:component-scan base-package="com.spring.cjs2108_kdd.method" />
 	
 	<beans:bean id="bCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 	
@@ -49,6 +55,10 @@
 		<beans:property name="maxUploadSize" value="10485760"/>	<!-- 최대 10MByte설정 -->
 		<beans:property name="defaultEncoding" value="utf-8"/>
 	</beans:bean>
+	
+	<!-- 크론탭 -->
+	<task:scheduler id="jobScheduler" pool-size="10" />
+    <task:annotation-driven scheduler="jobScheduler" />
 	
 	
 </beans:beans>

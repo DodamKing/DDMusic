@@ -171,6 +171,9 @@
 			// 현재 재생 음악 포커스
 			focus_cur()
 			
+			//볼륨
+			player.volume = my_vol;
+			
 			// 재생 수 증가
 			playCntUp(idx_list[playerIndex]);
 			
@@ -241,8 +244,10 @@
 		});
 	
 		//볼륨
+		let my_vol = player.volume;
 		$("#volume_bar").on("input", () => {
 			player.volume = $("#volume_bar").val() / 100;
+			my_vol = player.volume; 
 		});
 	
 		// 음소거
@@ -250,6 +255,7 @@
 		$("#mute_btn1").click(() => {
 			temp_vol = player.volume;
 			player.volume = 0;
+			my_vol = player.volume;
 			volume_bar.value = 0;
 			
 		    $("#mute_btn1").hide();

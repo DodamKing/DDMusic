@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.cjs2108_kdd.method.Method;
 import com.spring.cjs2108_kdd.service.SongService;
+import com.spring.cjs2108_kdd.vo.ChartVO;
 import com.spring.cjs2108_kdd.vo.SongVO;
 import com.spring.cjs2108_kdd.vo.UserVO;
 
@@ -60,8 +61,10 @@ public class SongController {
 			
 			for (int i=0; i<idx_list.length; i++) {
 				SongVO vo = songService.getSongInfor(Integer.parseInt(idx_list[i]));
-				if (vo.getIsFile() == 1) {
-					vos.add(vo);
+				if (vo != null) {
+					if (vo.getIsFile() == 1) {
+						vos.add(vo);
+					}
 				}
 			}
 			model.addAttribute("play", play);
@@ -146,5 +149,5 @@ public class SongController {
 	public SongVO getaddsongPost(int idx) {
 		return songService.getSongInfor(idx);
 	}
-	
+
 }

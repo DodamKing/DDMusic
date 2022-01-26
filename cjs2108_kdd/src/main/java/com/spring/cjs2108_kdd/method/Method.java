@@ -106,10 +106,12 @@ public class Method {
 		List<ChartVO> vos = new ArrayList<ChartVO>();
 		
 		for (int i=0; i<100; i++) {
-			ChartVO vo = new ChartVO();
 			imgList.add(imgs.get(i).select("a>img").get(0).attr("src"));
 			titleList.add(titles.get(i).text());
-			artistList.add(artists.get(i).text());
+			
+			if (artists.get(i).select(".artistTitle").text().equals("")) artistList.add(artists.get(i).text());
+			else artistList.add(artists.get(i).select(".artistTitle").text());
+			
 			rankList.add(ranks.get(i).text());
 		}
 		

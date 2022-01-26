@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.google.gson.Gson;
 import com.spring.cjs2108_kdd.dao.SongDAO;
 import com.spring.cjs2108_kdd.method.Method;
+import com.spring.cjs2108_kdd.vo.ChartVO;
 import com.spring.cjs2108_kdd.vo.PlayVO;
 import com.spring.cjs2108_kdd.vo.SongVO;
 import com.spring.cjs2108_kdd.vo.UserVO;
@@ -127,6 +129,8 @@ public class SongServiceImpl implements SongService {
 	@Override
 	public void addSongDB(String img, String title, String artist) {
 		songDAO.addSongDB(img, title, artist);
+		int songIdx = songDAO.getSongIdx(title, artist);
+		songDAO.setChartSongIdx(songIdx, title, artist);
 	}
 
 	@Override
@@ -200,6 +204,21 @@ public class SongServiceImpl implements SongService {
 	@Override
 	public ArrayList<SongVO> getMyRank(int idx) {
 		return songDAO.getMyRank(idx);
+	}
+
+	@Override
+	public void setChartUpdate(List<ChartVO> vos) {
+		songDAO.setChartUpdate(vos);
+	}
+
+	@Override
+	public ArrayList<ChartVO> getChartVOS(String date) {
+		return songDAO.getChartVOS(date);
+	}
+
+	@Override
+	public String getMinDate() {
+		return songDAO.getMinDate();
 	}
 
 }

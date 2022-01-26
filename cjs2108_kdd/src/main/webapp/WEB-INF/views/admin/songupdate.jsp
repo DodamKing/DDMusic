@@ -24,6 +24,15 @@
 				    <li class="page-item"><a class="page-link bg-dark text-warning" href="${ctp }/admin/main?sw=2&pageNo=<c:if test="${pageNo + 1 > lastPageNo }">${pageNo }</c:if><c:if test="${pageNo + 1 <= lastPageNo }">${pageNo + 1}</c:if>">Next</a></li>
 				    <li class="page-item"><a class="page-link bg-dark text-warning" href="${ctp }/admin/main?sw=2&pageNo=${lastPageNo }">Last</a></li>
 	 	 		</ul>
+				<form id="srchform" action="${ctp }/admin/srch">
+					<div class="input-group mb-3 mr-5">
+						<input id="srch" name="srch" type="text" class="form-control" placeholder="검색">
+				  		<div class="input-group-append">
+					    	<button id="srch_btn" class="btn btn-dark" type="button">검색</button>
+				  		</div>
+			  		</div>
+			  		<input type="hidden" name="sw" value="${sw }">
+		  		</form>
 			</div>
 		</c:if>
 	    <div class="sticky2">
@@ -31,16 +40,6 @@
 	    	<input class="btn btn-warning" type="button" value="변경사항 적용" onclick="commit()">
     	</div>
 		<div class="mt-3">
-			<form id="srchform" action="${ctp }/admin/srch">
-				<div class="input-group mb-3 mr-5">
-					<div style="width: 50%"></div>
-					<input id="srch" name="srch" type="text" class="form-control" placeholder="검색">
-			  		<div class="input-group-append">
-				    	<button id="srch_btn" class="btn btn-dark" type="button">검색</button>
-			  		</div>
-		  		</div>
-		  		<input type="hidden" name="sw" value="${sw }">
-	  		</form>
 			<form method="post" name="myform">
 			<div>수정 하려는 항목을 더블 클릭 하세요!</div>
 				<table class="table table-bordered" style="width: 2000px;">
