@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.spring.cjs2108_kdd.vo.ChartVO;
+import com.spring.cjs2108_kdd.vo.PlayListVO;
 import com.spring.cjs2108_kdd.vo.SongVO;
 
 public interface SongDAO {
@@ -69,5 +70,8 @@ public interface SongDAO {
 	public String getMinDate();
 
 	public void setChartSongIdx(@Param("songIdx") int songIdx, @Param("title") String title, @Param("artist") String artist);
+
+	public void setIsFileChart(@Param("title") String title, @Param("artist") String artist);
+
 
 }

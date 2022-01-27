@@ -40,18 +40,14 @@
 	        <ul>
 	            <li><a href="${ctp }/today">투데이</a></li>
                 <li><a href="${ctp }/chart">차트</a></li>
-                <li><a href="${ctp }/temp">최신앨범</a></li>
                 <li><a href="${ctp }/temp">DJ 스테이션</a></li>
-                <li><a href="${ctp }/temp">MAG</a></li>
                 <li><a href="${ctp }/rank">이달의 노래</a></li>
             </ul>
             <c:if test="${sVO != null }">
 	            <ul>
 	                <div>보관함</div>
 	                <li><a href="${ctp }/temp">믹스테잎</a></li>
-	                <li><a href="${ctp }/temp">노래</a></li>
 	                <li><a href="${ctp }/temp">아티스트</a></li>
-	                <li><a href="${ctp }/temp">앨범</a></li>
 	                <li><a href="${ctp }/user/playlist">플레이리스트</a></li>
 	                <li><a href="${ctp }/temp">받은노래</a></li>
 	                <li><a href="${ctp }/temp">구매한 MP3</a></li>

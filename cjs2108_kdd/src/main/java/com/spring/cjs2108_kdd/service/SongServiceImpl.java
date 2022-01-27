@@ -23,9 +23,8 @@ import com.google.gson.Gson;
 import com.spring.cjs2108_kdd.dao.SongDAO;
 import com.spring.cjs2108_kdd.method.Method;
 import com.spring.cjs2108_kdd.vo.ChartVO;
-import com.spring.cjs2108_kdd.vo.PlayVO;
+import com.spring.cjs2108_kdd.vo.PlayListVO;
 import com.spring.cjs2108_kdd.vo.SongVO;
-import com.spring.cjs2108_kdd.vo.UserVO;
 
 @Service
 public class SongServiceImpl implements SongService {
@@ -173,6 +172,7 @@ public class SongServiceImpl implements SongService {
 	@Override
 	public void setIsfile(int idx) {
 		songDAO.setIsfile(idx);
+		songDAO.setIsFileChart(songDAO.getSongInfor(idx).getTitle(), songDAO.getSongInfor(idx).getArtist());
 	}
 
 	@Override

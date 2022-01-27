@@ -28,6 +28,8 @@
 			<audio id="player" src="" controls="controls"></audio>
 			<form id="srchform" action="${ctp }/admin/srch">
 				<div class="input-group mb-3 mr-5">
+					<c:if test="${empty flag }"><div class="btn btn-outline-warning" title="파일 없는 곡 보기" onclick="location.href='${ctp}/admin/srch?sw=${sw}&pageNo=${pageNo}&noFile=1'">No File</div></c:if>
+					<c:if test="${!empty flag }"><div class="btn btn-outline-warning" onclick="location.href='${ctp}/admin/main?sw=${sw }&pageNo=${pageNo }'">돌아가기</div></c:if>
 					<div style="width: 50%"></div>
 					<input id="srch" name="srch" type="text" class="form-control" placeholder="검색">
 			  		<div class="input-group-append">
@@ -35,6 +37,7 @@
 			  		</div>
 		  		</div>
 		  		<input type="hidden" name="sw" value="${sw }">
+		  		<input type="hidden" name="pageNo" value="${pageNo }">
 	  		</form>
 			<table class="table text-center">
 				<tr>
@@ -66,7 +69,7 @@
 					</tr>
 				</c:forEach>
 			</table>
-			<button class="btn btn-warning pull-right" type="button" onclick="javascript:location.href='${ctp}/admin/isFileUpdate?sw=${sw}&pageNo=${pageNo}'">업데이트</button>
+			<button class="btn btn-warning pull-right" type="button" title="파일 존재 유무를 업데이트 합니다" onclick="javascript:location.href='${ctp}/admin/isFileUpdate?sw=${sw}&pageNo=${pageNo}'">업데이트</button>
 		</div>
 	</div>
 </body>

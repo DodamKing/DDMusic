@@ -37,6 +37,7 @@
                 <div class="text-center h4">
                 	${fn:replace(fn:split(vos[0].date, " ")[0], "-", ".") }
             	</div>
+            	<c:if test="${empty vos }">아직 차트가 업데이트 되지 않았습니다 당일 업데이트는 오전 10시에 됩니다.</c:if>
                 <table class="table">
                 	<tr>
                 		<td style="border-top: none;"><input id="allch" type="checkbox" ></td>
@@ -48,7 +49,7 @@
 	                    	<td><input name="tch" type="checkbox" value="${vo.songIdx }" <c:if test="${vo.isFile == 0 }">disabled</c:if>></td>
 	                        <%-- <td style="text-align: center; vertical-align: middle;">${st.index + 1}</td> --%>
 	                        <td style="text-align: center; vertical-align: middle;">${vo.rank}</td>
-	                        <td><div class="imgBox"><a href="${fn:replace(vo.img, 50, 800) }" target="_blank"><img name="top100Img" src="${vo.img }" alt=""></a></div></td>
+	                        <td><div class="imgBox ho" onclick="addf(${vo.songIdx}, ${vo.isFile })"><img name="top100Img" src="${vo.img }"></div></td>
 	                        <td class="align-middle">
 	                            <div name="top100Title"><a href="${ctp }/infor?idx=${vo.songIdx }">${vo.title }</a></div>
 	                            <div name="top100Artist">${vo.artist }</div>

@@ -30,6 +30,7 @@
 		let artist_list = [];
 		
 		let songUrl;
+		let my_vol = player.volume;
 		let playerIndex = 0;
 		let playerIndex_ = 0;
 		let sw = 0;
@@ -54,6 +55,7 @@
 		    artist_list.push("${vo.artist}");
 		</c:if>
 		
+		// 바로 재생
 		<c:if test="${play == 1}">
 			if (sw == 0) {
 				load();
@@ -244,7 +246,6 @@
 		});
 	
 		//볼륨
-		let my_vol = player.volume;
 		$("#volume_bar").on("input", () => {
 			player.volume = $("#volume_bar").val() / 100;
 			my_vol = player.volume; 

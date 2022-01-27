@@ -16,17 +16,6 @@
 		<jsp:include page="/WEB-INF/views/main/today.jsp" />
 	</c:if>
 	<c:if test="${flag == 'chart'}">
-		<!-- <div class="loader"></div>
-		<script>
-			$.ajax({
-				type : "post",
-				url : "${ctp}/song/getchart",
-				success : () => {
-			        $('.loader').fadeOut();
-			         mainBody.innerHTML = "${chart}";
-				}
-			});
-		</script> -->
 		<jsp:include page="/WEB-INF/views/main/chart.jsp" />
 	</c:if>
 	<c:if test="${flag == 'srch'}">
@@ -63,7 +52,7 @@
         $('.loader').fadeOut();
 	 });
 		
-	function addf(idx, isFile) {
+	function addf(idx, isFile, autoplay) {
 		<c:if test="${!empty player}">
 			<% 
 			   	boolean player = (boolean) session.getAttribute("player");
@@ -208,6 +197,8 @@
 			type : "post",
 			url : "${ctp}/song/open"
 		});
+		
+		
 	}
 	
 </script>

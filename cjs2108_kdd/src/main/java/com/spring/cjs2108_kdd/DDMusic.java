@@ -3,7 +3,10 @@ package com.spring.cjs2108_kdd;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.parser.ParseException;
@@ -16,20 +19,38 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.spring.cjs2108_kdd.method.Method;
 import com.spring.cjs2108_kdd.service.ReviewService;
 import com.spring.cjs2108_kdd.service.SongService;
+import com.spring.cjs2108_kdd.service.UserService;
 import com.spring.cjs2108_kdd.vo.ChartVO;
+import com.spring.cjs2108_kdd.vo.PlayListVO;
 import com.spring.cjs2108_kdd.vo.SongVO;
 import com.spring.cjs2108_kdd.vo.UserVO;
 
 @Controller
 public class DDMusic {
-	@Autowired
-	SongService songService;
+	@Autowired SongService songService;
 	
-	@Autowired
-	ReviewService reviewService;
+	@Autowired ReviewService reviewService;
+
+	@Autowired UserService userService;
 	
 	@RequestMapping("/")
-	public String mainPage(Model model) {
+	public String mainPage(Model model, HttpServletRequest request, HttpSession session) {
+		Cookie[] cookies = request.getCookies();
+		
+		if (cookies != null) {
+			for (int i=0; i<cookies.length; i++) {
+				String str = cookies[i].getName();
+				if (str.equals("cIdx")) {
+					UserVO vo = userService.getUserVO(Integer.parseInt(cookies[i].getValue()));
+					if (vo != null) {
+						session.setAttribute("sMid", vo.getUserId());
+						session.setAttribute("sVO", vo);
+						return "redirect:/today";
+					}
+				}
+			}
+		}
+		
 		model.addAttribute("flag", "intro");
 		return "main/main";
 	}
@@ -44,7 +65,7 @@ public class DDMusic {
 //	}
 	
 	@RequestMapping("/{flag}")
-	public String mainGet(Model model, HttpSession session , @PathVariable String flag, String srchKwd, String idx, String date) throws FileNotFoundException, IOException, ParseException {
+	public String mainGet(Model model, HttpSession session , HttpServletRequest request, @PathVariable String flag, String srchKwd, String idx, String date) throws FileNotFoundException, IOException, ParseException {
 		if (flag.equals("index")) {
 			model.addAttribute("flag", "today");
 			return "main/main";
@@ -96,6 +117,17 @@ public class DDMusic {
 					model.addAttribute("vos", vos);
 				}
 			}
+		}
+		
+		else if (flag.equals("artist")) {
+			UserVO vo = (UserVO) session.getAttribute("sVO");
+			if (vo != null) {
+				
+			}
+		}
+
+		else if (flag.equals("mix")) {
+			
 		}
 
 		model.addAttribute("flag", flag);

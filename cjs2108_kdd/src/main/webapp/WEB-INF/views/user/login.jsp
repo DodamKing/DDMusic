@@ -13,6 +13,12 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="${ctp }/resources/css/login.css">
     <link rel="stylesheet" href="${ctp }/resources/css/loader.css">
+    <style>
+    	.ho {
+    		cursor: pointer;
+    		opacity: 0.7;
+    	}
+    </style>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/include/title.jsp" />
@@ -34,7 +40,7 @@
                                 placeholder="비밀번호" required>
                         </div>
                         <div class="form-group">
-                            <input class="check-control" type="checkbox" id="loginCheck"> <span class="login-status">로그인
+                            <input class="check-control" type="checkbox" id="loginCheck" name="loginCheck" onchange="info()"> <span class="login-status ho" onclick="loginCheck.click()">로그인
                                 상태 유지</span>
                         </div>
                         <div id="demo" class="demo-box"></div>
@@ -61,5 +67,16 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	
+	<script>
+		$("#loginCheck").click(() => {
+			if ($("#loginCheck").prop("checked")) {
+				if(confirm("다음 로그인 부터 로그인 상태를 유지하시겠습니까?\n단, 사용자에 브라우저에서 쿠키사용을 허용해야만 정상 작동 합니다.\n정상 로그아웃을 하면 로그인 상태 유지가 해지 됩니다.")) {
+					$("#loginCheck").prop("checked", true);
+					return;
+				}
+				$("#loginCheck").prop("checked", false);
+			}
+		});
+	</script>
 </body>
 </html>

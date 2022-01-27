@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <c:set var="ctp" value="<%=request.getContextPath() %>" />
 <!DOCTYPE html>
-<div class="loader" style="display: none;"></div>
 <div class="modal" id="myModal1">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -48,6 +47,7 @@
 				<button type="button" class="close" data-dismiss="modal" onclick="vClear()">&times;</button>
 			</div>
 			<div class="modal-body">
+				<div class="loader" style="display: none;"></div>
 				<div class="input-group">
 					<div class="input-group-prepend mb-3">
 						<span class="input-group-text"> 아&nbsp;&nbsp;&nbsp;&nbsp;이&nbsp;&nbsp;&nbsp;&nbsp;디</span>
@@ -101,6 +101,7 @@
 	
 	function findUserPwd() {
 		$('.loader').fadeIn();
+		demo21.innerHTML = "이메일을 전송중입니다. 잠시만 기다려 주세요.";
 		let data = {
 				userId : userId2.value,
 				/* phoneNb : phoneNb2.value, */

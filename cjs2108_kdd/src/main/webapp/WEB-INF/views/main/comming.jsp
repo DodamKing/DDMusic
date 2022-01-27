@@ -23,8 +23,9 @@
 		<div class="container">
 			<div class="card-body" style="padding-bottom: 300px;">
 				<h2 class="mt-5 mb-5">커밍쑨 DDMusic</h2>
+				<p class="h4">이제 더 많은 음악을 감상하실수 있습니다. 아래에서 업데이트 된 곡 들을 확인하세요!</p>
 				<c:forEach var="vo" items="${vos }" varStatus="st">
-					<div>
+					<div class="text-warning">
 						<c:if test="${date != fn:split(vo.date, ' ')[0]}"><br><p style="font-size: 28px;">${fn:replace(fn:split(vo.date, " ")[0], "-", ".") } 업데이트 <i onclick="more_i('${fn:split(vo.date, ' ')[0]}')" class="fas fa-caret-down ho"></i></p></c:if>
 						<p <c:if test="${date != fn:split(vo.date, ' ')[0]}">name="more_box${fn:split(vo.date, ' ')[0] }"</c:if>
 						<c:set var="Nm" value="more_box${fn:split(vo.date, ' ')[0] }" />
@@ -34,7 +35,7 @@
 					<c:set var="date" value="${fn:split(vo.date, ' ')[0] }" />
 				</c:forEach>
 				<div class="mt-5">
-					<p style="font-size: 28px;">2022.01.14 업데이트 <i onclick="$('#0114').toggle();" class="fas fa-caret-down ho"></i></p>
+					<p class="text-warning" style="font-size: 28px;">2022.01.14 업데이트 <i onclick="$('#0114').toggle();" class="fas fa-caret-down ho"></i></p>
 					<div id="0114" style="display: none;">
 						<p style="color: #bbb;">뿌리 (Feat. JUSTHIS) (Prod. GroovyRoom) - 쿤디판다(Khundi Panda) </p>
 						<p style="color: #bbb;">개똥벌레 - 신형원</p>

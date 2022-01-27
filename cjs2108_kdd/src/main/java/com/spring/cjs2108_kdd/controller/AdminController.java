@@ -36,8 +36,7 @@ public class AdminController {
 			@RequestParam(value = "pageNo", defaultValue = "1") int pageNo) 
 					throws IOException, ParseException {
 		if (sw == 0) {
-//			model.addAttribute("vos", songService.getChartJson());
-			model.addAttribute("vos", songService.getChartVOS(null));
+			model.addAttribute("vos", songService.getChartVOS("all"));
 		}
 		
 		else if (sw == 1) {
@@ -142,10 +141,17 @@ public class AdminController {
 	}
 
 	@RequestMapping("/srch")
-	public String srchGet(Model model, String srch, int sw) {
-		model.addAttribute("vos", songService.getSongSrch(srch));
-		model.addAttribute("sw", sw);
+	public String srchGet(Model model, String srch, int sw, int pageNo, String noFile) {
+		if (noFile != null && noFile.equals("1")) {
+			model.addAttribute("vos", songService.getSongSrch(null));
+		}
+
+		else {
+			model.addAttribute("vos", songService.getSongSrch(srch));
+		}
 		model.addAttribute("flag", "srch");
+		model.addAttribute("sw", sw);
+		model.addAttribute("pageNo", pageNo);
 		return "admin/main";
 	}
 	

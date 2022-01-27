@@ -9,6 +9,7 @@ import org.json.simple.parser.ParseException;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.cjs2108_kdd.vo.ChartVO;
+import com.spring.cjs2108_kdd.vo.PlayListVO;
 import com.spring.cjs2108_kdd.vo.SongVO;
 
 public interface SongService {

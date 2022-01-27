@@ -22,7 +22,12 @@
 	</select>
 	
 	<select id="getSongSrch" resultType="com.spring.cjs2108_kdd.vo.SongVO">
-		select * from song where title like '%${srchKwd}%' or artist like '%${srchKwd}%';
+		<if test="srchKwd != null">
+			select * from song where title like '%${srchKwd}%' or artist like '%${srchKwd}%';
+		</if>
+		<if test="srchKwd == null">
+			select * from song where isFile = 0 and idx != 0;
+		</if>
 	</select>
 	
 	<update id="upLikeCnt">
@@ -81,6 +86,10 @@
 		update song set isFile = 1 where idx = ${idx};
 	</update>
 
+	<update id="setIsFileChart">
+		update chart set isFile = 1 where title = ${title} and artist = #{artist};
+	</update>
+
 	<update id="isFileUpdate">
 		<if test="sw == 0">
 			update song set isFile = 0 where idx = ${idx};
@@ -99,7 +108,6 @@
 	</insert>
 	
 	<select id="getUpdateSong" resultType="com.spring.cjs2108_kdd.vo.SongVO">
-		<!-- select * from song s left join song_update u on s.idx = u.songIdx where date_format(date, "%Y-%m-%d") = curdate(); -->
 		select * from song_update u left join song s on s.idx = u.songIdx order by date desc;
 	</select>
 	
@@ -113,8 +121,11 @@
 		<if test="date == null">
 			select * from chart where date = (select max(date) from chart) order by rank;
 		</if>
-		<if test="date != null">
-			select * from chart where date(date) = #{date} order by rank;
+		<if test="date != null and date != 'all'">
+			select * from chart where date(date) = #{date} order by date desc, rank limit 100;
+		</if>
+		<if test="date != null and date == 'all'">
+			select * from chart group by title, artist;
 		</if>
 	</select>
 	
@@ -125,5 +136,10 @@
 	<update id="setChartSongIdx">
 		update chart set songIdx = #{songIdx} where title = #{title} and artist = #{artist};
 	</update>
+	
+	<!-- 가장 많이 들은 5곡 정보 -->
+	<!-- <select id="getDDVOS" resultType="com.spring.cjs2108_kdd.vo.PlayListVO">
+		select *, from play p left join song s on p.songIdx = s.idx where isFile = 1 group by p.songIdx order by sum(playCnt) desc limit 5;
+	</select> -->
 	
 </mapper>

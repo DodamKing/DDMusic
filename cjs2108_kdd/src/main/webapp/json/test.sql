@@ -1,0 +1,1 @@
+select *, sum(playCnt) from play p left join song s on p.songIdx = s.idx where isFile = 1 group by p.songIdx order by sum(playCnt) desc limit 5;

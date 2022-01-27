@@ -6,7 +6,9 @@ import java.util.ArrayList;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +55,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value="/login", method = RequestMethod.POST)
-	public String loginPost(HttpSession session, String userId, String pwd, String flag) {
+	public String loginPost(HttpSession session, HttpServletResponse response, String userId, String pwd, String flag, String loginCheck) {
 		Integer idx = userService.getIdx(userId);
 		session.setAttribute("sMid_", userId);
 		UserVO vo = userService.getUserVO(idx);
@@ -70,6 +72,13 @@ public class UserController {
 			userService.setVisitDate(vo.getIdx());
 			session.setAttribute("sMid", vo.getUserId());
 			session.setAttribute("sVO", vo);
+			
+			if (loginCheck != null && loginCheck.equals("on")) {
+				Cookie cookie = new Cookie("cIdx", Integer.toString(idx));
+				cookie.setPath("/");
+				cookie.setMaxAge(60*60*24*7);
+				response.addCookie(cookie);
+;			}
 				
 			if (flag != null) {
 				if (flag.equals("write")) return "redirect:/review/write";
@@ -103,8 +112,14 @@ public class UserController {
 	}
 
 	@RequestMapping("/logout")
-	public String logoutGet(HttpSession session) {
+	public String logoutGet(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 		session.invalidate();
+		
+		Cookie cookie = new Cookie("cIdx", null);
+		cookie.setMaxAge(0);
+		cookie.setPath("/");
+		response.addCookie(cookie);
+		
 		return "redirect:/today";
 	}
 
