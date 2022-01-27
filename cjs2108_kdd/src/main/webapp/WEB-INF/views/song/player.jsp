@@ -104,37 +104,35 @@
 		    	}
 		    	
 		    	else if (index == 0) {
-		    		if (playerIndex == 0) {
+		    		playerIndex--;
+		    		if (playerIndex == -1) {
+			    		playerIndex = 0;
 			    		load();
 			    		player.play();
 		    		}
 		    	}
 		    	
-		    	/* else if (index == playerIndex) {
-		    		$("#next_btn").click();
-		    	} */
 		    	else if (index < playerIndex) {
 					playerIndex--;
 					if (playerIndex < 0) playerIndex = 0;
 				}
 		    	
-		    	else if (index == playerIndex) {
-		    		
+		    	else if (index == playerIndex && playerIndex != idx_list.length) {
+		    		load();
+		    		player.play();
 		    	}
 		    	
 		    	else if (playerIndex == idx_list.length) {
+				    setList();
 		    		$(play_btn).show();
 				    $(pause_btn).hide();
 				    player.currentTime = player.duration;
+				    playerIndex_ = 0;
+				    return;
 		    	}
 		    	
 		    }
 		    
-	    	/* if (index <= playerIndex) {
-				playerIndex--;
-				if (playerIndex < 0) playerIndex = 0;
-			} */
-	    	
 	    	setList();
 		    if (!player.paused) focus_cur();
 		    
@@ -161,6 +159,7 @@
 			$(play_btn).hide();
 		    $(pause_btn).show();
 			player.play();
+			sw = 1;
 		}
 	
 		// 플레이 리스트에 데이터 뿌리기
@@ -540,7 +539,7 @@
 				focu_.style.backgroundColor = "";
 				focu_.style.opacity = "1";
 				focu_.style.borderRadius = "0";
-				playerIndex_ = playerIndex;		
+				playerIndex_ = playerIndex;
 			}
 		}
 		

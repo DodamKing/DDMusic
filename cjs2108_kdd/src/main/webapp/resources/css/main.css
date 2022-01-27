@@ -300,6 +300,10 @@ div#play_listImg > div {
     background: #222;
 }
 
+#play_bar:hover {
+	height: 12px;		
+}
+
 #play_bar::-webkit-slider-thumb{
     -webkit-appearance: none;
     width: 0px;
