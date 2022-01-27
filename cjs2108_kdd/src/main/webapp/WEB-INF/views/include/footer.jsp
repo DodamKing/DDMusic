@@ -49,7 +49,7 @@
 	            <button id="like_btn2" style="display: none;" class="btn" type="button"><i class="fa-solid fa-heart text-danger" style="color: #fff;"></i></button>
         	</c:if>
             <button id="lyrics_btn" class="btn" type="button" title="가사" data-toggle="modal" data-target="#myModal"><i class="fa-solid fa-music" style="color: #fff;"></i></button>
-            <button id="addmore_btn" class="btn" type="button" title="더보기"><i class="fa-solid fa-ellipsis" style="color: #fff;"></i></button>
+            <button id="addmore_btn" class="btn" type="button" title="더보기" data-toggle="modal" data-target="#moreShowModal"><i class="fa-solid fa-ellipsis" style="color: #fff;"></i></button>
         </div>
         <div class="col pt-2">
             <div id="shuffle_btn" class="btn" title="재생 방법 변경" style="background: #222; opacity: 0.5;"><i

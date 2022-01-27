@@ -15,7 +15,7 @@
 	        <!-- Modal body -->
 	        <div class="modal-body">
 	        	<button type="button" class="btn btn-danger form-control" onclick="godata_many()">현재 재생 목록에 추가</button>
-	        	<button type="button" class="btn btn-danger form-control mt-3" onclick="getlist()">플레이리스트에 추가</button>
+	        	<button type="button" class="btn btn-danger form-control mt-3" onclick="getlist_many()">플레이리스트에 추가</button>
 	        	<div id="idx_box_many" style="display: none;"></div>
 	        	<div id="mylist_box_many" class="mt-5"></div>
 	        	<div id="message_box_many" style="display: none;" class="text-center">추가 되었습니다</div>
@@ -30,7 +30,7 @@
 </div>
 
 <script>
-	function getlist() {
+	function getlist_many() {
 		$.ajax({
 			type : "post",
 			url : "${ctp}/user/getlist",

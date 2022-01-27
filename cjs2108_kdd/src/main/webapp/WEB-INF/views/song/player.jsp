@@ -15,6 +15,7 @@
 <body>
 	<div style="width: 1000px;">
 		<jsp:include page="/WEB-INF/views/include/modal.jsp" />
+		<jsp:include page="/WEB-INF/views/include/more_show_modal.jsp" />
 		<jsp:include page="/WEB-INF/views/include/playList.jsp" />
 		<jsp:include page="/WEB-INF/views/include/footer.jsp" />
 	</div>
@@ -89,17 +90,53 @@
 		// 플레이 리스트 음원 삭제
 		function delList(idx) {
 			let index = idx_list.indexOf(idx);
-			if (index <= playerIndex) {
-				playerIndex--;
-				if (playerIndex < 0) playerIndex = 0;
-			}
 
 			idx_list.splice(index, 1);
 			thum_list.splice(index, 1);
 		    title_list.splice(index, 1);
 		    artist_list.splice(index, 1);
 		    
-		    setList();
+		    if (!player.paused) {
+		    	if (idx_list.length == 0) {
+		    		$(play_btn).show();
+				    $(pause_btn).hide();
+				    player.currentTime = player.duration;
+		    	}
+		    	
+		    	else if (index == 0) {
+		    		if (playerIndex == 0) {
+			    		load();
+			    		player.play();
+		    		}
+		    	}
+		    	
+		    	/* else if (index == playerIndex) {
+		    		$("#next_btn").click();
+		    	} */
+		    	else if (index < playerIndex) {
+					playerIndex--;
+					if (playerIndex < 0) playerIndex = 0;
+				}
+		    	
+		    	else if (index == playerIndex) {
+		    		
+		    	}
+		    	
+		    	else if (playerIndex == idx_list.length) {
+		    		$(play_btn).show();
+				    $(pause_btn).hide();
+				    player.currentTime = player.duration;
+		    	}
+		    	
+		    }
+		    
+	    	/* if (index <= playerIndex) {
+				playerIndex--;
+				if (playerIndex < 0) playerIndex = 0;
+			} */
+	    	
+	    	setList();
+		    if (!player.paused) focus_cur();
 		    
 		    //플레이리스트에서도 삭제
 		   /*  if ("${listIdx}" != "") {
@@ -364,6 +401,8 @@
 				if (repeat == 1) {
 					load();
 					player.play();
+					$(play_btn).hide();
+				    $(pause_btn).show();
 				}
 				
 				return;
@@ -487,6 +526,8 @@
 		
 		// 현재 음악 포커스
 		function focus_cur() {
+			if (idx_list.length == 0) return;
+			
 			let focu = document.getElementById("p_" + idx_list[playerIndex]);
 			
 			focu.scrollIntoView();
@@ -505,7 +546,7 @@
 		
 		// 더보기 버튼 클릭
 		addmore_btn.addEventListener("click", () => {
-			alert("어떻게 해야 하죠?ㅜㅜ");
+			
 		});
 		
 		// 창 닫기 이벤트

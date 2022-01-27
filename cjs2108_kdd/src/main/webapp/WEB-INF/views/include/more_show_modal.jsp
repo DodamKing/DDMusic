@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <c:set var="ctp" value="<%=request.getContextPath() %>" />
 <!DOCTYPE html>
-<div class="modal fade" id="addlist">
+<div class="modal fade" id="moreShowModal">
 	<div class="modal-dialog">
 		<div class="modal-content" style="background: black;">
 			<!-- Modal Header -->
@@ -14,7 +14,7 @@
 	        
 	        <!-- Modal body -->
 	        <div class="modal-body">
-	        	<button type="button" class="btn btn-danger form-control" onclick="godata()" data-dismiss="modal">현재 재생 목록에 추가</button>
+	        	<button type="button" class="btn btn-danger form-control" onclick="delList(idx_list[playerIndex])" data-dismiss="modal">현재 재생 목록에서 제거</button>
 	        	<button type="button" class="btn btn-danger form-control mt-3" onclick="getlist()">플레이리스트에 추가</button>
 	        	<div id="idx_box" style="display: none;"></div>
 	        	<div id="isFile_box" style="display: none;"></div>
@@ -67,8 +67,7 @@
 					}
 				});
 				mylist_box.innerHTML = res;
-				
-			} 
+			}
 		});
 	}
 	
