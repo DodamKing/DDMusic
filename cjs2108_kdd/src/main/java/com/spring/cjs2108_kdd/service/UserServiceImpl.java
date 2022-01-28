@@ -3,9 +3,7 @@ package com.spring.cjs2108_kdd.service;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +18,8 @@ import com.spring.cjs2108_kdd.dao.SongDAO;
 import com.spring.cjs2108_kdd.dao.UserDAO;
 import com.spring.cjs2108_kdd.method.Method;
 import com.spring.cjs2108_kdd.vo.PlayListVO;
+import com.spring.cjs2108_kdd.vo.PlayVO;
+import com.spring.cjs2108_kdd.vo.SongVO;
 import com.spring.cjs2108_kdd.vo.UserVO;
 
 @Service
@@ -223,6 +223,39 @@ public class UserServiceImpl implements UserService {
 			}
 		}
 		userDAO.setUpdateMyList(idx, content);
+	}
+
+	@Override
+	public ArrayList<PlayVO> getUserBestSongIdx(int userIdx) {
+		return userDAO.getUserBestSongIdx(userIdx);
+	}
+
+	@Override
+	public void setArtistTape(int userIdx, String artist) {
+		userDAO.setArtistTape(userIdx, artist);
+	}
+
+	@Override
+	public List<SongVO> getArtistTape(int idx) {
+		List<SongVO> vos = new ArrayList<SongVO>(); 
+		String artists = userDAO.getArtistTape(idx);
+		String[] artistArr = artists.split("/");
+		
+		Method method = new Method();
+		int cnt = 0;
+		// 여기서 갯수 설정 해야 할 듯
+		for (String artist : artistArr) {
+			SongVO vo = new SongVO();
+			vo.setArtist(artist);
+			String img_ = songDAO.getThumnail(artist);
+			if (img_ != null) vo.setImg(method.getImgSize(img_, "200"));
+			vos.add(vo);
+			cnt++;
+			if (cnt > 6) break;
+		}
+			
+		
+		return vos;
 	}
 
 }

@@ -33,6 +33,7 @@
 
 <script>
 	function getlist() {
+		if ("${sVO}" == "") return;
 		$.ajax({
 			type : "post",
 			url : "${ctp}/user/getlist",

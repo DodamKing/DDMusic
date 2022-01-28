@@ -5,6 +5,7 @@
 <c:set var="ctp" value="<%=request.getContextPath() %>" />
 <link rel="stylesheet" href="${ctp }/resources/css/loader.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="shortcut icon" href="https://i1.sndcdn.com/avatars-000606604806-j6ghpm-t500x500.jpg" />
 
 <jsp:include page="/WEB-INF/views/include/addlist.jsp" />
 <jsp:include page="/WEB-INF/views/include/addlist_many.jsp" />
@@ -38,6 +39,9 @@
 	</c:if>
 	<c:if test="${flag == 'myranking'}">
 		<jsp:include page="/WEB-INF/views/main/myranking.jsp" />
+	</c:if>
+	<c:if test="${flag == 'artisttape'}">
+		<jsp:include page="/WEB-INF/views/user/artisttape.jsp" />
 	</c:if>
 	<c:if test="${flag == 'temp'}">
 		<jsp:include page="/WEB-INF/views/main/temp.jsp" />

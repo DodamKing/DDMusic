@@ -45,13 +45,12 @@ public class DDMusic {
 					if (vo != null) {
 						session.setAttribute("sMid", vo.getUserId());
 						session.setAttribute("sVO", vo);
-						return "redirect:/today";
 					}
 				}
 			}
 		}
 		
-		model.addAttribute("flag", "intro");
+		model.addAttribute("flag", "today");
 		return "main/main";
 	}
 	
@@ -128,6 +127,15 @@ public class DDMusic {
 
 		else if (flag.equals("mix")) {
 			
+		}
+
+		else if (flag.equals("artisttape")) {
+			UserVO vo = (UserVO) session.getAttribute("sVO");
+			if (vo != null) {
+				List<SongVO> vos = userService.getArtistTape(vo.getIdx());
+				
+				model.addAttribute("vos", vos);
+			}
 		}
 
 		model.addAttribute("flag", flag);

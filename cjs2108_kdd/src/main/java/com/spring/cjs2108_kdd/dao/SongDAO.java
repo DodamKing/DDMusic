@@ -73,5 +73,9 @@ public interface SongDAO {
 
 	public void setIsFileChart(@Param("title") String title, @Param("artist") String artist);
 
+	public SongVO getSrchArtist(String artist);
+
+	public String getThumnail(String artist);
+
 
 }

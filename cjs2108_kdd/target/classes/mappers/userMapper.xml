@@ -81,5 +81,16 @@
 		update playlist set listNm = #{listNm}, comment = #{comment} where idx = #{idx};
 	</update>
 	
+	<select id="getUserBestSongIdx" resultType="com.spring.cjs2108_kdd.vo.PlayVO">
+		select * from play where userIdx = #{userIdx} order by playCnt desc;
+	</select>
+	
+	<insert id="setArtistTape">
+		insert into artistTape values (default, #{userIdx}, #{artist}, default);
+	</insert>
+	
+	<select id="getArtistTape" resultType="String">
+		select artist from artisttape where userIdx = #{idx} order by date desc limit 1;
+	</select>
 
 </mapper>

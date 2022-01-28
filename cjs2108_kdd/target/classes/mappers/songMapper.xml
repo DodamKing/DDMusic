@@ -83,19 +83,19 @@
 	</select>
 	
 	<update id="setIsfile">
-		update song set isFile = 1 where idx = ${idx};
+		update song set isFile = 1 where idx = #{idx};
 	</update>
 
 	<update id="setIsFileChart">
-		update chart set isFile = 1 where title = ${title} and artist = #{artist};
+		update chart set isFile = 1 where title = #{title} and artist = #{artist};
 	</update>
 
 	<update id="isFileUpdate">
 		<if test="sw == 0">
-			update song set isFile = 0 where idx = ${idx};
+			update song set isFile = 0 where idx = #{idx};
 		</if>
 		<if test="sw == 1">
-			update song set isFile = 1 where idx = ${idx};
+			update song set isFile = 1 where idx = #{idx};
 		</if>
 	</update>
 	
@@ -136,6 +136,14 @@
 	<update id="setChartSongIdx">
 		update chart set songIdx = #{songIdx} where title = #{title} and artist = #{artist};
 	</update>
+	
+	<select id="getSrchArtist" resultType="com.spring.cjs2108_kdd.vo.SongVO">
+		select * from song where artist like '%${artist}%';
+	</select>
+	
+	<select id="getThumnail" resultType="String">
+		select img from song where artist = #{artist} order by idx desc limit 1;
+	</select>
 	
 	<!-- 가장 많이 들은 5곡 정보 -->
 	<!-- <select id="getDDVOS" resultType="com.spring.cjs2108_kdd.vo.PlayListVO">

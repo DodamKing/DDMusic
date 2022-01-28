@@ -4,18 +4,20 @@
 <c:set var="ctp" value="<%=request.getContextPath() %>" />
 <!DOCTYPE html>
 <div class="modal fade" id="moreShowModal">
-	<div class="modal-dialog">
+	<div class="modal-dialog modal-sm modal-dialog-scrollable">
 		<div class="modal-content" style="background: black;">
 			<!-- Modal Header -->
 	        <div class="modal-header">
-	          <h4 class="modal-title">곡 추가</h4>
+	          <h4 class="modal-title">더보기</h4>
 	          <button type="button" class="close" data-dismiss="modal" onclick='mylist_box_re()'>&times;</button>
 	        </div>
 	        
 	        <!-- Modal body -->
 	        <div class="modal-body">
 	        	<button type="button" class="btn btn-danger form-control" onclick="delList(idx_list[playerIndex])" data-dismiss="modal">현재 재생 목록에서 제거</button>
-	        	<button type="button" class="btn btn-danger form-control mt-3" onclick="getlist()">플레이리스트에 추가</button>
+	        	<button type="button" class="btn btn-danger form-control mt-3" onclick="like_click()">좋아요</button>
+	        	<button type="button" class="btn btn-danger form-control mt-3" onclick="$('#lyrics_btn').click()" data-dismiss="modal">가사 보기</button>
+	        	<button type="button" class="btn btn-danger form-control mt-3" onclick="getlist2()">플레이리스트에 추가</button>
 	        	<div id="idx_box" style="display: none;"></div>
 	        	<div id="isFile_box" style="display: none;"></div>
 	        	<div id="mylist_box" class="mt-5"></div>
@@ -32,7 +34,7 @@
 </div>
 
 <script>
-	function getlist() {
+	function getlist2() {
 		$.ajax({
 			type : "post",
 			url : "${ctp}/user/getlist",
@@ -43,27 +45,16 @@
 					res += '<div style="width: 50px; height: 50px;" class="col-2">';
 					res += '<div class="row" style="margin-left: 0px;">';
 					if (e.thum1 == null) {
-						res += '<div><img width="50px" src="https://i1.sndcdn.com/avatars-000606604806-j6ghpm-t500x500.jpg"></div>';
-						res += '</div></div><div class="col">';
-						res += e.listNm;
-						res += '</div></div>';
-					}
-					else if (e.thum4 == null) {
-						res += '<div><img width="50px" src="' + e.thum1 + '"></div>';
+						res += '<div width="50px"><img width="100%" src="https://i1.sndcdn.com/avatars-000606604806-j6ghpm-t500x500.jpg"></div>';
 						res += '</div></div><div class="col">';
 						res += e.listNm;
 						res += '</div></div>';
 					}
 					else {
-						res += '<div><img width="25px" src="' + e.thum1 + '"></div>';
-						res += '<div><img width="25px" src="' + e.thum2 + '"></div>';
-						res += '</div>';
-						res += '<div class="row" style="margin-left: 0px;">';
-						res += '<div><img width="25px" src="' + e.thum3 + '"></div>';
-						res += '<div><img width="25px" src="' + e.thum4 + '"></div>';
+						res += '<div width="50px"><img width="100%" src="' + e.thum1 + '"></div>';
 						res += '</div></div><div class="col">';
 						res += e.listNm;
-						res += "</div></div></div>";
+						res += '</div></div>';
 					}
 				});
 				mylist_box.innerHTML = res;
@@ -72,9 +63,11 @@
 	}
 	
 	function action(idx) {
+		let songIdx = idx_box.innerHTML;
+		if (songIdx == "") songIdx = idx_list[playerIndex];
 		let data = {
 			idx : idx,
-			songIdx : idx_box.innerHTML
+			songIdx : songIdx
 		}
 		
 		$.ajax({
@@ -91,6 +84,11 @@
 				setTimeout(() => $("#message_box2").slideUp(), 1000);
 			}
 		});
+	}
+	
+	function like_click() {
+		if ($("#like_btn2").css("display") == "none") $("#like_btn1").click();
+		else if ($("#like_btn1").css("display") == "none") $("#like_btn2").click();
 	}
 	
 	function mylist_box_re() {

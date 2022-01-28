@@ -8,6 +8,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.spring.cjs2108_kdd.service.SongService;
+import com.spring.cjs2108_kdd.service.UserService;
 import com.spring.cjs2108_kdd.vo.ChartVO;
 
 @Component
@@ -28,4 +29,5 @@ public class Scheduler {
 		songService.setChartUpdate(vos);
 		System.out.println("차트 업데이트 : " + songService.getChartVOS(null).get(0).getDate());
 	}
+	
 }

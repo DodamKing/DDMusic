@@ -47,7 +47,7 @@
 	            <ul>
 	                <div>보관함</div>
 	                <li><a href="${ctp }/temp">믹스테잎</a></li>
-	                <li><a href="${ctp }/temp">아티스트</a></li>
+	                <li><a href="${ctp }/artisttape">아티스트</a></li>
 	                <li><a href="${ctp }/user/playlist">플레이리스트</a></li>
 	                <li><a href="${ctp }/temp">받은노래</a></li>
 	                <li><a href="${ctp }/temp">구매한 MP3</a></li>

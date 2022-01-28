@@ -285,6 +285,10 @@ div#play_listImg > div {
 	display: none;
 }
 
+#moreShowModal::-webkit-scrollbar {
+	display: none;
+}
+
 .table {
     color: inherit;
 }

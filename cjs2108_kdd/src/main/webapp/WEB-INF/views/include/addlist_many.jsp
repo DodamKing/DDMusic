@@ -14,7 +14,7 @@
 	        
 	        <!-- Modal body -->
 	        <div class="modal-body">
-	        	<button type="button" class="btn btn-danger form-control" onclick="godata_many()">현재 재생 목록에 추가</button>
+	        	<button type="button" class="btn btn-danger form-control" onclick="godata_many()" data-dismiss="modal">현재 재생 목록에 추가</button>
 	        	<button type="button" class="btn btn-danger form-control mt-3" onclick="getlist_many()">플레이리스트에 추가</button>
 	        	<div id="idx_box_many" style="display: none;"></div>
 	        	<div id="mylist_box_many" class="mt-5"></div>
@@ -31,6 +31,7 @@
 
 <script>
 	function getlist_many() {
+		if ("${sVO}" == "") return;
 		$.ajax({
 			type : "post",
 			url : "${ctp}/user/getlist",

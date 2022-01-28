@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="${ctp }/resources/css/main.css?v=2">
     <script src="${ctp}/resources/ckeditor/ckeditor.js"></script>
+	<link rel="shortcut icon" href="https://i1.sndcdn.com/avatars-000606604806-j6ghpm-t500x500.jpg" />
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/include/searchBar.jsp" />

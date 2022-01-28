@@ -40,13 +40,15 @@
 	            <button id="like_btn1" class="btn" type="button" title="좋아요"><i class="fa-regular fa-heart" style="color: #fff;"></i></button>
 	            <button id="like_btn2" style="display: none;" class="btn" type="button"><i class="fa-solid fa-heart text-danger" style="color: #fff;"></i></button>
         	</c:if>
-        	<c:if test="${(fn:contains(vo.likeList, sMid) && !empty sMid) || (fn:contains(vos[0].likeList, sMid) && !empty sMid)}">
-	            <button id="like_btn1" style="display: none;" class="btn" type="button" title="좋아요"><i class="fa-regular fa-heart" style="color: #fff;"></i></button>
-	            <button id="like_btn2" class="btn" type="button"><i class="fa-solid fa-heart text-danger" style="color: #fff;"></i></button>
-        	</c:if>
-        	<c:if test="${(!fn:contains(vo.likeList, sMid) && !empty sMid) || (!fn:contains(vos[0].likeList, sMid) && !empty sMid) }">
-	            <button id="like_btn1" class="btn" type="button" title="좋아요"><i class="fa-regular fa-heart" style="color: #fff;"></i></button>
+        	<c:if test="${!empty sMid }">
+        		<c:if test="${fn:contains(vo.likeList, sMid) || fn:contains(vos[0].likeList, sMid)}">
+        			<button id="like_btn1" style="display: none;" class="btn" type="button" title="좋아요"><i class="fa-regular fa-heart" style="color: #fff;"></i></button>
+	            	<button id="like_btn2" class="btn" type="button"><i class="fa-solid fa-heart text-danger" style="color: #fff;"></i></button>
+        		</c:if>
+        		<c:if test="${!(fn:contains(vo.likeList, sMid) || fn:contains(vos[0].likeList, sMid))}">
+        			<button id="like_btn1" class="btn" type="button" title="좋아요"><i class="fa-regular fa-heart" style="color: #fff;"></i></button>
 	            <button id="like_btn2" style="display: none;" class="btn" type="button"><i class="fa-solid fa-heart text-danger" style="color: #fff;"></i></button>
+        		</c:if>
         	</c:if>
             <button id="lyrics_btn" class="btn" type="button" title="가사" data-toggle="modal" data-target="#myModal"><i class="fa-solid fa-music" style="color: #fff;"></i></button>
             <button id="addmore_btn" class="btn" type="button" title="더보기" data-toggle="modal" data-target="#moreShowModal"><i class="fa-solid fa-ellipsis" style="color: #fff;"></i></button>

@@ -1,13 +1,12 @@
 package com.spring.cjs2108_kdd.dao;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
 import com.spring.cjs2108_kdd.vo.PlayListVO;
+import com.spring.cjs2108_kdd.vo.PlayVO;
 import com.spring.cjs2108_kdd.vo.UserVO;
 
 public interface UserDAO {
@@ -51,6 +50,12 @@ public interface UserDAO {
 	void setPlayListDel(int idx);
 
 	void setPlayListContentUpdate(@Param("idx") int idx, @Param("listNm") String listNm, @Param("comment") String comment);
+
+	ArrayList<PlayVO> getUserBestSongIdx(int userIdx);
+
+	void setArtistTape(@Param("userIdx") int userIdx, @Param("artist") String artist);
+
+	String getArtistTape(int idx);
 
 
 }
