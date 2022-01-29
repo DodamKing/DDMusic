@@ -3,6 +3,8 @@ package com.spring.cjs2108_kdd.controller;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.cjs2108_kdd.method.Method;
@@ -149,5 +152,17 @@ public class SongController {
 	public SongVO getaddsongPost(int idx) {
 		return songService.getSongInfor(idx);
 	}
+
+	@RequestMapping("/shuffle")
+	@ResponseBody
+	public List<SongVO> shufflePost(@RequestParam(value="idxs[]") List<Integer> idxs) {
+		List<SongVO> vos = new ArrayList<SongVO>();
+		Collections.shuffle(idxs);
+		for (int idx : idxs) {
+			vos.add(songService.getSongInfor(idx));
+		}
+		return vos;
+	}
+	
 
 }

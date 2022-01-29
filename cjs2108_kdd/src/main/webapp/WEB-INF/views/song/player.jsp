@@ -286,6 +286,7 @@
 		$("#volume_bar").on("input", () => {
 			player.volume = $("#volume_bar").val() / 100;
 			my_vol = player.volume; 
+			$("#vol_no").html($("#volume_bar").val());
 		});
 	
 		// 음소거
@@ -467,14 +468,15 @@
 			
 			else if (repeat == 1) {
 				repeat = 2;
-				repeat_btn.style.opacity = "0.7";
 				$("#repeat_btn").prop("title", "한곡반복");
+				$("#one_repeat_mark").show();
 			}
 			
 			else if (repeat == 2) {
 				repeat = 0;
 				repeat_btn.style.opacity = "0.5";
 				$("#repeat_btn").prop("title", "반복해제");
+				$("#one_repeat_mark").hide();
 			}
 		});
 		
@@ -486,6 +488,7 @@
 		let artist_list_ = [];
 		
 		$("#shuffle_btn").click(() => {
+			if (idx_list.length <= 1) return;
 			alert("셔플때문에 킹받음");
 			
 			if (shuffle_sw == 0) {
@@ -496,11 +499,25 @@
 			}
 			
 			if (shuffle == 0)  {
-				let param = Math.random() - 0.5;
-				idx_list.sort(() => param);
-				thum_list.sort(() => param);
-				title_list.sort(() => param);
-				artist_list.sort(() => param);
+				$.ajax({
+					type : "post",
+					url : "${ctp}/song/shuffle",
+					dataType : "json",
+					contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
+					data : {idxs : idx_list},
+					success : (data) => {
+						for (let i=0; i<idx_list.length; i++) {
+							idx_list[i] = data[i].idx;
+							thum_list_[i] = data[i].img;
+							title_list_[i] = data[i].title;
+							artist_list_[i] = data[i].artist;
+							
+							setList();
+							playerIndex = idx_list.indexOf(idx_list_[playerIndex]);
+							focus_cur();
+						}
+					}
+				});
 				
 				shuffle_btn.style.opacity = "1";
 				shuffle = 1;

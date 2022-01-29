@@ -12,6 +12,7 @@
 	<title>관리자</title>
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${ctp }/resources/css/loader.css">
     <style>
 		nav {
 			background: black;
@@ -64,6 +65,7 @@
 	</style>
 </head>
 <body>
+	<div class="loader" style="display: none;"></div>
 	<nav>
 		<div class="card-body nav-w">
 	        <ul>
@@ -307,10 +309,12 @@
 		// 차트 업데이트
 		function chartUpdate() {
 			if (confirm("현재 시각으로 차트를 업테이트 하시겠습니까?")) {
+				$('.loader').fadeIn();
 				$.ajax({
 					type : "post",
 					url : "${ctp}/admin/chartupdate",
 					success : () => {
+						$('.loader').fadeOut();
 						location.reload();
 					}
 				});

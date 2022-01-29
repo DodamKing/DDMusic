@@ -25,9 +25,13 @@
     	<div class="container">
     		<div class="card-body" style="padding-bottom: 300px;">
 	    		<h2 class="mt-5 mb-5"><font color="yellow">${sVO.nickNm }</font>님을 위한 추천 아티스트!</h2>
+	    		<c:if test="${empty vos }">
+	    			<p>데이터가 부족 합니다.</p> 
+	    			<p><font color="red">DDMusic</font>을 더 많이 이용해 주세요!!</p>
+    			</c:if>
 	    		<div class="row">
 		    		<c:forEach var="vo" items="${vos }">
-		    			<div class="p-3 ho" title="${vo.artist }" onclick="javacript:location.href=''">
+		    			<div class="p-3 ho" title="${vo.artist }" onclick="javacript:location.href='${ctp}/artist/${vo.artist }'">
 			    		<div style="width: 200px; height: 200px;">
 		    				<div><img src="${vo.img}" style="width: 100%;"></div>
 			    			</div>

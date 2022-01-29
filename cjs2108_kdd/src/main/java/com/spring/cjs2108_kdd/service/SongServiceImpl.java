@@ -221,4 +221,9 @@ public class SongServiceImpl implements SongService {
 		return songDAO.getMinDate();
 	}
 
+	@Override
+	public ArrayList<SongVO> getSrchArtist(String artist) {
+		return songDAO.getSrchArtist(artist);
+	}
+
 }

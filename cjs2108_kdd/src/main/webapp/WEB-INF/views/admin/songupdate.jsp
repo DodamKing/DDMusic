@@ -32,6 +32,7 @@
 				  		</div>
 			  		</div>
 			  		<input type="hidden" name="sw" value="${sw }">
+			  		<input type="hidden" name="pageNo" value="${pageNo }">
 		  		</form>
 			</div>
 		</c:if>
@@ -84,6 +85,7 @@
                 <input type="hidden" name="pageNo" value="${pageNo }">
             </form>
 		</div>
+		<c:if test="${!empty flag }"><div class="btn btn-outline-warning" onclick="location.href='${ctp}/admin/main?sw=${sw }&pageNo=${pageNo }'">돌아가기</div></c:if>
 	</div>
 </body>
 </html>

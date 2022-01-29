@@ -33,32 +33,34 @@
 	                <div id="go_btn" class="btn btn-dark btn-sm">go</div>
                 </div>
                 <div id="top_btn" class="btn btn-dark" style="position: fixed; right: 30px; bottom: 100px;">top</div>
-                <div id="add_btn" class="btn btn-dark btn-sm" style="position: sticky; right: 30px; top: 50px; float: right;" onclick="">선택추가</div>
+                <c:if test="${!empty vos }"><div id="add_btn" class="btn btn-dark btn-sm" style="position: sticky; right: 30px; top: 50px; float: right;" onclick="">선택추가</div></c:if>
                 <div class="text-center h4">
                 	${fn:replace(fn:split(vos[0].date, " ")[0], "-", ".") }
             	</div>
-            	<c:if test="${empty vos }">아직 차트가 업데이트 되지 않았습니다 당일 업데이트는 오전 10시에 됩니다.</c:if>
-                <table class="table">
-                	<tr>
-                		<td style="border-top: none;"><input id="allch" type="checkbox" ></td>
-                		<td id="cnt_box" colspan="2" style="vertical-align: middle; border-top: none;">0 곡 선택 됨</td>
-                		<!-- <td colspan="2" class="text-right" style="border-top: none;"><div id="add_btn" class="btn btn-dark btn-sm" style="position: sticky; position: -webkit-sticky; right: 30px; top: 50px;">선택추가</div></td> -->
-            		</tr>
-                    <c:forEach var="vo" items="${vos }" varStatus="st">
-	                    <tr>
-	                    	<td><input name="tch" type="checkbox" value="${vo.songIdx }" <c:if test="${vo.isFile == 0 }">disabled</c:if>></td>
-	                        <%-- <td style="text-align: center; vertical-align: middle;">${st.index + 1}</td> --%>
-	                        <td style="text-align: center; vertical-align: middle;">${vo.rank}</td>
-	                        <td><div class="imgBox ho" onclick="addf(${vo.songIdx}, ${vo.isFile })"><img name="top100Img" src="${vo.img }"></div></td>
-	                        <td class="align-middle">
-	                            <div name="top100Title"><a href="${ctp }/infor?idx=${vo.songIdx }">${vo.title }</a></div>
-	                            <div name="top100Artist">${vo.artist }</div>
-	                        </td>
-	                        <td class="align-middle"><button name="add_btn" type="button" class="btn" onclick="senddata(${vo.songIdx}, ${vo.isFile })"><i title="곡 추가" class="fas fa-plus"></i></button></td>
-	                        <%-- <td class="align-middle"><button name="add_btn" type="button" class="btn" onclick="addf(${vo.idx}, ${vo.isFile })"><i title="곡 추가" class="fas fa-plus"></i></button></td> --%>
-	                    </tr>
-                    </c:forEach>
-                </table>
+            	<c:if test="${empty vos }"><p class="h5 mt-5" style="padding-bottom: 400px;">아직 차트가 업데이트 되지 않았습니다. 잠시 기다려 주세요!</p></c:if>
+            	<c:if test="${!empty vos }">
+	                <table class="table">
+	                	<tr>
+	                		<td style="border-top: none;"><input id="allch" type="checkbox" ></td>
+	                		<td id="cnt_box" colspan="2" style="vertical-align: middle; border-top: none;">0 곡 선택 됨</td>
+	                		<!-- <td colspan="2" class="text-right" style="border-top: none;"><div id="add_btn" class="btn btn-dark btn-sm" style="position: sticky; position: -webkit-sticky; right: 30px; top: 50px;">선택추가</div></td> -->
+	            		</tr>
+	                    <c:forEach var="vo" items="${vos }" varStatus="st">
+		                    <tr>
+		                    	<td><input name="tch" type="checkbox" value="${vo.songIdx }" <c:if test="${vo.isFile == 0 }">disabled</c:if>></td>
+		                        <%-- <td style="text-align: center; vertical-align: middle;">${st.index + 1}</td> --%>
+		                        <td style="text-align: center; vertical-align: middle;">${vo.rank}</td>
+		                        <td><div class="imgBox ho" onclick="oneplay(${vo.songIdx}, ${vo.isFile })"><img name="top100Img" src="${vo.img }"></div></td>
+		                        <td class="align-middle">
+		                            <div name="top100Title"><a href="${ctp }/infor?idx=${vo.songIdx }">${vo.title }</a></div>
+		                            <div name="top100Artist">${vo.artist }</div>
+		                        </td>
+		                        <td class="align-middle"><button name="add_btn" type="button" class="btn" onclick="senddata(${vo.songIdx}, ${vo.isFile })"><i title="곡 추가" class="fas fa-plus"></i></button></td>
+		                        <%-- <td class="align-middle"><button name="add_btn" type="button" class="btn" onclick="addf(${vo.idx}, ${vo.isFile })"><i title="곡 추가" class="fas fa-plus"></i></button></td> --%>
+		                    </tr>
+	                    </c:forEach>
+	                </table>
+                </c:if>
             </div>
         </div>
         <!-- <div id="demo" style="display: none;">0</div> -->
@@ -72,6 +74,10 @@
 	<script src="${ctp }/resources/js/main.js?v=1"></script>
 	
 	<script>
+		top_btn.addEventListener("click", () => {
+			window.scrollTo({top: 0, behavior: 'smooth'});
+		});
+	
 		//전체선택
 		allch.addEventListener("click", () => {
 			if (allch.checked) {
@@ -120,10 +126,6 @@
 			}
 			
 			location.href = "${ctp}/chart?date=" + calendar.value;
-		});
-		
-		top_btn.addEventListener("click", () => {
-			window.scrollTo({top: 0, behavior: 'smooth'});
 		});
 		
 	</script>

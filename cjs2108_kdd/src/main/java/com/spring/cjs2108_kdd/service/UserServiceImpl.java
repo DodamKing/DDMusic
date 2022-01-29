@@ -239,22 +239,22 @@ public class UserServiceImpl implements UserService {
 	public List<SongVO> getArtistTape(int idx) {
 		List<SongVO> vos = new ArrayList<SongVO>(); 
 		String artists = userDAO.getArtistTape(idx);
-		String[] artistArr = artists.split("/");
-		
-		Method method = new Method();
-		int cnt = 0;
-		// 여기서 갯수 설정 해야 할 듯
-		for (String artist : artistArr) {
-			SongVO vo = new SongVO();
-			vo.setArtist(artist);
-			String img_ = songDAO.getThumnail(artist);
-			if (img_ != null) vo.setImg(method.getImgSize(img_, "200"));
-			vos.add(vo);
-			cnt++;
-			if (cnt > 6) break;
-		}
+		if (artists != null) {
+			String[] artistArr = artists.split("\\^");
 			
-		
+			Method method = new Method();
+			int cnt = 0;
+			// 여기서 갯수 설정 해야 할 듯
+			for (String artist : artistArr) {
+				SongVO vo = new SongVO();
+				vo.setArtist(artist);
+				String img_ = songDAO.getThumnail(artist);
+				if (img_ != null) vo.setImg(method.getImgSize(img_, "200"));
+				vos.add(vo);
+				cnt++;
+				if (cnt > 7) break;
+			}
+		}
 		return vos;
 	}
 

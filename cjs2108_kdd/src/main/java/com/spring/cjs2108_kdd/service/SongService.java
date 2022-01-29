@@ -68,5 +68,7 @@ public interface SongService {
 
 	String getMinDate();
 
+	ArrayList<SongVO> getSrchArtist(String artist);
+
 	
 }

@@ -63,7 +63,7 @@
                     class="fa-regular fa-circle-pause fa-3x"></i></button>
             <button id="next_btn" class="btn" type="button"><i class="fa-solid fa-forward-step fa-2x" style="color: #fff;"></i></button>
             <div id="repeat_btn" class="btn" title="반복 재생 설정" style="background: #222; opacity: 0.5;"><i
-                    class="fa-solid fa-repeat" style="color: #fff;"></i></div>
+                    class="fa-solid fa-repeat" style="color: #fff;"><span id="one_repeat_mark" style="font-size: 8px; display: none;">1</span></i></div>
         </div>
         <div class="ml-auto d-flex mt-4 mr-3">
             <div id="controls_time" class="mt-2">00:00 / 00:00</div>
@@ -72,6 +72,7 @@
             <div id="mute_btn2" class="ml-2" style="display: none;"><button class="btn" type="button"><i
                         class="fa-solid fa-volume-xmark" style="color: #fff;"></i></button></div>
             <div class="ml-1 mt-1"><input id="volume_bar" type="range" min="0" max="100" value="100"/></div>
+            <div id="vol_no" class="ml-1" style="font-size: 8px; margin-top: 12px;">100</div>
         </div>
     </div>
     <audio id="player" src=""></audio>

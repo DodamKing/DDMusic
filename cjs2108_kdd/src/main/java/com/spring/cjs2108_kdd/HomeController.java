@@ -3,12 +3,9 @@ package com.spring.cjs2108_kdd;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.spring.cjs2108_kdd.dao.SongDAO;
 import com.spring.cjs2108_kdd.method.Method;
-import com.spring.cjs2108_kdd.method.Scheduler;
 import com.spring.cjs2108_kdd.service.SongService;
 import com.spring.cjs2108_kdd.service.UserService;
 import com.spring.cjs2108_kdd.vo.ChartVO;
@@ -125,7 +121,7 @@ public class HomeController {
 			String artist = "";
 			
 			for (int j=0; j<artist_1.size(); j++) {
-				artist += artist_1.get(j) + "/";
+				artist += artist_1.get(j) + "^";
 			}
 			
 			if (!artist.equals("")) {

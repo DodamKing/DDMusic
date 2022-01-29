@@ -65,6 +65,8 @@ public class DDMusic {
 	
 	@RequestMapping("/{flag}")
 	public String mainGet(Model model, HttpSession session , HttpServletRequest request, @PathVariable String flag, String srchKwd, String idx, String date) throws FileNotFoundException, IOException, ParseException {
+		Method method = new Method();
+		
 		if (flag.equals("index")) {
 			model.addAttribute("flag", "today");
 			return "main/main";
@@ -92,7 +94,6 @@ public class DDMusic {
 		
 		else if (flag.equals("rank")) {
 			ArrayList<SongVO> vos = songService.getRank();
-			Method method = new Method();
 			vos.get(0).setImg(method.getImgSize(vos.get(0).getImg(), "300"));
 			vos.get(1).setImg(method.getImgSize(vos.get(1).getImg(), "200"));
 			vos.get(2).setImg(method.getImgSize(vos.get(2).getImg(), "200"));
@@ -109,7 +110,6 @@ public class DDMusic {
 			if (vo != null) {
 				ArrayList<SongVO> vos = songService.getMyRank(vo.getIdx());
 				if (vos.size() != 0) {
-					Method method = new Method();
 					vos.get(0).setImg(method.getImgSize(vos.get(0).getImg(), "300"));
 					vos.get(1).setImg(method.getImgSize(vos.get(1).getImg(), "200"));
 					vos.get(2).setImg(method.getImgSize(vos.get(2).getImg(), "200"));
@@ -118,13 +118,6 @@ public class DDMusic {
 			}
 		}
 		
-		else if (flag.equals("artist")) {
-			UserVO vo = (UserVO) session.getAttribute("sVO");
-			if (vo != null) {
-				
-			}
-		}
-
 		else if (flag.equals("mix")) {
 			
 		}
@@ -133,12 +126,25 @@ public class DDMusic {
 			UserVO vo = (UserVO) session.getAttribute("sVO");
 			if (vo != null) {
 				List<SongVO> vos = userService.getArtistTape(vo.getIdx());
-				
-				model.addAttribute("vos", vos);
+				if (vos.size() > 0) {
+					model.addAttribute("vos", vos);
+					model.addAttribute("thum", method.getImgSize(vos.get(0).getImg(), "200"));
+				}
 			}
 		}
 
 		model.addAttribute("flag", flag);
+		return "main/main";
+	}
+	
+	@RequestMapping("/artist/{artist}")
+	public String artistGet(Model model, @PathVariable String artist) {
+		Method method = new Method();
+		List<SongVO> vos = songService.getSrchArtist(artist);
+		
+		model.addAttribute("thum", method.getImgSize(vos.get(0).getImg(), "200"));
+		model.addAttribute("vos", vos);
+		model.addAttribute("flag", "artist");
 		return "main/main";
 	}
 	

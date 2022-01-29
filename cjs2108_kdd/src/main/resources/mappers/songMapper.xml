@@ -138,7 +138,7 @@
 	</update>
 	
 	<select id="getSrchArtist" resultType="com.spring.cjs2108_kdd.vo.SongVO">
-		select * from song where artist like '%${artist}%';
+		select * from song where artist like '%${artist}%' order by idx desc;
 	</select>
 	
 	<select id="getThumnail" resultType="String">

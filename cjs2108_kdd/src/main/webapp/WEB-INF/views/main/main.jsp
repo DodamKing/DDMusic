@@ -43,6 +43,9 @@
 	<c:if test="${flag == 'artisttape'}">
 		<jsp:include page="/WEB-INF/views/user/artisttape.jsp" />
 	</c:if>
+	<c:if test="${flag == 'artist'}">
+		<jsp:include page="/WEB-INF/views/user/artist.jsp" />
+	</c:if>
 	<c:if test="${flag == 'temp'}">
 		<jsp:include page="/WEB-INF/views/main/temp.jsp" />
 	</c:if>
@@ -55,6 +58,15 @@
 	 $(document).ready(() => {
         $('.loader').fadeOut();
 	 });
+	 
+	 function oneplay(idx, isFile) {
+		 	if (isFile == 0) {
+		 		alert("준비중입니다.");
+		 		return;
+		 	}
+			let url = "${ctp}/song/player?idx=" + idx + "&play=1";
+			player = window.open(url, "player", "width=1100px, height=800px, left=50px, top=150px");
+	 }
 		
 	function addf(idx, isFile, autoplay) {
 		<c:if test="${!empty player}">

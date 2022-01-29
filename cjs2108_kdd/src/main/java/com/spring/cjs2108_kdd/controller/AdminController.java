@@ -165,7 +165,6 @@ public class AdminController {
 			if (songService.getSongIdx(vos.get(i).getTitle(), vos.get(i).getArtist()) != null) idx = songService.getSongIdx(vos.get(i).getTitle(), vos.get(i).getArtist());
 			vos.get(i).setSongIdx(idx);
 			vos.get(i).setIsFile(songService.getSongInfor(idx).getIsFile());
-			System.out.println(i);
 		}
 		songService.setChartUpdate(vos);
 	}
