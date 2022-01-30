@@ -48,8 +48,8 @@
 	                    <c:forEach var="vo" items="${vos }" varStatus="st">
 		                    <tr>
 		                    	<td><input name="tch" type="checkbox" value="${vo.songIdx }" <c:if test="${vo.isFile == 0 }">disabled</c:if>></td>
-		                        <%-- <td style="text-align: center; vertical-align: middle;">${st.index + 1}</td> --%>
 		                        <td style="text-align: center; vertical-align: middle;">${vo.rank}</td>
+		                        <%-- <td><div class="imgBox ho"><img name="top100Img" src="${vo.img }"></div></td> --%>
 		                        <td><div class="imgBox ho" onclick="oneplay(${vo.songIdx}, ${vo.isFile })"><img name="top100Img" src="${vo.img }"></div></td>
 		                        <td class="align-middle">
 		                            <div name="top100Title"><a href="${ctp }/infor?idx=${vo.songIdx }">${vo.title }</a></div>

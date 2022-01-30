@@ -3,11 +3,12 @@ package com.spring.cjs2108_kdd.controller;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.parser.ParseException;
@@ -21,7 +22,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.cjs2108_kdd.method.Method;
 import com.spring.cjs2108_kdd.service.SongService;
-import com.spring.cjs2108_kdd.vo.ChartVO;
 import com.spring.cjs2108_kdd.vo.SongVO;
 import com.spring.cjs2108_kdd.vo.UserVO;
 
@@ -47,7 +47,17 @@ public class SongController {
 	
 	@RequestMapping(value="/player", method = RequestMethod.GET)
 	public String playerGet(HttpServletRequest request, HttpSession session, Model model, String idx, String idxs, String listIdx, String play) {
-		session.setAttribute("player", true);
+		session.setAttribute("sPlayer", true);
+		
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			for (int i=0; i<cookies.length; i++) {
+				String str = cookies[i].getName();
+				if (str.equals("cVol")) {
+					model.addAttribute("cVol", cookies[i].getValue());
+				}
+			}
+		}
 		
 		if (idx != null) {
 			SongVO vo = songService.getSongInfor(Integer.parseInt(idx));
@@ -70,13 +80,13 @@ public class SongController {
 					}
 				}
 			}
-			model.addAttribute("play", play);
 			model.addAttribute("listIdx", listIdx);
 			model.addAttribute("vos", vos);
 			model.addAttribute("img1000", method.getImgSize(vos.get(0).getImg(), "1000"));
 			model.addAttribute("img2000", method.getImgSize(vos.get(0).getImg(), "2000"));
 			
 		}
+		model.addAttribute("play", play);
 		return "song/player"; 
 	}
 	
@@ -131,15 +141,9 @@ public class SongController {
 	@RequestMapping("close")
 	@ResponseBody
 	public void clseosPost(HttpSession session) {
-		session.setAttribute("player", false);
+		session.setAttribute("sPlayer", false);
 	}
 
-	@RequestMapping("open")
-	@ResponseBody
-	public void openPost(HttpSession session) {
-		session.setAttribute("player", true);
-	}
-	
 	@RequestMapping("/getchart")
 	@ResponseBody
 	public void getchartPost(Model model) throws FileNotFoundException, IOException, ParseException {
@@ -155,13 +159,25 @@ public class SongController {
 
 	@RequestMapping("/shuffle")
 	@ResponseBody
-	public List<SongVO> shufflePost(@RequestParam(value="idxs[]") List<Integer> idxs) {
+	public List<SongVO> shufflePost(@RequestParam(value="idxs[]") List<Integer> idxs, int curIdx) {
 		List<SongVO> vos = new ArrayList<SongVO>();
 		Collections.shuffle(idxs);
+		int index = idxs.indexOf(curIdx);
+		int temp = idxs.get(0);
+		idxs.set(0, curIdx);
+		idxs.set(index, temp);
 		for (int idx : idxs) {
 			vos.add(songService.getSongInfor(idx));
 		}
 		return vos;
+	}
+
+	@RequestMapping("/myvol")
+	@ResponseBody
+	public void myvolPost(HttpServletResponse response, String vol) {
+		Cookie cookie = new Cookie("cVol", vol);
+		cookie.setMaxAge(60*60*24*7);
+		response.addCookie(cookie);
 	}
 	
 

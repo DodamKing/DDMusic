@@ -66,13 +66,14 @@
 		 	}
 			let url = "${ctp}/song/player?idx=" + idx + "&play=1";
 			player = window.open(url, "player", "width=1100px, height=800px, left=50px, top=150px");
+			sw = true;
 	 }
 		
 	function addf(idx, isFile, autoplay) {
-		<c:if test="${!empty player}">
+		<c:if test="${!empty sPlayer}">
 			<% 
-			   	boolean player = (boolean) session.getAttribute("player");
-				pageContext.setAttribute("player1", player); 
+			   	boolean sPlayer = (boolean) session.getAttribute("sPlayer");
+				pageContext.setAttribute("player1", sPlayer); 
 			%>
 			if (${player1}) {
 				player = window.open("", "player", "width=1100px, height=800px, left=50px, top=150px");
@@ -87,10 +88,6 @@
 						$("#message_box1").slideDown(300);
 						setTimeout(() => $("#message_box1").slideUp(), 1000);
 					}
-				});
-				$.ajax({
-					type : "post",
-					url : "${ctp}/song/open"
 				});
 				return;
 			}
@@ -122,11 +119,6 @@
 				sw = true;
 			}
 		}
-		
-		$.ajax({
-			type : "post",
-			url : "${ctp}/song/open"
-		});
 	}
 	
 	function senddata(idx, isFile) {
@@ -149,12 +141,12 @@
 	function godata_many() {
 		let idxs = idx_box_many.innerHTML;
 		
-		<c:if test="${!empty player}">
+		<c:if test="${!empty sPlayer}">
 			<% 
-			   	boolean player = (boolean) session.getAttribute("player");
-				pageContext.setAttribute("player1", player); 
+			   	boolean sPlayer = (boolean) session.getAttribute("sPlayer");
+				pageContext.setAttribute("player1", sPlayer); 
 			%>
-			if (${player1}) {
+			if (${player1} && player) {
 				player = window.open("", "player", "width=1100px, height=800px, left=50px, top=150px");
 				let idx_list = idxs.split("/");
 				for (let i=0; i<idx_list.length - 1; i++) {
@@ -171,10 +163,6 @@
 						}
 					});
 				}
-				$.ajax({
-					type : "post",
-					url : "${ctp}/song/open"
-				});
 				return;
 			}
 		</c:if>
@@ -208,13 +196,16 @@
 				sw = true;
 			}
 		}
-		
+	}
+	
+	function player_close() {
 		$.ajax({
 			type : "post",
-			url : "${ctp}/song/open"
+			url : "${ctp}/song/close",
+			success : () => {
+				location.reload();
+			}
 		});
-		
-		
 	}
 	
 </script>
