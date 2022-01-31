@@ -145,6 +145,14 @@
 		select img from song where artist = #{artist} order by idx desc limit 1;
 	</select>
 	
+	<select id="getDownSongIdxs" resultType="String">
+		select songIdxs from download where userIdx = #{userIdx};
+	</select>
+	
+	<insert id="setDownUpdate">
+		insert into download values (default, #{userIdx}, #{songIdxs}, #{class}) on duplicate key update songIdxs = #{songIdxs};
+	</insert>
+	
 	<!-- 가장 많이 들은 5곡 정보 -->
 	<!-- <select id="getDDVOS" resultType="com.spring.cjs2108_kdd.vo.PlayListVO">
 		select *, from play p left join song s on p.songIdx = s.idx where isFile = 1 group by p.songIdx order by sum(playCnt) desc limit 5;

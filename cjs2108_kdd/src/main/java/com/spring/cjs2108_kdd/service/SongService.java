@@ -70,5 +70,7 @@ public interface SongService {
 
 	ArrayList<SongVO> getSrchArtist(String artist);
 
+	void setDownload(int userIdx, String songIdx);
+
 	
 }

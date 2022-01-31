@@ -11,6 +11,7 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="${ctp }/resources/css/main.css?v=1">
+<link rel="stylesheet" href="${ctp }/resources/css/loader.css">
 <link rel="shortcut icon" href="https://i1.sndcdn.com/avatars-000606604806-j6ghpm-t500x500.jpg" />
 </head>
 <body>
@@ -31,6 +32,10 @@
 		let thum_list = [];
 		let title_list = [];
 		let artist_list = [];
+		let idx_list_ = [];
+		let thum_list_ = [];
+		let title_list_ = [];
+		let artist_list_ = [];
 		
 		let songUrl;
 		let playerIndex = 0;
@@ -136,6 +141,16 @@
 		    
 	    	setList();
 		    if (!player.paused) focus_cur();
+		    
+		    //셔플 상태에서 삭제시 임시 리스트 삭제
+		    if (shuffle == 1) {
+		    	let index_ = idx_list_.indexOf(idx);
+		    	
+		    	idx_list_.splice(index_, 1);
+		    	img_list_.splice(index_, 1);
+		    	title_list_.splice(index_, 1);
+		    	artist_list_.splice(index_, 1);
+		    }
 		    
 		    //플레이리스트에서도 삭제
 		   /*  if ("${listIdx}" != "") {
@@ -478,48 +493,46 @@
 		});
 		
 		//셔플
-		let idx_list_ = [];
-		let thum_list_ = [];
-		let title_list_ = [];
-		let artist_list_ = [];
-		
 		$("#shuffle_btn").click(() => {
 			if (idx_list.length <= 1) return;
 			
 			if (shuffle == 0)  {
+				$('.loader').show();
+				
 				idx_list_ = Object.assign([], idx_list);
 				thum_list_ = Object.assign([], thum_list);
 				title_list_ = Object.assign([], title_list);
 				artist_list_ = Object.assign([], artist_list);
 				
-				$('.loader').fadeIn();
-				
-				$.ajax({
-					type : "post",
-					url : "${ctp}/song/shuffle",
-					async : false,
-					dataType : "json",
-					contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
-					data : {idxs : idx_list, curIdx : idx_list[playerIndex]},
-					success : (data) => {
-						for (let i=0; i<idx_list.length; i++) {
-							idx_list[i] = data[i].idx;
-							thum_list[i] = data[i].img;
-							title_list[i] = data[i].title;
-							artist_list[i] = data[i].artist;
+				setTimeout(() => {
+					$.ajax({
+						type : "post",
+						url : "${ctp}/song/shuffle",
+						async : false,
+						dataType : "json",
+						contentType :   "application/x-www-form-urlencoded; charset=UTF-8",
+						data : {idxs : idx_list, curIdx : idx_list[playerIndex]},
+						success : (data) => {
+							for (let i=0; i<idx_list.length; i++) {
+								idx_list[i] = data[i].idx;
+								thum_list[i] = data[i].img;
+								title_list[i] = data[i].title;
+								artist_list[i] = data[i].artist;
+							}
+							
+							playerIndex = idx_list.indexOf(idx_list_[playerIndex]);
+	
+							shuffle_btn.style.opacity = "1";
+							shuffle = 1;
+							
+							setList();
+							focus_cur();
+							$('.loader').fadeOut();
 						}
-						
-						playerIndex = idx_list.indexOf(idx_list_[playerIndex]);
-
-						shuffle_btn.style.opacity = "1";
-						shuffle = 1;
-						
-						$('.loader').fadeOut();
-					}
-				});
+					});
+				}, 100);
+			}
 				
-			} 
-
 			else if (shuffle == 1)  {
 				playerIndex = idx_list_.indexOf(idx_list[playerIndex]);
 				
@@ -531,11 +544,9 @@
 				shuffle_btn.style.opacity = "0.5";
 				shuffle = 0;
 				
-			}
-			
 				setList();
 				focus_cur();
-			
+			}
 		});
 		
 		// 현재 음악 포커스

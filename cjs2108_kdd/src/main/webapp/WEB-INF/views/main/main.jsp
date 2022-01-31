@@ -84,9 +84,6 @@
 					success : (data) => {
 						player.addList(data);
 						player.setList();
-						
-						$("#message_box1").slideDown(300);
-						setTimeout(() => $("#message_box1").slideUp(), 1000);
 					}
 				});
 				return;
@@ -107,9 +104,6 @@
 					success : (data) => {
 						player.addList(data);
 						player.setList();
-						
-						$("#message_box1").slideDown(300);
-						setTimeout(() => $("#message_box1").slideUp(), 1000);
 					}
 				});
 			} 
@@ -157,9 +151,6 @@
 						success : (data) => {
 							player.addList(data);
 							player.setList();
-							
-							$("#message_box_many").slideDown(300);
-							setTimeout(() => $("#message_box_many").slideUp(), 1000);
 						}
 					});
 				}
@@ -196,6 +187,37 @@
 				sw = true;
 			}
 		}
+	}
+	
+	function download() {
+		let idx = idx_box.innerHTML;
+		$.ajax({
+			type : "post",
+			url : "${ctp}/song/download",
+			data : {idx : idx},
+			success : (data) => {
+				if (data == 0) {
+					$("#message_box3").html("로그인이 필요합니다");
+				}
+				
+				else if (data == 1) {
+					$("#message_box3").html("권한이 없습니다. 관리자에게 권한을 요청해 보세요.");
+				}
+				
+				else {
+					$("#message_box3").html("해당곡이 저장되었습니다. 보관함에 구매한 MP3에서 확인하세요.");
+				}
+				
+				$("#message_box3").slideDown(300);
+				setTimeout(() => $("#message_box3").slideUp(), 1000);
+			}
+		});
+	}
+	
+	function gift() {
+		$("#message_box3").html("준비중인 서비스 입니다.");
+		$("#message_box3").slideDown(300);
+		setTimeout(() => $("#message_box3").slideUp(), 1000);
 	}
 	
 	function player_close() {

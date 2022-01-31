@@ -15,12 +15,15 @@
 	        <!-- Modal body -->
 	        <div class="modal-body">
 	        	<button type="button" class="btn btn-danger form-control" onclick="godata()" data-dismiss="modal">현재 재생 목록에 추가</button>
+	        	<button type="button" class="btn btn-danger form-control mt-3" onclick="download()">저장</button>
+	        	<button type="button" class="btn btn-danger form-control mt-3" onclick="gift()">선물하기</button>
 	        	<button type="button" class="btn btn-danger form-control mt-3" onclick="getlist()">플레이리스트에 추가</button>
 	        	<div id="idx_box" style="display: none;"></div>
 	        	<div id="isFile_box" style="display: none;"></div>
 	        	<div id="mylist_box" class="mt-5"></div>
 	        	<div id="message_box1" style="display: none;" class="text-center">추가 되었습니다</div>
 	        	<div id="message_box2" style="display: none;" class="text-center">이미 추가 된 곡입니다</div>
+	        	<div id="message_box3" style="display: none;" class="text-center">로그인이 필요합니다</div>
 	        </div>
 	        
 	        <!-- Modal footer -->

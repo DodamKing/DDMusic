@@ -77,5 +77,9 @@ public interface SongDAO {
 
 	public String getThumnail(String artist);
 
+	public String getDownSongIdxs(int userIdx);
+
+	public void setDownUpdate(@Param("userIdx") int userIdx, @Param("songIdxs") String songIdxs, @Param("class") int i);
+
 
 }

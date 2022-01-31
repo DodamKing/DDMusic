@@ -226,4 +226,12 @@ public class SongServiceImpl implements SongService {
 		return songDAO.getSrchArtist(artist);
 	}
 
+	@Override
+	public void setDownload(int userIdx, String songIdx) {
+		String songIdxs = songDAO.getDownSongIdxs(userIdx);
+		if (songIdxs == null) songIdxs = "";
+		if (!songIdxs.contains(songIdx)) songIdxs += songIdx + "/";
+		songDAO.setDownUpdate(userIdx, songIdxs, 1);
+	}
+
 }

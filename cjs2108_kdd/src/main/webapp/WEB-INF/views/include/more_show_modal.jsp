@@ -17,12 +17,15 @@
 	        	<button type="button" class="btn btn-danger form-control" onclick="delList(idx_list[playerIndex])" data-dismiss="modal">현재 재생 목록에서 제거</button>
 	        	<button type="button" class="btn btn-danger form-control mt-3" onclick="like_click()">좋아요</button>
 	        	<button type="button" class="btn btn-danger form-control mt-3" onclick="$('#lyrics_btn').click()" data-dismiss="modal">가사 보기</button>
+	        	<button type="button" class="btn btn-danger form-control mt-3" onclick="download()">저장</button>
+	        	<button type="button" class="btn btn-danger form-control mt-3" onclick="gift()">선물하기</button>
 	        	<button type="button" class="btn btn-danger form-control mt-3" onclick="getlist2()">플레이리스트에 추가</button>
 	        	<div id="idx_box" style="display: none;"></div>
 	        	<div id="isFile_box" style="display: none;"></div>
 	        	<div id="mylist_box" class="mt-5"></div>
 	        	<div id="message_box1" style="display: none;" class="text-center">추가 되었습니다</div>
 	        	<div id="message_box2" style="display: none;" class="text-center">이미 추가 된 곡입니다</div>
+	        	<div id="message_box3" style="display: none;" class="text-center"></div>
 	        </div>
 	        
 	        <!-- Modal footer -->
@@ -93,6 +96,37 @@
 	
 	function mylist_box_re() {
 		mylist_box.innerHTML = "";
+	}
+	
+	function download() {
+		let idx = idx_box.innerHTML;
+		$.ajax({
+			type : "post",
+			url : "${ctp}/song/download",
+			data : {idx : idx},
+			success : (data) => {
+				if (data == 0) {
+					$("#message_box3").html("로그인이 필요합니다");
+				}
+				
+				else if (data == 1) {
+					$("#message_box3").html("권한이 없습니다. 관리자에게 권한을 요청해 보세요.");
+				}
+				
+				else {
+					$("#message_box3").html("해당곡이 저장되었습니다. 보관함에 구매한 MP3에서 확인하세요.");
+				}
+				
+				$("#message_box3").slideDown(300);
+				setTimeout(() => $("#message_box3").slideUp(), 1000);
+			}
+		});
+	}
+	
+	function gift() {
+		$("#message_box3").html("준비중인 서비스 입니다.");
+		$("#message_box3").slideDown(300);
+		setTimeout(() => $("#message_box3").slideUp(), 1000);
 	}
 	
 	

@@ -179,6 +179,18 @@ public class SongController {
 		cookie.setMaxAge(60*60*24*7);
 		response.addCookie(cookie);
 	}
+
+	@RequestMapping("/download")
+	@ResponseBody
+	public String downloadPost(HttpSession session, String idx) {
+		UserVO vo = (UserVO) session.getAttribute("sVO");
+		
+		if (vo == null) return "0";
+		else if (vo.getMembership() != 11) return "1";
+		
+		songService.setDownload(vo.getIdx(), idx);
+		return "2";
+	}
 	
 
 }
