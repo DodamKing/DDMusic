@@ -71,8 +71,11 @@
                         class="fa-solid fa-volume-high" style="color: #fff;"></i></button></div>
             <div id="mute_btn2" class="ml-2" style="display: none;"><button class="btn" type="button"><i
                         class="fa-solid fa-volume-xmark" style="color: #fff;"></i></button></div>
-            <div class="ml-1 mt-1"><input id="volume_bar" type="range" min="0" max="100" value="${cVol * 100 }"/></div>
-            <div id="vol_no" class="ml-1" style="font-size: 8px; margin-top: 12px;">${fn:substring(cVol * 100, 0, 2) }</div>
+            <div class="ml-1 mt-1"><input id="volume_bar" type="range" min="0" max="100" <c:if test="${!empty cVol }">value="${cVol * 100 }"</c:if> /></div>
+            <div id="vol_no" class="ml-1" style="font-size: 8px; margin-top: 12px;">
+            	<c:if test="${empty cVol }">50</c:if>
+            	<c:if test="${!empty cVol }">${fn:substring(cVol * 100, 0, 2) }</c:if>
+        	</div>
         </div>
     </div>
     <audio id="player" src="" <c:if test="${!empty cVol }">onloadstart="this.volume=${cVol }"</c:if>></audio>

@@ -46,6 +46,9 @@
 	<c:if test="${flag == 'artist'}">
 		<jsp:include page="/WEB-INF/views/user/artist.jsp" />
 	</c:if>
+	<c:if test="${flag == 'gift'}">
+		<jsp:include page="/WEB-INF/views/user/gift.jsp" />
+	</c:if>
 	<c:if test="${flag == 'temp'}">
 		<jsp:include page="/WEB-INF/views/main/temp.jsp" />
 	</c:if>

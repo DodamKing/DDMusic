@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.spring.cjs2108_kdd.method.Method;
 import com.spring.cjs2108_kdd.service.SongService;
@@ -192,5 +194,24 @@ public class SongController {
 		return "2";
 	}
 	
+	@RequestMapping("/mp3")
+	public String mp3Get(HttpSession session, Model model) {
+		UserVO vo = (UserVO) session.getAttribute("sVO");
+		if (vo != null) {
+			ArrayList<SongVO> vos = new ArrayList<SongVO>();
+			vos = songService.getDownloadMP3(vo.getIdx());
+			model.addAttribute("vos", vos);
+		}
+		return "user/mp3";
+	}
+
+	@RequestMapping(value="/mp3/down", produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String mp3DownPost(int idx) throws Exception {
+		SongVO vo = songService.getSongInfor(idx);
+		String url = vo.getTitle()  + " - " +  vo.getArtist() + ".mp3";
+		url = url.replaceAll("[\\\\/:*?\"<>|]", "");
+		return url;
+	}
 
 }

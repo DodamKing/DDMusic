@@ -73,13 +73,15 @@ public interface SongDAO {
 
 	public void setIsFileChart(@Param("title") String title, @Param("artist") String artist);
 
-	public ArrayList<SongVO> getSrchArtist(String artist);
+	public ArrayList<SongVO> getSrchArtist(@Param("artist1") String artist1, @Param("artist2") String artist2);
 
 	public String getThumnail(String artist);
 
 	public String getDownSongIdxs(int userIdx);
 
 	public void setDownUpdate(@Param("userIdx") int userIdx, @Param("songIdxs") String songIdxs, @Param("class") int i);
+
+	public ArrayList<SongVO> getDownloadMP3(@Param("songIdx") ArrayList<Integer> songIdx);
 
 
 }

@@ -93,7 +93,7 @@ public class Scheduler {
 			}
 		}
 		LocalDate now = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formatedNow = now.format(formatter);
 		System.out.println("아티스트 테잎 업데이트: " + formatedNow);
 	}

@@ -1,13 +1,18 @@
 package com.spring.cjs2108_kdd.service;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -23,7 +28,6 @@ import com.google.gson.Gson;
 import com.spring.cjs2108_kdd.dao.SongDAO;
 import com.spring.cjs2108_kdd.method.Method;
 import com.spring.cjs2108_kdd.vo.ChartVO;
-import com.spring.cjs2108_kdd.vo.PlayListVO;
 import com.spring.cjs2108_kdd.vo.SongVO;
 
 @Service
@@ -223,7 +227,19 @@ public class SongServiceImpl implements SongService {
 
 	@Override
 	public ArrayList<SongVO> getSrchArtist(String artist) {
-		return songDAO.getSrchArtist(artist);
+		ArrayList<SongVO> vos = new ArrayList<SongVO>();
+		
+		if (artist.contains("(")) {
+			String artist1 = artist.split("\\(")[0].trim();
+			String artist2 = artist.substring(artist.indexOf("(") + 1, artist.indexOf(")"));
+			vos = songDAO.getSrchArtist(artist1, artist2);
+		}
+		
+		else {
+			vos = songDAO.getSrchArtist(artist, null);
+		}
+		
+		return vos;
 	}
 
 	@Override
@@ -232,6 +248,20 @@ public class SongServiceImpl implements SongService {
 		if (songIdxs == null) songIdxs = "";
 		if (!songIdxs.contains(songIdx)) songIdxs += songIdx + "/";
 		songDAO.setDownUpdate(userIdx, songIdxs, 1);
+	}
+
+	@Override
+	public ArrayList<SongVO> getDownloadMP3(int idx) {
+		ArrayList<Integer> songIdx = new ArrayList<Integer>();
+		String songIdxs = songDAO.getDownSongIdxs(idx);
+		if (songIdxs != null) {
+			String[] songIdxsArr = songIdxs.split("/");
+			for (String str : songIdxsArr) {
+				songIdx.add(Integer.parseInt(str));
+			}
+			return songDAO.getDownloadMP3(songIdx);
+		}
+		return null;
 	}
 
 }

@@ -72,5 +72,7 @@ public interface SongService {
 
 	void setDownload(int userIdx, String songIdx);
 
+	ArrayList<SongVO> getDownloadMP3(int idx);
+
 	
 }

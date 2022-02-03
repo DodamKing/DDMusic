@@ -109,12 +109,10 @@ public class DDMusic {
 			UserVO vo = (UserVO) session.getAttribute("sVO");
 			if (vo != null) {
 				ArrayList<SongVO> vos = songService.getMyRank(vo.getIdx());
-				if (vos.size() != 0) {
-					vos.get(0).setImg(method.getImgSize(vos.get(0).getImg(), "300"));
-					vos.get(1).setImg(method.getImgSize(vos.get(1).getImg(), "200"));
-					vos.get(2).setImg(method.getImgSize(vos.get(2).getImg(), "200"));
-					model.addAttribute("vos", vos);
-				}
+				if (vos.size() > 0) vos.get(0).setImg(method.getImgSize(vos.get(0).getImg(), "300"));
+				if (vos.size() > 1) vos.get(1).setImg(method.getImgSize(vos.get(1).getImg(), "300"));
+				if (vos.size() > 2) vos.get(2).setImg(method.getImgSize(vos.get(2).getImg(), "300"));
+				model.addAttribute("vos", vos);
 			}
 		}
 		
@@ -140,7 +138,10 @@ public class DDMusic {
 	@RequestMapping("/artist/{artist}")
 	public String artistGet(Model model, @PathVariable String artist) {
 		Method method = new Method();
-		List<SongVO> vos = songService.getSrchArtist(artist);
+		List<SongVO> vos = new ArrayList<SongVO>();
+		artist = artist.replaceAll("\\^", "'");
+		
+		vos = songService.getSrchArtist(artist);
 		
 		model.addAttribute("thum", method.getImgSize(vos.get(0).getImg(), "200"));
 		model.addAttribute("vos", vos);

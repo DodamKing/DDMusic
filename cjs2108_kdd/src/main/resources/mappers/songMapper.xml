@@ -138,7 +138,12 @@
 	</update>
 	
 	<select id="getSrchArtist" resultType="com.spring.cjs2108_kdd.vo.SongVO">
-		select * from song where artist like '%${artist}%' order by idx desc;
+		<if test="artist2 == null">
+			select * from song where artist like concat('%', #{artist1}, '%') order by idx desc;
+		</if>
+		<if test="artist2 != null">
+			select * from song where artist like concat('%', #{artist1}, '%') or artist like concat('%', #{artist2}, '%') order by idx desc;
+		</if>
 	</select>
 	
 	<select id="getThumnail" resultType="String">
@@ -152,6 +157,12 @@
 	<insert id="setDownUpdate">
 		insert into download values (default, #{userIdx}, #{songIdxs}, #{class}) on duplicate key update songIdxs = #{songIdxs};
 	</insert>
+	
+	<select id="getDownloadMP3" resultType="com.spring.cjs2108_kdd.vo.SongVO">
+		select * from song where
+		<foreach collection="songIdx" item="idx" separator="or">idx = #{idx}</foreach>
+		;
+	</select>
 	
 	<!-- 가장 많이 들은 5곡 정보 -->
 	<!-- <select id="getDDVOS" resultType="com.spring.cjs2108_kdd.vo.PlayListVO">

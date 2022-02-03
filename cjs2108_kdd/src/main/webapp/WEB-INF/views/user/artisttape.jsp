@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<% pageContext.setAttribute("sq", "'"); %>
 <c:set var="ctp" value="<%=request.getContextPath() %>" />
 <!DOCTYPE html>
 <html>
@@ -31,7 +32,7 @@
     			</c:if>
 	    		<div class="row">
 		    		<c:forEach var="vo" items="${vos }">
-		    			<div class="p-3 ho" title="${vo.artist }" onclick="javacript:location.href='${ctp}/artist/${vo.artist }'">
+		    			<div class="p-3 ho" title="${vo.artist }" onclick='javacript:location.href="${ctp}/artist/${fn:replace(vo.artist, sq, "^") }"'>
 			    		<div style="width: 200px; height: 200px;">
 		    				<div><img src="${vo.img}" style="width: 100%;"></div>
 			    			</div>

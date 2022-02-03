@@ -46,18 +46,22 @@
 						<div>재생수 : ${vos[0].playCnt }</div>
 					</div>
 					<div class="row mb-5">
-						<div class="col text-center ho" onclick="javascript:location.href='infor?idx=${vos[1].idx }'">
-							<div><img src="${vos[1].img }"></div>
-							<div>${vos[1].title }</div>
-							<div>${vos[1].artist }</div>
-							<div>재생수 : ${vos[1].playCnt }</div>
-						</div>
-						<div class="col text-center ho" onclick="javascript:location.href='infor?idx=${vos[2].idx }'">
-							<div><img src="${vos[2].img }"></div>
-							<div>${vos[2].title }</div>
-							<div>${vos[2].artist }</div>
-							<div>재생수 : ${vos[2].playCnt }</div>
-						</div>
+						<c:if test="${!empty vos[1].img }">
+							<div class="col text-center ho" onclick="javascript:location.href='infor?idx=${vos[1].idx }'">
+								<div><img src="${vos[1].img }"></div>
+								<div>${vos[1].title }</div>
+								<div>${vos[1].artist }</div>
+								<div>재생수 : ${vos[1].playCnt }</div>
+							</div>
+						</c:if>
+						<c:if test="${!empty vos[2].img }">
+							<div class="col text-center ho" onclick="javascript:location.href='infor?idx=${vos[2].idx }'">
+								<div><img src="${vos[2].img }"></div>
+								<div>${vos[2].title }</div>
+								<div>${vos[2].artist }</div>
+								<div>재생수 : ${vos[2].playCnt }</div>
+							</div>
+						</c:if>
 					</div>
 					<table class="table">
 						<tr style="border-top: none;">
