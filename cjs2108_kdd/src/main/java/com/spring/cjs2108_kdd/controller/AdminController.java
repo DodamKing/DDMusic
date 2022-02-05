@@ -105,7 +105,7 @@ public class AdminController {
 	@RequestMapping("/addsongall")
 	@ResponseBody
 	public void addsongallPost() {
-		List<ChartVO> vos = songService.getChartVOS(null);
+		List<ChartVO> vos = songService.getChartVOS("all");
 		for (int i=0; i<vos.size(); i++) {
 			if (vos.get(i).getSongIdx() == 0) {
 				songService.addSongDB(vos.get(i).getImg(), vos.get(i).getTitle(), vos.get(i).getArtist());

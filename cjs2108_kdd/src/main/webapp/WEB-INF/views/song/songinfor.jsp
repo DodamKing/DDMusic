@@ -97,8 +97,11 @@
 			<div class="p-3" style="border-radius: 15px; background-color: rgb(35, 35, 35);">
 				<h5><b>가사정보</b></h5>
 				<div class="text-light text-center">
-					<div id="lyrics_div">${fn:replace(vo.lyrics, enter, "<br>") }</div>
-					<button id="lyrics_more_btn" type="button" class="btn btn-dark form-control mt-5" onclick="moerLyrics()">더보기</button>
+					<c:if test="${empty vo.lyrics }">준비중 입니다.</c:if>
+					<c:if test="${!empty vo.lyrics }">
+						<div id="lyrics_div">${fn:replace(vo.lyrics, enter, "<br>") }</div>
+						<button id="lyrics_more_btn" type="button" class="btn btn-dark form-control mt-5" onclick="moerLyrics()">더보기</button>
+					</c:if>
 				</div>
 			</div>
 		</div>

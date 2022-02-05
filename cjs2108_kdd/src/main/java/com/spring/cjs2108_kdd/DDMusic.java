@@ -76,6 +76,7 @@ public class DDMusic {
 //			ArrayList<SongVO> vos = songService.getChartJson();
 			ArrayList<ChartVO> vos = songService.getChartVOS(date);
 			model.addAttribute("vos", vos);
+			model.addAttribute("date", date);
 			model.addAttribute("minDate", songService.getMinDate());
 		}
 		

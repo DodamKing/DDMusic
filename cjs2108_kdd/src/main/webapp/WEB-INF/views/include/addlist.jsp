@@ -76,7 +76,7 @@
 		});
 	}
 	
-	function action(idx) {
+	/* function action(idx) {
 		let data = {
 			idx : idx,
 			songIdx : idx_box.innerHTML
@@ -96,7 +96,7 @@
 				setTimeout(() => $("#message_box2").slideUp(), 1000);
 			}
 		});
-	}
+	} */
 	
 	function mylist_box_re() {
 		mylist_box.innerHTML = "";

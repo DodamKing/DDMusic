@@ -244,8 +244,11 @@ public class SongServiceImpl implements SongService {
 
 	@Override
 	public void setDownload(int userIdx, String songIdx) {
-		String songIdxs = songDAO.getDownSongIdxs(userIdx);
-		if (songIdxs == null) songIdxs = "";
+		String songIdxs = "";
+		if (songDAO.getDownSongIdxs(userIdx) != null) {
+			songIdxs = songDAO.getDownSongIdxs(userIdx);
+		}
+		
 		if (!songIdxs.contains(songIdx)) songIdxs += songIdx + "/";
 		songDAO.setDownUpdate(userIdx, songIdxs, 1);
 	}

@@ -44,7 +44,7 @@
 			success : (data) => {
 				let res = "";
 				data.forEach((e) => {
-					res += "<div class='d-flex justify-content-center ho mb-3' onclick='action(" + e.idx + ")'>";
+					res += "<div class='d-flex justify-content-center ho mb-3' onclick='action2(" + e.idx + ")'>";
 					res += '<div style="width: 50px; height: 50px;" class="col-2">';
 					res += '<div class="row" style="margin-left: 0px;">';
 					if (e.thum1 == null) {
@@ -65,7 +65,7 @@
 		});
 	}
 	
-	function action(idx) {
+	function action2(idx) {
 		let songIdx = idx_box.innerHTML;
 		if (songIdx == "") songIdx = idx_list[playerIndex];
 		let data = {
@@ -99,7 +99,7 @@
 	}
 	
 	function download() {
-		let idx = idx_box.innerHTML;
+		let idx = idx_list[playerIndex];
 		$.ajax({
 			type : "post",
 			url : "${ctp}/song/download",

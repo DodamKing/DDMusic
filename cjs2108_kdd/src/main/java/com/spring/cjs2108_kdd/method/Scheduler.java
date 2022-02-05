@@ -98,4 +98,21 @@ public class Scheduler {
 		System.out.println("아티스트 테잎 업데이트: " + formatedNow);
 	}
 	
+//	@Scheduled(cron = "0 35 10 * * *")
+//	public void mixTapeUpdate() {
+//		List<UserVO> userVOS = userService.getUserVOS();
+//		
+//		for (int i=0; i<userVOS.size(); i++) {
+//			ArrayList<Integer> bestUserSongIdx = new ArrayList<Integer>();
+//			int userIdx = userVOS.get(i).getIdx();
+//			if (userIdx == 0) continue;
+//			List<PlayVO> playListVOS = userService.getUserBestSongIdx(userIdx);
+//			for (int j=0; j<playListVOS.size(); j++) {
+//				bestUserSongIdx.add(playListVOS.get(j).getSongIdx());
+//			}
+//			
+//		}
+		
+	}
+	
 }

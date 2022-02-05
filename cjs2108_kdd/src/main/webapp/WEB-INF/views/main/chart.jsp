@@ -37,7 +37,7 @@
                 <div class="text-center h4">
                 	${fn:replace(fn:split(vos[0].date, " ")[0], "-", ".") }
             	</div>
-            	<c:if test="${empty vos }"><p class="h5 mt-5" style="padding-bottom: 400px;">아직 차트가 업데이트 되지 않았습니다. 잠시 기다려 주세요!</p></c:if>
+            	<c:if test="${empty vos }"><p class="h5 mt-5" style="padding-bottom: 400px;">${date }의 차트 데이터가 존재하지 않습니다.</p></c:if>
             	<c:if test="${!empty vos }">
 	                <table class="table">
 	                	<tr>

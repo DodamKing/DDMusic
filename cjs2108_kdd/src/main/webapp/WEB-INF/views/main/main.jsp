@@ -192,6 +192,28 @@
 		}
 	}
 	
+	function action(idx) {
+		let data = {
+			idx : idx,
+			songIdx : idx_box.innerHTML
+		}
+		
+		$.ajax({
+			type : "post",
+			url : "${ctp}/user/addmylist",
+			data : data,
+			success : (data) => {
+				if (data == 1) {
+					$("#message_box1").slideDown(300);
+					setTimeout(() => $("#message_box1").slideUp(), 1000);
+					return;
+				}
+				$("#message_box2").slideDown(300);
+				setTimeout(() => $("#message_box2").slideUp(), 1000);
+			}
+		});
+	}
+	
 	function download() {
 		let idx = idx_box.innerHTML;
 		$.ajax({
