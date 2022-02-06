@@ -23,7 +23,6 @@ function mainVideoPlay() {
 	let contextPath = location.href.substring(hostIndex, location.href.indexOf("/", hostIndex + 1));
 
     let mainVideoUrl = contextPath + "/resources/video/sample.mp4#t=0" + mainVideoH + ":" + mainVideoM.substr(-2) + ":" + mainVideoS.substr(-2);
-    // let mainVideoUrl = "video/sample.mp4#t=02:20:00,02:20:03";
     $("video").prop("src", mainVideoUrl);
 }
 

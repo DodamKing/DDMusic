@@ -32,7 +32,7 @@
 			<div id="demo11" class="form-control"></div>
 		</div>
 		<div class="modal-footer">
-			<button type="button" class="btn btn-danger" onclick="findUserId()" >확인</button>
+			<button type="button" class="btn btn-danger" onclick="findUserId()" >찾기</button>
 			<button type="button" class="btn btn-danger" data-dismiss="modal" onclick="vClear()">Close</button>
 			</div>
 		</div>
@@ -69,7 +69,7 @@
 				<div id="demo21" class="form-control"></div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-danger" onclick="findUserPwd()">확인</button>
+				<button type="button" class="btn btn-danger" onclick="findUserPwd()">찾기</button>
 				<button type="button" class="btn btn-danger" data-dismiss="modal" onclick="vClear()">Close</button>
 			</div>
 		</div>

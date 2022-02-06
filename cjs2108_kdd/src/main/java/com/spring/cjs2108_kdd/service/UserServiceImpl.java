@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public String getUserId(String userNm, String phoneNb, String email) {
 		String mid = userDAO.getUserId(userNm, phoneNb, email);
-		mid = mid.replace(mid.substring(0, 4), "****");
+		if (mid != null) mid = mid.replace(mid.substring(0, 4), "****");
 		return mid;
 	}
 

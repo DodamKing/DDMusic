@@ -74,7 +74,7 @@
             <div class="ml-1 mt-1"><input id="volume_bar" type="range" min="0" max="100" <c:if test="${!empty cVol }">value="${cVol * 100 }"</c:if> /></div>
             <div id="vol_no" class="ml-1" style="font-size: 8px; margin-top: 12px;">
             	<c:if test="${empty cVol }">50</c:if>
-            	<c:if test="${!empty cVol }">${fn:substring(cVol * 100, 0, 2) }</c:if>
+            	<c:if test="${!empty cVol }">${fn:split(cVol * 100, ".")[0] }</c:if>
         	</div>
         </div>
     </div>

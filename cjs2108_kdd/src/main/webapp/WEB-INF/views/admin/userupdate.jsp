@@ -40,6 +40,7 @@
 								<c:if test="${vo.membership == -1 }">관리자</c:if>
 								<c:if test="${vo.membership == 0 }">없음</c:if>
 								<c:if test="${vo.membership == 1 }">DDMusic 무제한 듣기</c:if>
+								<c:if test="${vo.membership == 11 }">서버 오픈 기념 이벤트 권한</c:if>
 							</td>
 							<td>${vo.lastDate }</td>
 							<td>${vo.visitCnt }</td>
