@@ -1,7 +1,7 @@
 package com.spring.cjs2108_kdd.method;
 
 import java.io.IOException;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +22,8 @@ public class Scheduler {
 
 	@Autowired UserService userService;
 	
-	// 매일 10시 차트 업데이트
-	@Scheduled(cron = "0 0 10 * * *")
+	// 매일 00시 10분 차트 업데이트
+	@Scheduled(cron = "0 10 0 * * *")
 	public void chartUpdate() throws IOException {
 		Method method = new Method();
 		List<ChartVO> vos = method.getChartTop100();
@@ -92,9 +92,9 @@ public class Scheduler {
 				userService.setArtistTape(userIdx, artist);
 			}
 		}
-		LocalDate now = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String formatedNow = now.format(formatter);
+		LocalDateTime now = LocalDateTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		String formatedNow = now.format(formatter);
 		System.out.println("아티스트 테잎 업데이트: " + formatedNow);
 	}
 	
