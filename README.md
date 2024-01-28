@@ -198,11 +198,11 @@
 
 ### 구매한 MP3
 
-- 구매한 MP# 내역 확인
+- 구매한 MP3 내역 확인
 
 - 다운로드 가능
 
-- 다운로드 주소 보이지 안헥 ajax로 구현
+- 다운로드 주소 보이지 않게 ajax로 구현
 
 ![image](https://github.com/DodamKing/DDMusic/assets/87540282/f77af189-d479-4bcd-b885-b718741a330d)
 
